@@ -9,7 +9,7 @@ CREATE TABLE "users" (
   "email" varchar(255) NOT NULL,
   "created_at" timestamp NOT NULL,
   "phone_number" int(255) NOT NULL,
-  "credit_card" int(255) NOT NULL,
+  "credit_card" int(255),
   "license" varchar(255),
   "street_address" varchar(255) NOT NULL,
   "appartment_number" varchar(255),
