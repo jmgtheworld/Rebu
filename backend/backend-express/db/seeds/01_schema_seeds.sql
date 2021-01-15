@@ -12,11 +12,11 @@ VALUES
   (3, 4, [{"driver_id": "Outside"}, {"customer_id": "On my way"}], NOW()),
   (4, 5, [{"driver_id": "Please come outside"}, {"customer_id": "Ok"}], NOW()),
   (5, 2, [{"driver_id": "I have arrived"}, {"customer_id": "kk"}], NOW()),
-  (2, 5, [{"driver_id": "Hello"}, {"customer_id": "heyyyy"}], NOW())
+  (2, 5, [{"driver_id": "Hello"}, {"customer_id": "heyyyy"}], NOW());
 
 INSERT INTO trips (user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status, created_at, ended_at)
 VALUES
   (1, "255 Bremner Blvd, Toronto, ON M5V 3M9", "40 Bay St, Toronto, ON M5J 2X2", 43.641788, -79.386429, 43.643970, -79.378929, 20, true, NOW() - 1, NOW()),
   (3, "225 Richmond St W Suite 100, Toronto, ON M5V 1W2", "18 Duncan St, Toronto, ON M5H 3G8", 43.649110, -79.389560, 43.647869, -79.388687, 10, true, NOW() - 3, NOW() - 2.5),
   (4, "225 Richmond St W Suite 100, Toronto, ON M5V 1W2", "144 Front St W, Toronto, ON M5J 2L7", 43.649110, -79.389560, 43.645433, -79.383896, 10, false, NOW() - 5, NOW() - 4.5),
-  (2, "225 Richmond St W Suite 100, Toronto, ON M5V 1W2", "132 Dundas St W, Toronto, ON M5G 1C3", 43.649110, -79.389560, 43.6556486, -79.3847106, 10, false, NOW() - 6, NOW() - 5.5),
+  (2, "225 Richmond St W Suite 100, Toronto, ON M5V 1W2", "132 Dundas St W, Toronto, ON M5G 1C3", 43.649110, -79.389560, 43.6556486, -79.3847106, 10, false, NOW() - 6, NOW() - 5.5);
