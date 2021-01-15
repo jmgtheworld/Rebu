@@ -6,9 +6,14 @@ const logger = require('morgan');
 
 const tripsRouter = require('./routes/trips');
 const usersRouter = require('./routes/users');
+const messagesRouter = require('./routes/messages');
 
 const app = express();
 const db = require("./db");
+
+const dbHelpers = require('./db/helpers/dbHelpers.js')(db);
+
+// app.use('/api/users', usersRouter(dbHelpers));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,7 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter(db));
-app.use('/trips', tripsRouter(db));
+app.use('/users', usersRouter(dbHelpers));
+app.use('/trips', tripsRouter(dbHelpers));
+app.use('/messages', messagesRouter(dbHelpers));
+// app.use('/', indexRouter);
 
 module.exports = app;
