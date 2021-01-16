@@ -1,11 +1,11 @@
 import {Fragment} from 'react';
-import Map2 from './Map2';
+import Map from './Map';
 
 export default function Home(props) {
   return (
     <Fragment>
       <h1> Home Page </h1>
-      <Map2 />
+      <Map />
     </Fragment>
 
   )
