@@ -63,5 +63,13 @@ module.exports = ({
         });
     });
 
+    router.get('/:id', function(req, res) {
+        db.query(
+            `SELECT * FROM users WHERE id=$1`
+        , [req.params.id]).then(({ rows: user }) => {
+            res.json(user);
+        });
+    });
+
     return router;
 };
