@@ -1,6 +1,12 @@
+import {Fragment} from 'react';
+import Map from './Map';
 
 export default function Home(props) {
   return (
-    <h1> Home Page </h1>
+    <Fragment>
+      <h1> Home Page </h1>
+      <Map />
+    </Fragment>
+
   )
 }
