@@ -10,6 +10,8 @@ CREATE TABLE users(
   created_at timestamp NOT NULL,
   phone_number BIGINT NOT NULL,
   credit_card BIGINT,
+  month_year varchar(255) NOT NULL,
+  cvc varchar(255) NOT NULL,
   license varchar(255),
   street_address varchar(255) NOT NULL,
   appartment_number varchar(255),
@@ -42,9 +44,3 @@ CREATE TABLE trips(
   created_at timestamp,
   ended_at timestamp
 );
-
--- ALTER TABLE messages ADD FOREIGN KEY (customer_id) REFERENCES users (id);
-
--- ALTER TABLE messages ADD FOREIGN KEY (driver_id) REFERENCES users (id);
-
--- ALTER TABLE trips ADD FOREIGN KEY (user_id) REFERENCES users (id);

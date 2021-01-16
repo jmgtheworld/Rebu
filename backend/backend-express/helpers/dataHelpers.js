@@ -1,4 +1,5 @@
 const getPostsByUsers = (usersPosts) => {
+  // Sample code, will add more later
   const postsByUsers = {};
 
   for (let post of usersPosts) {
