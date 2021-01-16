@@ -8,7 +8,7 @@ VALUES
 
 INSERT INTO messages(customer_id, driver_id, message, created_at)
 VALUES
-  (1, 2, ARRAY[{"id": "1", "text": "here"}, {"id": "2", "text": "coming"}], current_timestamp),
+  (1, 2, 'here', current_timestamp),
   (3, 4, 'outside', current_timestamp),
   (4, 5, 'please come outside', current_timestamp),
   (5, 2, 'I have arrived', current_timestamp),

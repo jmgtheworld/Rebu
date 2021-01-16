@@ -26,7 +26,7 @@ CREATE TABLE messages(
   id SERIAL PRIMARY KEY NOT NULL,
   customer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   driver_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  message text[1:2],
+  message varchar(255),
   created_at timestamp
 );
 
