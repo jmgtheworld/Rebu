@@ -14,7 +14,7 @@ CREATE TABLE users(
   cvc varchar(255) NOT NULL,
   license varchar(255),
   street_address varchar(255) NOT NULL,
-  appartment_number varchar(255),
+  apartment_number varchar(255),
   city varchar(255) NOT NULL,
   postal_code varchar(255) NOT NULL,
   province varchar(255) NOT NULL,

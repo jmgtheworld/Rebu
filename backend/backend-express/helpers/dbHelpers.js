@@ -25,13 +25,13 @@ module.exports = (db) => {
     };
 
     // Add new user to DB
-    const addUser = (driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number) => {
+    const addUser = (driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number) => {
         const query = {
             text: `
                 INSERT INTO users (driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *
             `,
-            values: [driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number]
+            values: [driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number]
         };
   
         return db.query(query)

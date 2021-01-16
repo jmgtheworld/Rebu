@@ -26,12 +26,12 @@ module.exports = ({
     });
 
     // Add new user
-    router.post('/', (req, res)=> {
+    router.post('/add', (req, res)=> {
         const driver = req.body.license ? true : false;
-        const { full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number } = req.body;
+        const { full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number } = req.body;
 
-        addUser(driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number)
-            .then(user => res.json("added user!", user))
+        addUser(driver, full_name, email, phone_number, credit_card,  month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number)
+            .then(user => res.json(user))
             .catch((err) => res.json({
                 error: err.message
             }));
