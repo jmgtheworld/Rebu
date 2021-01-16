@@ -1,10 +1,10 @@
-INSERT INTO users(driver, full_name, email, created_at, phone_number, credit_card, license, street_address, appartment_number, city, postal_code, province, country, password)
+INSERT INTO users(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, appartment_number, city, postal_code, province, country, password)
 VALUES 
-  (false, 'John Smith', 'jsmith@mail.com', current_timestamp, 4161234567, 411111111111, NULL, '40 Bay St', NULL, 'Toronto', 'M5J 2X2', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
-  (true, 'Jane Doe', 'jdoe@mail.com', current_timestamp, 4162345678, 411111111111, 'S04206969696969', '598 Bay St', NULL, 'Toronto', 'M5G 1M5', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
-  (false, 'Douglas Falcon', 'captain@falcon.com', current_timestamp, 4162344323, 411111111111, NULL, '18 Duncan St', NULL, 'Toronto', 'M5H 3G8', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
-  (true, 'Tony Stark', 'iron@man.com', current_timestamp, 4166438943, 411111111111, 'S04216969696969', '225 Richmond St W', 'Suite 100', 'Toronto', 'M5V 1W2', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
-  (true, 'Hayley Williams', 'para@more.com', current_timestamp, 4161234567, 411111111111, 'S04206969696970', '144 Front St W', NULL, 'Toronto', 'M5J 2L7', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
+  (false, 'John Smith', 'jsmith@mail.com', current_timestamp, 4161234567, 411111111111, '01/25', '123', NULL, '40 Bay St', NULL, 'Toronto', 'M5J 2X2', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
+  (true, 'Jane Doe', 'jdoe@mail.com', current_timestamp, 4162345678, 411111111111, '02/24', '345', 'S04206969696969', '598 Bay St', NULL, 'Toronto', 'M5G 1M5', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
+  (false, 'Douglas Falcon', 'captain@falcon.com', current_timestamp, 4162344323, 411111111111, '11/27', '420', NULL, '18 Duncan St', NULL, 'Toronto', 'M5H 3G8', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
+  (true, 'Tony Stark', 'iron@man.com', current_timestamp, 4166438943, 411111111111, '10/22', '089', 'S04216969696969', '225 Richmond St W', 'Suite 100', 'Toronto', 'M5V 1W2', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
+  (true, 'Hayley Williams', 'para@more.com', current_timestamp, 4161234567, 411111111111, '08/23', '547', 'S04206969696970', '144 Front St W', NULL, 'Toronto', 'M5J 2L7', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 
 INSERT INTO messages(customer_id, driver_id, message, created_at)
 VALUES

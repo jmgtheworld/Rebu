@@ -1,0 +1,22 @@
+.searchArea{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchBar{
+  font-family: Arial, Helvetica, sans-serif;
+  width: 400px;
+  padding: 10px;
+}
+
+.locate {
+  width: 50px;
+  height: 50px;
+  margin: 25px;
+}
+
+.compass{
+  width: 32px;
+  height: 32px;
+}

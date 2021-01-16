@@ -2,12 +2,22 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = ({
-    getMessages
+    getMessages,
+    getMessageById
 }) => {
     /* GET all trips */
     router.get('/', (req, res) => {
         getMessages()
             .then((messages) => res.json(messages))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/:id', (req, res) => {
+        const tripId = req.params.id;
+        getMessageById(tripId)
+            .then((users) => res.json(users))
             .catch((err) => res.json({
                 error: err.message
             }));
