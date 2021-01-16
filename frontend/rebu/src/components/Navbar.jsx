@@ -31,7 +31,13 @@ const Navbar = () => {
         <span className="menu-bars">
           <FaIcons.FaBars onClick={showSidebar}/>
         </span>
+        <span>
+        <Link className= "home-link" to="/">
+          <h1 className="app-name">Rebu</h1>
+        </Link>
+        </span>
       </div>
+
       <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
         <ul className="nav-menu-items">
           <li className="navbar-toggle">
