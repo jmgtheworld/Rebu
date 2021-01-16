@@ -63,7 +63,7 @@ const router = express.Router();
 module.exports = ({
     getTrips
 }) => {
-    /* GET all trips */
+    // GET all trips
     router.get('/', (req, res) => {
         getTrips()
             .then((trips) => res.json(trips))
@@ -72,6 +72,7 @@ module.exports = ({
             }));
     });
 
+    // POST a new trip
     router.post('/', function(req, res) {
       const {
         user_id,
