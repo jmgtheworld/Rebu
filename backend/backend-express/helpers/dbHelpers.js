@@ -34,6 +34,19 @@ module.exports = (db) => {
             .then((result) => result.rows)
             .catch((err) => err);
     };
+
+    const getUserById = id => {
+
+        const query = {
+            text: `SELECT * FROM users WHERE id = $1` ,
+            values: [id]
+        }
+
+        return db
+            .query(query)
+            .then(result => result.rows[0])
+            .catch((err) => err);
+    };
   
 
     const getUserByEmail = email => {
@@ -77,6 +90,7 @@ module.exports = (db) => {
   
     return {
         getUsers,
+        getUserById,
         getTrips,
         getMessages,
         getUserByEmail,

@@ -38,11 +38,21 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = ({
-    getUsers
+    getUsers,
+    getUserById
 }) => {
     /* GET users */
     router.get('/', (req, res) => {
         getUsers()
+            .then((users) => res.json(users))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/:id', (req, res) => {
+        const userId = req.params.id;
+        getUserById(userId)
             .then((users) => res.json(users))
             .catch((err) => res.json({
                 error: err.message
@@ -63,13 +73,13 @@ module.exports = ({
         });
     });
 
-    router.get('/:id', function(req, res) {
-        db.query(
-            `SELECT * FROM users WHERE id=$1`
-        , [req.params.id]).then(({ rows: user }) => {
-            res.json(user);
-        });
-    });
+    // router.get('/:id', function(req, res) {
+    //     db.query(
+    //         `SELECT * FROM users WHERE id=$1`
+    //     , [req.params.id]).then(({ rows: user }) => {
+    //         res.json(user);
+    //     });
+    // });
 
     return router;
 };
