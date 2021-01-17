@@ -25,7 +25,7 @@ export default function ConfirmModal (props) {
       <Modal.Body>
         <p>From: {props.start_address}</p>
         <p>To: {props.end_address}</p>
-        <p>Price: {props.price}</p>
+        <p>Price: ${props.price}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.confirm}>Yes</Button>
