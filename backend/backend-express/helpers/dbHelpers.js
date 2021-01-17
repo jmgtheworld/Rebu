@@ -25,19 +25,32 @@ module.exports = (db) => {
     };
 
     // Add new user to DB
-    const addUser = (driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number) => {
+    const addUser = (driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password) => {
         const query = {
             text: `
-                INSERT INTO users (driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *
+                INSERT INTO users (driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
             `,
-            values: [driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, postal_code, city, province, country, apartment_number]
+            values: [driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password]
         };
   
         return db.query(query)
             .then(result => result.rows[0])
             .catch(err => err);
     };
+
+    const getUserByEmail = email => {
+
+        const query = {
+            text: `SELECT * FROM users WHERE email = $1` ,
+            values: [email]
+        }
+
+        return db
+            .query(query)
+            .then(result => result.rows[0])
+            .catch((err) => err);
+    }
   
     // Gets all trips in DB
     const getTrips = () => {
@@ -103,18 +116,18 @@ module.exports = (db) => {
             .catch((err) => err);
     };
 
-    const getUserByEmail = email => {
+    // const getUserByEmail = email => {
 
-        const query = {
-            text: `SELECT * FROM users WHERE email = $1` ,
-            values: [email]
-        }
+    //     const query = {
+    //         text: `SELECT * FROM users WHERE email = $1` ,
+    //         values: [email]
+    //     }
 
-        return db
-            .query(query)
-            .then(result => result.rows[0])
-            .catch((err) => err);
-    }
+    //     return db
+    //         .query(query)
+    //         .then(result => result.rows[0])
+    //         .catch((err) => err);
+    // }
   
     // Sample code, can be modified later
     // const getUsersPosts = () => {
@@ -135,11 +148,11 @@ module.exports = (db) => {
         getUsers,
         getUserById,
         addUser,
+        getUserByEmail,
         getTrips,
         getTripById,
         addTrip,
         getMessages,
-        getMessageById,
-        getUserByEmail
+        getMessageById
     };
   };

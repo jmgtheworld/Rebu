@@ -3,6 +3,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
 import * as VscIcons from 'react-icons/vsc';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
+import { BiLogOutCircle } from 'react-icons/bi'
 
 const SidebarData = [
   {
@@ -13,12 +14,12 @@ const SidebarData = [
   {
     title: 'History',
     path: '/history',
-    icon: <FaIcons.FaHistory/>
+    icon: <FaIcons.FaHistory />
   },
   {
     title: 'Settings',
     path: '/settings',
-    icon: <AiIcons.AiFillSetting/>
+    icon: <AiIcons.AiFillSetting />
   },
   {
     title: 'Ride',
@@ -35,6 +36,11 @@ const SidebarData = [
     path: '/support',
     icon: <BsFillQuestionCircleFill />
   },
+  {
+    title: 'Logout',
+    path: '/',
+    icon: <BiLogOutCircle />
+  }
 ]
 
 export default SidebarData;
