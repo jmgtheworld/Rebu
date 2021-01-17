@@ -11,6 +11,7 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Settings from "./components/Settings"
 import Navbar from "./components/Navbar"
+import History from "./components/History"
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path = "/register">
             <Register />
+          </Route>
+          <Route path = "/history">
+            <History />
           </Route>
           <Route path = "/">
             <Home />
