@@ -13,7 +13,6 @@ export default function UserSummary(props) {
   const getPriceRange = PriceRange => {
     const lowest = PriceRange[0];
     const highest = PriceRange[PriceRange.length - 1];
-
     range = {
       lowest,
       highest
@@ -22,7 +21,6 @@ export default function UserSummary(props) {
   }
 
   getPriceRange(PriceRange)
-  console.log(range)
 
   const listofPrice = PriceRange.map( (item, index) => {
     return <li key = {index} 
