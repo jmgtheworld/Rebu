@@ -26,15 +26,19 @@ module.exports = (db) => {
 
     const getTripsByUserId = id => {
         const query = {
-            text: `SELECT * FROM trips WHERE user_id = $1`,
+            text: `SELECT * FROM trips WHERE customer_id = $1`,
             values: [id]
         };
 
         return db
             .query(query)
-            .then(result => result.rows[0])
+            .then(result => result.rows)
             .catch((err) => err);
     };
+
+    // const getUserCurrentLocation = id => {
+
+    // };
 
     // Add new user to DB
     const addUser = (driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password) => {
