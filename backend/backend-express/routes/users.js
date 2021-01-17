@@ -27,7 +27,7 @@ module.exports = ({
     });
 
     // Add new user
-    router.post('/', (req, res)=> {
+    router.post('/add', (req, res)=> {
         const driver = req.body.license ? true : false;
         const { full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
 
