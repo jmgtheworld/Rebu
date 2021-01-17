@@ -16,7 +16,11 @@ VALUES
 
 INSERT INTO trips(user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status, created_at, ended_at)
 VALUES
-  (1, '255 Bremner Blvd, Toronto, ON M5V 3M9', '40 Bay St, Toronto, ON M5J 2X2', 43.641788, -79.386429, 43.643970, -79.378929, 20, true, current_timestamp, current_timestamp),
-  (3, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '18 Duncan St, Toronto, ON M5H 3G8', 43.649110, -79.389560, 43.647869, -79.388687, 10, true, current_timestamp, current_timestamp),
-  (4, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '144 Front St W, Toronto, ON M5J 2L7', 43.649110, -79.389560, 43.645433, -79.383896, 10, false, current_timestamp, current_timestamp),
-  (2, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '132 Dundas St W, Toronto, ON M5G 1C3', 43.649110, -79.389560, 43.6556486, -79.3847106, 10, false, current_timestamp, current_timestamp);
+  (1, '255 Bremner Blvd, Toronto, ON M5V 3M9', '40 Bay St, Toronto, ON M5J 2X2', 43.641788, -79.386429, 43.643970, -79.378929, 20, true, current_timestamp, current_timestamp + interval '1 hour'),
+  (1, '328 Spadina Ave, Toronto, ON M5T 2E7', '40 Bay St, Toronto, ON M5J 2X2', 43.653790, -79.398697, 43.643970, -79.378929, 25, true, current_timestamp - interval '1 day', current_timestamp - interval '1 day' + interval '1 hour'),
+  (3, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '18 Duncan St, Toronto, ON M5H 3G8', 43.649110, -79.389560, 43.647869, -79.388687, 10, true, current_timestamp, current_timestamp + interval '1 hour'),
+  (3, '909 Lake Shore Blvd W, Toronto, ON M6K 3L3', '18 Duncan St, Toronto, ON M5H 3G8', 43.629330, -79.415123, 43.647869, -79.388687, 15, true, current_timestamp - interval '2 day', current_timestamp - interval '2 day' + interval '1 hour'),
+  (4, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '144 Front St W, Toronto, ON M5J 2L7', 43.649110, -79.389560, 43.645433, -79.383896, 10, false, current_timestamp, current_timestamp + interval '1 hour'),
+  (4, '144 Front St W, Toronto, ON M5J 2L7', '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', 43.645630, 43.645630, 43.641788, -79.386429, 10, true, current_timestamp - interval '3 day', current_timestamp - interval '3 day' + interval '1 hour'),
+  (2, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '132 Dundas St W, Toronto, ON M5G 1C3', 43.649110, -79.389560, 43.6556486, -79.3847106, 10, false, current_timestamp - interval '1 day', current_timestamp - interval '1 day' + interval '1 hour'),
+  (2, '255 Bremner Blvd, Toronto, ON M5V 3M9', '598 Bay St Toronto, ON M5G 1C3', 43.641788, -79.386429, 43.655850, -79.384070, 10, false, current_timestamp, current_timestamp + interval '1 hour');
