@@ -7,9 +7,19 @@ import "./UserSummary.scss";
 export default function UserSummary(props) {
 
   const [priceMenu, setpriceMenu] = useState(false);
+  const [price, setPrice] = useState("");
 
   const listofPrice = PriceRange.map( (item, index) => {
-    return <li key = {index} className = "priceItem">${item.price} </li>
+    return <li key = {index} 
+               className = "priceItem" 
+               onClick ={
+                 () => {
+                   setPrice(item.price)
+                   showPrice()        
+                  }
+                 }>
+               ${item.price} 
+            </li>
   })
 
   const showPrice = () => {
@@ -23,6 +33,9 @@ export default function UserSummary(props) {
       <FaIcons.FaAngleDown onClick = {showPrice} className = "dropdown"/> 
       <div className = {priceMenu ? 'show' : 'hide' }>
         {listofPrice}
+      </div>
+      <div className = "selectedPrice"> 
+        ${price}
       </div>
     </article>
   )
