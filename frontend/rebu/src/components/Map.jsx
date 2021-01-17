@@ -5,8 +5,8 @@ import { Spinner } from 'react-bootstrap';
 import {
   GoogleMap,
   useLoadScript,
+  DistanceMatrixService,
   Marker,
-  InfoWindow,
 } from "@react-google-maps/api";
 
 import usePlacesAutocomplete, {
@@ -31,7 +31,6 @@ const libraries = ["places"];
 const mapContainerStyle = {
   height: "60vh",
   width: "50vw",
-  marginLeft: "25%"
 };
 
 const options = {
@@ -45,17 +44,21 @@ const center = {
   lng: -79.3832,
 };
 
-Geocode.setApiKey("AIzaSyCNm0iMh4id4JyYT4P41jH5qRcv2G13r8g");
+Geocode.setApiKey("");
 
 export default function Map() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyB80M_S2VXZAh7-VtYLg1eYAjOVcauxn2c",
+    googleMapsApiKey: "",
     libraries,
   });
   const [markers, setMarkers] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
   const [startAddress, setstartAddress] = React.useState("");
+  const [travelTD, settravelTD] = React.useState({
+    time: "1",
+    distance: "2",
+  })
  
   const onMapClick = React.useCallback((e) => {
     setMarkers(() => [
@@ -114,7 +117,6 @@ export default function Map() {
 
   return (
     <div>
-
       <div className = "searchArea">
         <Locate panTo={panTo} />
         <SearchStart panTo={panTo} startAddress = {startAddress} />
@@ -141,6 +143,22 @@ export default function Map() {
             }}
           />
         ))}
+        <DistanceMatrixService
+          options={{
+            destinations: [{lat:1.296788, lng:103.778961}],
+            origins: [{lng:103.780267, lat:1.291692}],
+            travelMode: "DRIVING",
+          }}
+          callback = {(response) => {
+            console.log(response)
+            console.log(travelTD)
+            // settravelTD( {...travelTD,
+            //   time: response.rows[0].elements[0].duration['text'],
+            //   distance: response.rows[0].elements[0].distance['text']
+            // })
+            console.log(travelTD)
+          }}
+        />
       </GoogleMap>
       {loading && <Spinner animation="border" variant="secondary" className = "loading"/>}
     </div>
@@ -173,7 +191,7 @@ function Locate({ panTo }) {
   );
 }
 
-function SearchStart({ panTo } ) {
+function SearchStart({ panTo }, {startAddress} ) {
   const {
     ready,
     value,
@@ -210,7 +228,7 @@ function SearchStart({ panTo } ) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value= {value} 
+          value= {startAddress} 
           onChange={handleInput}
           disabled={!ready}
           placeholder= "Search your location"
