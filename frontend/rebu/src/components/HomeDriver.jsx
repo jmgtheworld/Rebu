@@ -9,9 +9,10 @@ export default function HomeDriver () {
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/trips"
-    Axios.get(requestsAPI) //would be /api/trips/requested
+    Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => setRequests(res.data));
   },[])
+
 
   return (
     <div>
