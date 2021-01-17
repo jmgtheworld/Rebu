@@ -5,7 +5,8 @@ module.exports = ({
     getUsers,
     getUserById,
     addUser,
-    getUserByEmail
+    getUserByEmail,
+    getTripsByUserId
 }) => {
     // Get all users
     router.get('/', (req, res) => {
@@ -21,6 +22,15 @@ module.exports = ({
         const userId = req.params.id;
         getUserById(userId)
             .then((users) => res.json(users))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/:id/trips', (req, res) => {
+        const userId = req.params.id;
+        getTripsByUserId(userId)
+            .then(trips => res.json(trips))
             .catch((err) => res.json({
                 error: err.message
             }));

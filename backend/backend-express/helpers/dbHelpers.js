@@ -24,6 +24,18 @@ module.exports = (db) => {
             .catch((err) => err);
     };
 
+    const getTripsByUserId = id => {
+        const query = {
+            text: `SELECT * FROM trips WHERE user_id = $1`,
+            values: [id]
+        };
+
+        return db
+            .query(query)
+            .then(result => result.rows[0])
+            .catch((err) => err);
+    };
+
     // Add new user to DB
     const addUser = (driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password) => {
         const query = {
@@ -116,18 +128,6 @@ module.exports = (db) => {
             .catch((err) => err);
     };
 
-    // const getUserByEmail = email => {
-
-    //     const query = {
-    //         text: `SELECT * FROM users WHERE email = $1` ,
-    //         values: [email]
-    //     }
-
-    //     return db
-    //         .query(query)
-    //         .then(result => result.rows[0])
-    //         .catch((err) => err);
-    // }
   
     // Sample code, can be modified later
     // const getUsersPosts = () => {
@@ -153,6 +153,7 @@ module.exports = (db) => {
         getTripById,
         addTrip,
         getMessages,
-        getMessageById
+        getMessageById,
+        getTripsByUserId
     };
   };
