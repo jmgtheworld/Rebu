@@ -19,6 +19,8 @@ CREATE TABLE users(
   postal_code varchar(255) NOT NULL,
   province varchar(255) NOT NULL,
   country varchar(255) NOT NULL,
+  current_location_lat REAL,
+  current_location_lon REAL,
   password varchar(255) NOT NULL
 );
 
