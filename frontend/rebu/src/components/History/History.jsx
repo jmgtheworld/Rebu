@@ -7,7 +7,7 @@ export default function History () {
   const [ trips, setTrips ] = useState([])
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/trips")
+    Axios.get("api/users/:id/trips")
       .then((res) => {
         console.log(res.data);
         setTrips(res.data);
