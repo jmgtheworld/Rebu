@@ -6,7 +6,7 @@ import {
 
 import './App.css';
 
-import Home from "./components/Home"
+import Homee from "./components/Homee"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Settings from "./components/Settings"
@@ -32,7 +32,7 @@ function App() {
             <History />
           </Route>
           <Route path = "/">
-            <Home />
+            <Homee />
           </Route>
         </Switch>
       </div>
