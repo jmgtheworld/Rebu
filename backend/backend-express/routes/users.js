@@ -4,7 +4,8 @@ const router = express.Router();
 module.exports = ({
     getUsers,
     getUserById,
-    addUser
+    addUser,
+    getUserByEmail
 }) => {
     // Get all users
     router.get('/', (req, res) => {
@@ -28,11 +29,22 @@ module.exports = ({
     // Add new user
     router.post('/', (req, res)=> {
         const driver = req.body.license ? true : false;
-        const { full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number } = req.body;
+        const { full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
 
-        addUser(driver, full_name, email, phone_number, credit_card, license, street_address, postal_code, city, province, country, apartment_number)
-            .then(user => res.json("added user!", user))
-            .catch((err) => res.json({
+        getUserByEmail(email)
+            .then(user => {
+
+                if (user) {
+                    res.json({
+                        msg: 'Sorry, a user account with this email already exists'
+                    });
+                } else {
+                    return addUser(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password)
+                }
+
+            })
+            .then(newUser => res.json(newUser))
+            .catch(err => res.json({
                 error: err.message
             }));
     });

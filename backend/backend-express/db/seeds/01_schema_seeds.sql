@@ -1,4 +1,4 @@
-INSERT INTO users(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, appartment_number, city, postal_code, province, country, password)
+INSERT INTO users(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password)
 VALUES 
   (false, 'John Smith', 'jsmith@mail.com', current_timestamp, 4161234567, 411111111111, '01/25', '123', NULL, '40 Bay St', NULL, 'Toronto', 'M5J 2X2', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
   (true, 'Jane Doe', 'jdoe@mail.com', current_timestamp, 4162345678, 411111111111, '02/24', '345', 'S04206969696969', '598 Bay St', NULL, 'Toronto', 'M5G 1M5', 'ON', 'Canada', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
