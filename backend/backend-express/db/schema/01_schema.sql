@@ -19,6 +19,8 @@ CREATE TABLE users(
   postal_code varchar(255) NOT NULL,
   province varchar(255) NOT NULL,
   country varchar(255) NOT NULL,
+  current_location_lat REAL,
+  current_location_lon REAL,
   password varchar(255) NOT NULL
 );
 
@@ -32,15 +34,17 @@ CREATE TABLE messages(
 
 CREATE TABLE trips(
   id SERIAL PRIMARY KEY NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  customer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  driver_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   start_address varchar(255) NOT NULL,
   end_address varchar(255) NOT NULL,
   start_location_lat REAL NOT NULL,
   start_location_lon REAL NOT NULL,
   end_location_lat REAL NOT NULL,
   end_location_lon REAL NOT NULL,
+  accepted boolean NOT NULL DEFAULT FALSE,
   payment_amount int NOT NULL,
   payment_status boolean NOT NULL DEFAULT FALSE,
-  created_at timestamp,
+  created_at timestamp DEFAULT NOW(),
   ended_at timestamp
 );

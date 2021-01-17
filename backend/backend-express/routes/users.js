@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -6,7 +7,10 @@ module.exports = ({
     getUserById,
     addUser,
     getUserByEmail,
-    getTripsByUserId
+    getTripsByUserId,
+    updateUserCurrentLocation,
+    fetchIP,
+    fetchCoordsByIP
 }) => {
     // Get all users
     router.get('/', (req, res) => {
@@ -27,6 +31,25 @@ module.exports = ({
             }));
     });
 
+    router.post('/:id/location', (req, res) => {
+        const userId = req.params.id;
+        // fetch the user's current IP
+        return fetchIP()
+            .then(body => {
+                // Fetch the user's lat and lon from their IP
+                fetchCoordsByIP(body)
+                    .then(coordinates => {
+                        // Update the user's current location with their new coordinates
+                        const { lat, lon } = JSON.parse(coordinates);
+                        updateUserCurrentLocation(lat, lon, userId)
+                    })
+            })
+            .then(user => res.json(user))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
     router.get('/:id/trips', (req, res) => {
         const userId = req.params.id;
         getTripsByUserId(userId)
@@ -40,6 +63,8 @@ module.exports = ({
     router.post('/', (req, res)=> {
         const driver = req.body.license ? true : false;
         const { full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
+        const current_location_lat = null; 
+        const current_location_lon = null;
 
         getUserByEmail(email)
             .then(user => {
@@ -49,7 +74,7 @@ module.exports = ({
                         msg: 'Sorry, a user account with this email already exists'
                     });
                 } else {
-                    return addUser(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password)
+                    return addUser(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password)
                 }
 
             })
