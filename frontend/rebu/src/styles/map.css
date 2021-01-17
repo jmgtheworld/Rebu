@@ -1,7 +1,14 @@
+
 .searchArea{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.destinationArea{
+  display:flex;
+  justify-content: center;
+  margin: 0 0 50px 100px;
 }
 
 .searchBar{
@@ -20,3 +27,23 @@
   width: 32px;
   height: 32px;
 }
+
+.comboboxPop{
+  background-color: #495867;
+}
+
+.comboboxList{
+  list-style: none;
+}
+
+.comboboxOption{
+  background-color: #495867;
+  color: white;
+}
+
+.comboboxOption:hover{
+  background-color: white;
+  color: #495867;
+}
+
+
