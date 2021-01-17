@@ -1,16 +1,8 @@
 import {Modal, Button} from 'react-bootstrap';
 
 export default function ConfirmModal (props) {
-  // if (!props.open) return null
 
   return (
-    // <div style={OVERLAY_STYLES}>
-    //   <button style={POPUP_STYLES} onClick={props.onClose}>
-    //     Would you like to accept?
-    //     <button onClick={props.confirm}>Yes</button>
-    //     <button onClick={props.cancel}>No</button>
-    //   </button>
-    // </div>
     <Modal
       {...props}
       size="lg"

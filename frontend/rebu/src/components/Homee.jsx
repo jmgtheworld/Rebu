@@ -6,23 +6,20 @@ import HomeDriver from "./HomeDriver";
 import Axios from "axios";
 
 const Homee =  () => {
-  const [ driver, setDriver ] = useState(false);
-
+  const [ userType, setUserType ] = useState("");
 
   useEffect(() => {
     Axios.get("http://localhost:3001/users/2")//would be /api/users/:id instead
       .then((res) => {
         console.log(res.data.driver);
-        res.data.driver ? setDriver("true") : setDriver(false);
+        res.data.driver ? setUserType("driver") : setUserType("rider");
       }).catch(err => console.log(err));
   }, []);
 
   return (
     <div>
-      <div>
-      {!driver && <Home />}
-      {driver && <HomeDriver />}
-      </div>
+      {userType === "rider" && <Home />}
+      {userType === "driver" && <HomeDriver />}
     </div>
   )
 };
