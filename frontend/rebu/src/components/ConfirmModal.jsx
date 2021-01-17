@@ -1,35 +1,37 @@
+import {Modal, Button} from 'react-bootstrap';
 
-  const POPUP_STYLES = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transfrom: 'translate(-50%, -50%)',
-    backgroundColor: '#FFF',
-    padding: '50px',
-    zIndex: 1000
-  }
-
-  const OVERLAY_STYLES = {
-    position: 'fixed',
-    top: 0,
-    left:1,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0, .7)',
-    zIndex: 1000
-  }
-
-export default function ConfirmModal ({open, close, onClose}) {
-  if (!open) return null
+export default function ConfirmModal (props) {
+  // if (!props.open) return null
 
   return (
-    <div style={OVERLAY_STYLES}>
-      <button style={POPUP_STYLES} onClick={onClose}>
-        Would you like to accept?
-        <button>Yes</button>
-        <button onClick={close}>No</button>
-      </button>
-    </div>
+    // <div style={OVERLAY_STYLES}>
+    //   <button style={POPUP_STYLES} onClick={props.onClose}>
+    //     Would you like to accept?
+    //     <button onClick={props.confirm}>Yes</button>
+    //     <button onClick={props.cancel}>No</button>
+    //   </button>
+    // </div>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Accept this request?
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <p>From: {props.start_address}</p>
+        <p>To: {props.end_address}</p>
+        <p>Price: {props.price}</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.confirm}>Yes</Button>
+        <Button onClick={props.onHide}>No</Button>
+      </Modal.Footer>
+    </Modal>
 
   )
 }
