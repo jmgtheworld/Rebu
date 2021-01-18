@@ -7,7 +7,7 @@ CREATE TABLE users(
   driver boolean NOT NULL DEFAULT FALSE,
   full_name varchar(255) NOT NULL,
   email varchar(255) NOT NULL,
-  created_at timestamp NOT NULL DEFAULT NOW(),
+  created_at timestamp DEFAULT NOW(),
   phone_number BIGINT NOT NULL,
   credit_card BIGINT,
   month_year varchar(255) NOT NULL,

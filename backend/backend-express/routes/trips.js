@@ -10,8 +10,8 @@ module.exports = ({
     // GET all trips
     router.get('/', (req, res) => {
         getTrips()
-            .then((trips) => res.json(trips))
-            .catch((err) => res.json({
+            .then(trips => res.json(trips))
+            .catch(err => res.json({
                 error: err.message
             }));
     });
@@ -19,8 +19,8 @@ module.exports = ({
     // Get trip by accepted status
     router.get('/not-accepted', (req, res) => {
         getTripsByNotAccepted()
-            .then((trips) => res.json(trips))
-            .catch((err) => res.json({
+            .then(trips => res.json(trips))
+            .catch(err => res.json({
                 error: err.message
             }));
     });
@@ -29,13 +29,11 @@ module.exports = ({
     router.get('/:id', (req, res) => {
       const tripId = req.params.id;
       getTripById(tripId)
-          .then((users) => res.json(users))
-          .catch((err) => res.json({
+          .then(users => res.json(users))
+          .catch(err => res.json({
               error: err.message
           }));
     });
-
-
 
     // POST a new trip
     router.post('/', function(req, res) {
@@ -53,10 +51,19 @@ module.exports = ({
 
       addTrip(user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status)
         .then(trip => res.json("added trip!", trip))
-        .catch((err) => res.json({
+        .catch(err => res.json({
             error: err.message
         }));
     });
+
+    router.put('/:id/accept', (req, res) => {
+        const tripId = req.params.id;
+        getTripById(tripId)
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+      });
 
     router.put("/:id/cancel", (req, res) => {
       db.query(`UPDATE `, [req.params.id])
