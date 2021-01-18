@@ -15,7 +15,7 @@ export default function HomeDriver () {
 
   //function to filter requests by distances
   //function when the request is accepted
-    //post requests to api/trips/:id and changes accepted column to 'true'
+    //put requests to api/trips/:id and changes accepted column to 'true' and input the user's id into the driver_id column
     //and directs the user to the /trip view route where the navigation starts
 
   return (
