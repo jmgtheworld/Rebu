@@ -2,6 +2,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 export default function ConfirmModal (props) {
 
+
   return (
     <Modal
       {...props}
@@ -20,7 +21,7 @@ export default function ConfirmModal (props) {
         <p>Price: ${props.price}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.confirm}>Yes</Button>
+        <Button onClick={() => props.confirm(props.tripId)}>Yes</Button>
         <Button onClick={props.onHide}>No</Button>
       </Modal.Footer>
     </Modal>

@@ -7,11 +7,12 @@ import RequestList from "./RequestList";
 export default function HomeDriver () {
   const [requests, setRequests] = useState([]); 
 
+  const requestsAPI = "http://localhost:3001/trips/not-accepted";
+
   useEffect(() => {
-    const requestsAPI = "http://localhost:3001/trips"
-    Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
+    Axios.get(requestsAPI) 
       .then(res => setRequests(res.data));
-  },[])
+  },[requestsAPI])
 
   //function to filter requests by distances
   //function when the request is accepted
@@ -20,7 +21,7 @@ export default function HomeDriver () {
 
   return (
     <div>
-      <div>Map to show other drivers</div>
+      <h1>Map to show other drivers</h1>
       <div>
         <h2>Requests</h2>
         <RequestList requests={requests} />

@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import Axios from "axios";
 
 import { Card, Col, Row, Button, Badge } from 'react-bootstrap';
 
@@ -8,6 +10,16 @@ export default function RequestCard (props) {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
+  const tripId = props.id;
+  
+
+  function confirm (tripId) {
+    setIsConfirmed(true);
+    console.log("Trip Id: ",tripId)
+    return Axios.put(`http://localhost:3001/trips/${tripId}/accept`)
+      .then(()=> console.log("trip is now accepted!"))
+      .catch(err => console.log("Error from put request: ", err))
+  }
 
   return (
     <Card.Body>
@@ -24,11 +36,12 @@ export default function RequestCard (props) {
               </Button>
               <ConfirmModal
                 show={modalShow}
+                tripId={tripId}
                 onHide={() => setModalShow(false)}
                 start_address={props.start_address}
                 end_address={props.end_address}
                 price={props.price}
-                confirm={() => setIsConfirmed(true)}
+                confirm={confirm}
               />
             </Col>
             }
