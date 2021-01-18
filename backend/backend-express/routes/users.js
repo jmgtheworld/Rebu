@@ -31,7 +31,7 @@ module.exports = ({
             }));
     });
 
-    router.post('/:id/location', (req, res) => {
+    router.put('/:id/location', (req, res) => {
         const userId = req.params.id;
         // fetch the user's current IP
         return fetchIP()
@@ -62,7 +62,7 @@ module.exports = ({
     // Add new user
     router.post('/', (req, res)=> {
         const driver = req.body.license ? true : false;
-        const { full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
+        const { full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
         const current_location_lat = null; 
         const current_location_lon = null;
 
@@ -74,7 +74,7 @@ module.exports = ({
                         msg: 'Sorry, a user account with this email already exists'
                     });
                 } else {
-                    return addUser(driver, full_name, email, created_at, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password)
+                    return addUser(driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password)
                 }
 
             })
