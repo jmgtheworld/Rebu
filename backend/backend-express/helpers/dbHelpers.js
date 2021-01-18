@@ -159,7 +159,7 @@ module.exports = (db) => {
     // Updates a trip to 'cancelled'
     const cancelTrip = (tripId) => {
         const query = {
-            text: `UPDATE trips SET accepted = FALSE WHERE id = $1`,
+            text: `UPDATE trips SET accepted = FALSE, driver_id = null WHERE id = $1`,
             values: [tripId]
         };
 
