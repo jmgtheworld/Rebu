@@ -80,7 +80,6 @@ module.exports = (db) => {
     };
 
     const getUserByEmail = email => {
-
         const query = {
             text: `SELECT * FROM users WHERE email = $1` ,
             values: [email]
@@ -144,7 +143,30 @@ module.exports = (db) => {
             .catch(err => err);
     };
 
-    const acceptTrip = id => {}
+    // Updates a trip to 'accepted'
+    // NEED TO ADD driver_id somehow
+    const acceptTrip = (tripId) => {
+        const query = {
+            text: `UPDATE trips SET accepted = TRUE WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
+    // Updates a trip to 'cancelled'
+    const cancelTrip = (tripId) => {
+        const query = {
+            text: `UPDATE trips SET accepted = FALSE WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
   
     // Gets all messages in DB
     const getMessages = () => {
@@ -201,6 +223,8 @@ module.exports = (db) => {
         updateUserCurrentLocation,
         fetchIP,
         fetchCoordsByIP,
-        getTripsByNotAccepted
+        getTripsByNotAccepted,
+        acceptTrip,
+        cancelTrip
     };
   };
