@@ -4,11 +4,21 @@ const router = express.Router();
 module.exports = ({
     getTrips,
     getTripById,
-    addTrip
+    addTrip,
+    getTripsByNotAccepted
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
         getTrips()
+            .then((trips) => res.json(trips))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
+    // Get trip by accepted status
+    router.get('/not-accepted', (req, res) => {
+        getTripsByNotAccepted()
             .then((trips) => res.json(trips))
             .catch((err) => res.json({
                 error: err.message
@@ -24,6 +34,8 @@ module.exports = ({
               error: err.message
           }));
     });
+
+
 
     // POST a new trip
     router.post('/', function(req, res) {

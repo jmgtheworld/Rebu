@@ -117,6 +117,19 @@ module.exports = (db) => {
             .catch((err) => err);
     };
 
+    // Get not accepted trips
+    const getTripsByNotAccepted = () => {
+        const query = {
+            text: 'SELECT * FROM trips WHERE accepted = FALSE',
+        };
+    
+        return db
+            .query(query)
+            .then((result) => result.rows)
+            .catch((err) => err);
+      };
+
+    // Add new trip to DB
     const addTrip = (user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status) => {
         const query = {
             text: `
@@ -185,6 +198,7 @@ module.exports = (db) => {
         getTripsByUserId,
         updateUserCurrentLocation,
         fetchIP,
-        fetchCoordsByIP
+        fetchCoordsByIP,
+        getTripsByNotAccepted
     };
   };
