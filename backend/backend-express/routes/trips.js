@@ -5,7 +5,9 @@ module.exports = ({
     getTrips,
     getTripById,
     addTrip,
-    getTripsByNotAccepted
+    getTripsByNotAccepted,
+    acceptTrip,
+    cancelTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -56,9 +58,26 @@ module.exports = ({
         }));
     });
 
+    // Updates a trip to 'accepted'
+    // NEED TO ADD driver_id somehow
     router.put('/:id/accept', (req, res) => {
         const tripId = req.params.id;
-        getTripById(tripId)
+        // console.log(tripId);
+        // const driverId = req.params.driver_id;
+        // console.log(driverId)
+
+        acceptTrip(tripId)
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+      });
+
+      // Updates a trip to 'cancelled'
+      router.put('/:id/cancel', (req, res) => {
+        const tripId = req.params.id;
+
+        cancelTrip(tripId)
             .then(trip => res.json(trip))
             .catch(err => res.json({
                 error: err.message
