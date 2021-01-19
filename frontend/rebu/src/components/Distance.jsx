@@ -7,7 +7,7 @@ import { Spinner } from 'react-bootstrap';
 
 export default function Distance(props) {
 
-  const {destination, origin, settravelTD, loadedOnce, setloadedOnce} = props;
+  const {destination, origin, settravelTD, loadedOnce, setloadedOnce, setstartAddress} = props;
 
   const options = {
     destinations: [destination],
@@ -31,6 +31,7 @@ export default function Distance(props) {
     if (!loadedOnce) {
       setloadedOnce(() => {
         settravelTD(time, distance)
+        setstartAddress(response.rows[0].originAddresses)
         return true
       })
     }

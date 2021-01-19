@@ -144,8 +144,8 @@ export default function Map(props) {
   return (
     <div>
       <div className = "searchArea">
-        <Locate panTo={panTo} />
-        <SearchStart panTo={panTo} origin = {origin} setOrigin = {setOrigin} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} />
+        <Locate panTo={panTo} setOrigin = {setOrigin}/>
+        <SearchStart panTo={panTo} startAddress = {startAddress} setOrigin = {setOrigin} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} />
       </div>
       <div className = "destinationArea"> 
         <SearchDestination panTo={panTo} destination = {destination} setDestination = {setDestination} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/> 
@@ -167,7 +167,7 @@ export default function Map(props) {
           />
         ))}
         <MapDirectionsRenderer places = {places} travelMode = "DRIVING" loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
-        {destination && origin && <Distance loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
+        {destination && origin && <Distance setstartAddress = {setstartAddress} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
           settravelTD({
             ...travelTD,
             time,
