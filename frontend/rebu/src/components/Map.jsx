@@ -39,7 +39,7 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("AIzaSyCgMJQZ417QjfxE0y49h3P0UZPGBz-QU5A");
+Geocode.setApiKey("");
 
 
 export default function Map(props) {
@@ -47,25 +47,26 @@ export default function Map(props) {
   const {travelTD, settravelTD}  = props;
 
   const [markers, setMarkers] = React.useState([]);
-
   const [startAddress, setstartAddress] = React.useState("");
+
+  const [loadedOnce, setloadedOnce] = React.useState(false)
 
   // Directions State
   const[response, setResponse] = React.useState(null);
   const[travelMode, setTravelMode] = React.useState("WALKING");
 
-  const[origin, setOrigin] = React.useState({lat:1.291692, lng:103.780267});
-  const[destination, setDestination] = React.useState({lat:1.296788, lng:103.778961});
+  const[origin, setOrigin] = React.useState({lat:43.6453, lng:-79.3806});
+  const[destination, setDestination] = React.useState({lat:43.6706, lng:-79.3865});
 
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
     {latitude: destination.lat, longitude: destination.lng},
   ]
   
-  console.log(places)
+  console.log('places', places)
   console.log('map loaded')
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCgMJQZ417QjfxE0y49h3P0UZPGBz-QU5A",
+    googleMapsApiKey: "",
     libraries,
   });
 
@@ -77,21 +78,6 @@ export default function Map(props) {
       } else {
         console.log('response: ', response)
       }
-    }
-  }
-
-  const getOrigin = ref => {
-    setOrigin(ref);
-  }
-
-  const getDestination = ref => {
-    setDestination(ref);
-  }
-
-  const onClicksetOriginDestination = () => {
-    if (origin.value !== '' && destination.value !== '') {
-      setOrigin(origin.value)
-      setDestination(destination.value)
     }
   }
 
@@ -150,16 +136,19 @@ export default function Map(props) {
     getAddress(lat, lng)
   }, []);
 
+  console.log('origin', origin)
+  console.log('destinations', destination)
+
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
 
   return (
     <div>
       <div className = "searchArea">
         <Locate panTo={panTo} />
-        <SearchStart panTo={panTo} startAddress = {startAddress} />
+        <SearchStart panTo={panTo} origin = {origin} setOrigin = {setOrigin} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} />
       </div>
       <div className = "destinationArea"> 
-        <SearchDestination panTo={panTo} /> 
+        <SearchDestination panTo={panTo} destination = {destination} setDestination = {setDestination} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/> 
       </div>
 
       <GoogleMap
@@ -177,8 +166,8 @@ export default function Map(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        <MapDirectionsRenderer places = {places} travelMode = "DRIVING"/>
-        {destination && origin && <Distance destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
+        <MapDirectionsRenderer places = {places} travelMode = "DRIVING" loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        {destination && origin && <Distance loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
           settravelTD({
             ...travelTD,
             time,

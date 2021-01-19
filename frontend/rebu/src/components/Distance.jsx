@@ -7,19 +7,17 @@ import { Spinner } from 'react-bootstrap';
 
 export default function Distance(props) {
 
-  const {destination, origin, settravelTD} = props;
+  const {destination, origin, settravelTD, loadedOnce, setloadedOnce} = props;
 
   const options = {
     destinations: [destination],
     origins: [origin],
-    travelMode: "DRIVING",
+    travelMode: "DRIVING", 
   }
 
   let time = ""
   let distance = ""
 
-  const [loadedOnce, setloadedOnce] = useState(false)
- 
   useEffect(()=> {
     console.log('works')
   }, [props.destination, props.origin])
