@@ -14,9 +14,20 @@ export default function Login() {
 
   function login () {
     const user = { email, password }
+    console.log(email);
+    console.log(password);
     
-    return Axios.get("/api/users/login", user)
-     .then(() => console.log("logged in!"));
+    // return Axios.post("https://localhost:3001/users/login", user)
+    //   .then(() => console.log("logged in!"));
+    // return Axios({
+    //   method: 'post',
+    //   url: 'https://localhost:3001/users/login',
+    //   body: user
+    // })
+    //   .then(res => console.log(res));
+    return Axios.post("http://localhost:3001/users/login", user)
+      .then(() => console.log("logged in"))
+      .catch(err => console.log(err));
      
   };
 
@@ -34,7 +45,7 @@ export default function Login() {
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" onChange={handleEmailChange} value={email}placeholder="Enter email"/>
+          <Form.Control type="email" onChange={handleEmailChange} value={email} placeholder="Enter email"/>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text>
