@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieSession({
   name: 'session',
-  keys: ['key1']
+  keys: ['key1', 'key2']
 }));
 
 app.use('/users', usersRouter(dbHelpersUsers));

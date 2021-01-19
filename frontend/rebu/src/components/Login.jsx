@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import Homee from './Homee';
 
-export default function Login() {
+export default function Login(props) {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
 
   //login page
-  // get request to  /api/users/login
+  // get request to  /users/login
     //which has a query that can find a user exists with the same email AND same password(unhashed)
     //if undefined, error message tells the user to register
     //if password is wrong, error messsage tells the user the password is wrong
 
-  function login () {
+  function login (e) {
+    e.preventDefault();
     const user = { email, password }
-    console.log(email);
-    console.log(password);
-    
-    // return Axios.post("https://localhost:3001/users/login", user)
-    //   .then(() => console.log("logged in!"));
-    // return Axios({
-    //   method: 'post',
-    //   url: 'https://localhost:3001/users/login',
-    //   body: user
-    // })
-    //   .then(res => console.log(res));
+
     return Axios.post("http://localhost:3001/users/login", user)
-      .then(() => console.log("logged in"))
+      .then(res => {
+        console.log(res.data)
+        // res.data.user_id ? <Homee user_id={res.data.user_id} /> : <Login />
+        if (res.data.user_id) {
+
+        }
+      })
+      // .then(res => console.log("logged in, user id:", res.data.user_id))
       .catch(err => console.log(err));
-     
   };
 
   function handleEmailChange (e) {
@@ -42,6 +40,7 @@ export default function Login() {
   return (
     <div>
       <h1> Login Page </h1>
+      <h1>Status: {props.loggedIn}</h1>
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -54,10 +53,7 @@ export default function Login() {
           <Form.Label>Password</Form.Label>
           <Form.Control onChange={handlePwChange} value={password} type="password" placeholder="Password" />
         </Form.Group>
-        {/* <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group> */}
-        <Button variant="primary" type="submit" onSubmit={login}>
+        <Button variant="primary" type="submit" onClick={login}>
           Submit
         </Button>
       </Form>

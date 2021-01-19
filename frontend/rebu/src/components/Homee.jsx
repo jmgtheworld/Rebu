@@ -5,11 +5,12 @@ import HomeDriver from "./HomeDriver";
 
 import Axios from "axios";
 
-const Homee =  () => {
+const Homee = (props) => {
   const [ userType, setUserType ] = useState("");
+  // const user_id = props.user_id;
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/users/1")//would be /api/users/:id instead
+    Axios.get(`http://localhost:3001/users/2`)//would be /api/users/:id instead
       .then((res) => {
         console.log(res.data.driver);
         res.data.driver ? setUserType("driver") : setUserType("rider");
@@ -18,6 +19,7 @@ const Homee =  () => {
 
   return (
     <div>
+      <h1>Logged In: {props.loggedIn}</h1>
       {userType === "rider" && <Home />}
       {userType === "driver" && <HomeDriver />}
     </div>

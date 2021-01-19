@@ -42,9 +42,9 @@ CREATE TABLE trips(
   start_location_lon REAL NOT NULL,
   end_location_lat REAL NOT NULL,
   end_location_lon REAL NOT NULL,
-  accepted boolean NOT NULL DEFAULT FALSE,
-  payment_amount int NOT NULL,
+  accepted boolean DEFAULT FALSE,
+  payment_amount INTEGER DEFAULT 0,
   payment_status boolean NOT NULL DEFAULT FALSE,
   created_at timestamp DEFAULT NOW(),
-  ended_at timestamp
+  ended_at timestamp DEFAULT NULL
 );

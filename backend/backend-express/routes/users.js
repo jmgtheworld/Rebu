@@ -1,6 +1,7 @@
 const { response } = require('express');
 const express = require('express');
 const router = express.Router();
+const cookieSession = require('cookie-session');
 
 module.exports = ({
     getUsers,
@@ -14,6 +15,7 @@ module.exports = ({
 }) => {
     // Get all users
     router.get('/', (req, res) => {
+        console.log(req.session.user_id);
         getUsers()
             .then((users) => res.json(users))
             .catch((err) => res.json({
@@ -31,8 +33,11 @@ module.exports = ({
             }));
     });
 
+    // Login user
+    // Sets session id to user id if successful
     router.post('/login', (req, res) => {
         const { email, password } = req.body;
+        req.session.user_id = null;
 
         getUserByEmail(email)
             .then(user => {
@@ -40,7 +45,12 @@ module.exports = ({
                     if (user.email === email) {
                         if (user.password === password) {
                             // send cookies here?
-                            return res.json("Logged in (backend)");
+                            // req.cookies
+                            req.session.user_id = user.id;
+                            console.log("session id:", req.session.user_id );
+                            // return res.json({"user_id": req.session.user_id});
+                            console.log(user);
+                            return res.json(user);
                         } else {
                             return res.json("Incorrect password");
                         }
@@ -56,8 +66,16 @@ module.exports = ({
             }));
     });
 
+    // Logout
+    // Set session id to null
+    router.post('/logout', (req, res) => {
+        req.session.user_id = null;
+        return res.json(req.session.user_id);
+    });
+
     router.put('/:id/location', (req, res) => {
-        const userId = req.params.id;
+        // changed from req.params.id
+        const userId = req.session.user_id;
         // fetch the user's current IP
         return fetchIP()
             .then(body => {
@@ -94,8 +112,6 @@ module.exports = ({
 
         getUserByEmail(email)
             .then(user => {
-                // console.log(user);
-
                 if (user) {
                     res.json({
                         msg: 'Sorry, a user account with this email already exists'
@@ -105,7 +121,13 @@ module.exports = ({
                 }
 
             })
-            .then(newUser => res.json(newUser))
+            .then(newUser => {
+                // Set the session id to the new user's id
+                // console.log(newUser);
+                // req.session.user_id = newUser.id;
+                // return res.json({"user_id": req.session.newUser_id});
+                res.json(newUser)
+            })
             .catch(err => res.json({
                 error: err.message
             }));
