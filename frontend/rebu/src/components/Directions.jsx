@@ -8,10 +8,8 @@ export default function MapDirectionsRenderer(props) {
   const [directions, setDirections] = useState(null);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const { places, travelMode, setloadedOnce } = props;
-    console.log(places, travelMode)
 
     const waypoints = places.map(p => ({
       location: { lat: p.latitude, lng: p.longitude },
@@ -39,12 +37,12 @@ export default function MapDirectionsRenderer(props) {
         }
       }
     );   
-  })
+  }, )
   
   if (error) {
     console.log({error})
   }
-  console.log('directions within direction rednerer', directions)
+
   return (
     directions && (
       <DirectionsRenderer directions={directions} />
