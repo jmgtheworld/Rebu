@@ -13,7 +13,7 @@ import {
 
 
 export default function SearchDestination(props) {
-  const {panTo, setDestination} = props;
+  const {panTo, setDestination, finishAddress} = props;
   const {
     ready,
     value,
@@ -55,7 +55,7 @@ export default function SearchDestination(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value={value}
+          value = {finishAddress}
           onChange={handleInput}
           disabled={!ready}
           placeholder= "Where to?"

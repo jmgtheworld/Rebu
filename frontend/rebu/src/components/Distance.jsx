@@ -7,12 +7,12 @@ import { Spinner } from 'react-bootstrap';
 
 export default function Distance(props) {
 
-  const {destination, origin, settravelTD, loadedOnce, setloadedOnce, setstartAddress} = props;
+  const {destination, origin, settravelTD, loadedOnce, setloadedOnce, setstartAddress, setfinishAddress, travelMode} = props;
 
   const options = {
     destinations: [destination],
     origins: [origin],
-    travelMode: "DRIVING", 
+    travelMode: travelMode, 
   }
 
   let time = ""
@@ -23,7 +23,7 @@ export default function Distance(props) {
   }, [props.destination, props.origin])
 
   const callback = (response) => {
-    console.log(response)
+    console.log('response from distance', response)
     time = response.rows[0].elements[0].duration.text
     console.log(time)
     distance = response.rows[0].elements[0].distance.text
@@ -31,7 +31,8 @@ export default function Distance(props) {
     if (!loadedOnce) {
       setloadedOnce(() => {
         settravelTD(time, distance)
-        setstartAddress(response.rows[0].originAddresses)
+        setstartAddress(response.originAddresses[0])
+        setfinishAddress(response.destinationAddresses[0])
         return true
       })
     }
