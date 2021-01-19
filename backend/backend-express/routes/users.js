@@ -31,6 +31,31 @@ module.exports = ({
             }));
     });
 
+    router.post('/login', (req, res) => {
+        const { email, password } = req.body;
+
+        getUserByEmail(email)
+            .then(user => {
+                if (user) {
+                    if (user.email === email) {
+                        if (user.password === password) {
+                            // send cookies here?
+                            return res.json("Logged in (backend)");
+                        } else {
+                            return res.json("Incorrect password");
+                        }
+                    } else {
+                        return res.json("Incorrect email or password");
+                    }
+                } else {
+                    return res.json("Email does not exist");
+                }
+            })
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
     router.put('/:id/location', (req, res) => {
         const userId = req.params.id;
         // fetch the user's current IP
@@ -50,6 +75,7 @@ module.exports = ({
             }));
     });
 
+    // Gets all of a user's trips
     router.get('/:id/trips', (req, res) => {
         const userId = req.params.id;
         getTripsByUserId(userId)
@@ -68,6 +94,7 @@ module.exports = ({
 
         getUserByEmail(email)
             .then(user => {
+                // console.log(user);
 
                 if (user) {
                     res.json({
