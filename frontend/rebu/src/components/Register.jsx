@@ -6,7 +6,7 @@ import RiderRegisterForm from "./RiderRegisterForm"
 import DriverRegisterForm from "./DriverRegisterForm"
 
 
-export default function Register() {
+export default function Register(props) {
   const [ newUser, setNewUser ] = useState({
     full_name: "",
     email: "",
@@ -110,6 +110,7 @@ export default function Register() {
 
   return (
     <div>
+      <h1>Logged In: {props.loggedIn}</h1>
       <h1> Register</h1>
       <Form.Row>
         <Form.Label as="legend" column sm={2}>

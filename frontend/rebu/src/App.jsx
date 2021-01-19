@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,25 +15,30 @@ import Navbar from "./components/Navbar"
 import History from "./components/History/History"
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState("");
+  const [user, setUser] = useState({});
+  console.log("logged in:", loggedIn);
+  console.log("user:", user);
+
   return (
     <Router >
       <div className = "App">
         <Navbar />
         <Switch>
           <Route path = "/settings">
-            <Settings />
+            <Settings loggedIn={loggedIn} />
           </Route>
           <Route path = "/login">
-            <Login />
+            <Login loggedIn={loggedIn} />
           </Route>
           <Route path = "/register">
-            <Register />
+            <Register loggedIn={loggedIn} />
           </Route>
           <Route path = "/history">
-            <History />
+            <History loggedIn={loggedIn} />
           </Route>
           <Route path = "/">
-            <Homee />
+            <Homee loggedIn={loggedIn}/>
           </Route>
         </Switch>
       </div>
