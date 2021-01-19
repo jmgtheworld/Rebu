@@ -24,7 +24,6 @@ module.exports = (db) => {
             .catch((err) => err);
     };
 
-  
     // Sample code, can be modified later
     // const getUsersPosts = () => {
     //     const query = {

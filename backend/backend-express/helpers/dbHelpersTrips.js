@@ -1,5 +1,3 @@
-const request = require('request-promise-native');
-
 module.exports = (db) => {
     // Gets all trips in DB
     const getTrips = () => {

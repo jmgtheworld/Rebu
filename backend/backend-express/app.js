@@ -11,8 +11,6 @@ const messagesRouter = require('./routes/messages');
 
 const app = express();
 const db = require("./db");
-// const dbHelpersUsers = require('./helpers/dbHelpersUsers');
-
 
 const dbHelpersUsers = require('./helpers/dbHelpersUsers.js')(db);
 const dbHelpersTrips = require('./helpers/dbHelpersTrips.js')(db);
@@ -32,5 +30,6 @@ app.use(cookieSession({
 app.use('/users', usersRouter(dbHelpersUsers));
 app.use('/trips', tripsRouter(dbHelpersTrips));
 app.use('/messages', messagesRouter(dbHelpersMessages));
+app.use('/login', usersRouter(dbHelpersUsers));
 
 module.exports = app;
