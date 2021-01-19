@@ -37,17 +37,21 @@
 }
 
 .comboboxList{
-  list-style: none;
+  list-style:none;
+  color: #495867;
 }
 
 .comboboxOption{
   background-color: #495867;
   color: white;
+  width: 100%;
+  padding: 13px;
 }
 
 .comboboxOption:hover{
-  background-color: white;
-  color: #495867;
+  color: black;
 }
+
+
 
 

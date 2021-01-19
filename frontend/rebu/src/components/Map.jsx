@@ -7,59 +7,94 @@ import {
   useLoadScript,
   DistanceMatrixService,
   Marker,
+  DirectionsRenderer,
+  DirectionsService
 } from "@react-google-maps/api";
 
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
 
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+import MapDirectionsRenderer from './Directions';
+import Distance from './Distance'
+import Locate from './Locate';
+import SearchStart from './SearchStart';
+import SearchDestination from './SearchDestination';
+
 
 import "../styles/map.css";
 import mapStyles from "../styles/mapStyles"
 
-
 const libraries = ["places"];
-
 const mapContainerStyle = {
   height: "60vh",
   width: "50vw",
 };
-
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };
-
 const center = {
   lat: 43.6532,
   lng: -79.3832,
 };
+//temporary data for directions
 
-Geocode.setApiKey("");
 
-export default function Map() {
+Geocode.setApiKey("AIzaSyCgMJQZ417QjfxE0y49h3P0UZPGBz-QU5A");
+
+
+export default function Map(props) {
+
+  const {travelTD, settravelTD}  = props;
+
+  const [markers, setMarkers] = React.useState([]);
+
+  const [startAddress, setstartAddress] = React.useState("");
+
+  // Directions State
+  const[response, setResponse] = React.useState(null);
+  const[travelMode, setTravelMode] = React.useState("WALKING");
+
+  const[origin, setOrigin] = React.useState({lat:1.291692, lng:103.780267});
+  const[destination, setDestination] = React.useState({lat:1.296788, lng:103.778961});
+
+  const places = [
+    {latitude: origin.lat, longitude: origin.lng},
+    {latitude: destination.lat, longitude: destination.lng},
+  ]
+  
+  console.log(places)
+  console.log('map loaded')
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyCgMJQZ417QjfxE0y49h3P0UZPGBz-QU5A",
     libraries,
   });
-  const [markers, setMarkers] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-  const [selected, setSelected] = React.useState(null);
-  const [startAddress, setstartAddress] = React.useState("");
-  const [travelTD, settravelTD] = React.useState({
-    time: "1",
-    distance: "2",
-  })
- 
+
+  const directionsCallback = response => {
+    console.log(response)
+    if (response !== null) {
+      if (response.status === 'OK') {
+        setResponse(response)
+      } else {
+        console.log('response: ', response)
+      }
+    }
+  }
+
+  const getOrigin = ref => {
+    setOrigin(ref);
+  }
+
+  const getDestination = ref => {
+    setDestination(ref);
+  }
+
+  const onClicksetOriginDestination = () => {
+    if (origin.value !== '' && destination.value !== '') {
+      setOrigin(origin.value)
+      setDestination(destination.value)
+    }
+  }
+
   const onMapClick = React.useCallback((e) => {
     setMarkers(() => [
       {
@@ -95,11 +130,14 @@ export default function Map() {
   }
 
   const mapRef = React.useRef();
+
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    console.log("Inside onmapload")
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
+    console.log('inside panTo')
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
     setMarkers(() => [
@@ -112,7 +150,6 @@ export default function Map() {
     getAddress(lat, lng)
   }, []);
 
-  if (loadError) return "Error";
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
 
   return (
@@ -138,168 +175,17 @@ export default function Map() {
           <Marker
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
           />
         ))}
-        <DistanceMatrixService
-          options={{
-            destinations: [{lat:1.296788, lng:103.778961}],
-            origins: [{lng:103.780267, lat:1.291692}],
-            travelMode: "DRIVING",
-          }}
-          callback = {(response) => {
-            console.log(response)
-            console.log(travelTD)
-            // settravelTD( {...travelTD,
-            //   time: response.rows[0].elements[0].duration['text'],
-            //   distance: response.rows[0].elements[0].distance['text']
-            // })
-            console.log(travelTD)
-          }}
-        />
+        <MapDirectionsRenderer places = {places} travelMode = "DRIVING"/>
+        {destination && origin && <Distance destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
+          settravelTD({
+            ...travelTD,
+            time,
+            distance
+          })
+        }}/> }
       </GoogleMap>
-      {loading && <Spinner animation="border" variant="secondary" className = "loading"/>}
-    </div>
-  );
-}
-
-function Locate({ panTo }) {
-  return (
-    <Fragment>
-        <button
-          className="locate"
-          onClick={() => {
-      
-            navigator.geolocation.getCurrentPosition(
-              (position) => {
-                console.log(position)
-                panTo({
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude,
-                });
-              },
-              () => null
-            );
-          }}
-        >
-          <img src="../../images/compass.svg" alt="compass" className = "compass"/>
-        </button>
-
-    </Fragment>
-  );
-}
-
-function SearchStart({ panTo }, {startAddress} ) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 43.6532, lng: () => -79.3832 },
-      radius: 100 * 1000,
-    },
-  });
-
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
-
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-  };
-
-  return (
-    <div className="search">
-      <Combobox onSelect={handleSelect}>
-        <ComboboxInput
-          value= {startAddress} 
-          onChange={handleInput}
-          disabled={!ready}
-          placeholder= "Search your location"
-          className = "searchBar" 
-        />
-        <ComboboxPopover className = "comboboxPop">
-          <ComboboxList className = "comboboxList">
-            {status === "OK" &&
-              data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} className = "comboboxOption"/>
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
-  );
-}
-
-
-function SearchDestination({ panTo }) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 43.6532, lng: () => -79.3832 },
-      radius: 100 * 1000,
-    },
-  });
-
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
-
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-  };
-
-  return (
-    <div className="search">
-      <Combobox onSelect={handleSelect}>
-        <ComboboxInput
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-          placeholder= "Where to?"
-          className = "searchBar" 
-        />
-        <ComboboxPopover className = "comboboxPop">
-          <ComboboxList className = "comboboxList">
-            {status === "OK" &&
-              data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} className = "comboboxOption"/>
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
     </div>
   );
 }

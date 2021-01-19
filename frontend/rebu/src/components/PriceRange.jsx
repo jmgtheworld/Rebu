@@ -1,9 +1,6 @@
-const priceRange = [];
-const distance = 12;
-
-const priceRangeGenerator = distance => {
+const priceRangeGenerator = distanceInNumber => {
   const priceRange = [];
-  const medianPrice = (distance * 2.0);
+  const medianPrice = (distanceInNumber * 3.0);
   const startingPrice = medianPrice - 2.0;
   const highestPrice = medianPrice + 3.0;
 
@@ -16,6 +13,4 @@ const priceRangeGenerator = distance => {
   return priceRange
 }
 
-const PriceRange = priceRangeGenerator(distance)
- 
-export default PriceRange
+export default {priceRangeGenerator}
