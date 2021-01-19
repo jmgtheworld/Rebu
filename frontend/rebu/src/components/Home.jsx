@@ -6,8 +6,8 @@ import Button from './Button';
 export default function Home(props) {
 
   const [travelTD, settravelTD] = useState({
-    time: "1",
-    distance: "2",
+    time: "0",
+    distance: "0",
   })
 
   return (

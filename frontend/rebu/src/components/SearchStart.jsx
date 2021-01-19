@@ -15,7 +15,7 @@ import "@reach/combobox/styles.css";
 
 export default function SearchStart(props) {
 
-  const {panTo, setOrigin} = props;
+  const {panTo, setOrigin, startAddress} = props;
   const {
     ready,
     value,
@@ -32,6 +32,10 @@ export default function SearchStart(props) {
   const handleInput = (e) => {
     setValue(e.target.value);
   };
+
+  const handleCompass = () => {
+    setValue()
+  }
 
   const handleSelect = async (address) => {
     setValue(address, false);
@@ -54,7 +58,7 @@ export default function SearchStart(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value= {value}
+          value= {startAddress}
           onChange={handleInput}
           placeholder= "Search your location"
           className = "searchBar" 
