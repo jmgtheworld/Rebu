@@ -36,6 +36,9 @@ export default function UserSummary(props) {
   const [loadedOnce, setloadedOnce] = useState(false);
   const [loadCancel, setloadCancel] = useState(false);
 
+  const [toggle, setToggle] = useState(false);
+ 
+
   const distanceInNumber = Math.round(parseFloat(travelTD.distance.replace("km", "")))
   const priceRange = [];
 
@@ -86,17 +89,18 @@ export default function UserSummary(props) {
   }
 
   useEffect(() => {
-    if (loadedOnce) {
+    if (loadedOnce && toggle) {
       setWaiting(true)
       console.log('newtrip', newTrip)
       return Axios.post("http://localhost:3001/trips", newTrip)
-      .then(() => console.log("new trip request created"))
-      .catch(err => console.log(err));
+        .then(() => console.log("new trip request created"))
+        .catch(err => console.log(err));
     }
-  }, [loadedOnce])
+  }, [loadedOnce, toggle])
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
+    setToggle(true)
     setNewTrip({
       customer_id: 1,
       driver_id: null,
@@ -115,17 +119,21 @@ export default function UserSummary(props) {
   }, [price])
 
   useEffect(() => {
-    if (loadCancel) {
-      setWaiting(true)
-      console.log('trip id to be deleted', 37)
-      return Axios.put(`http://localhost:3001/trips/37/cancel`)
-      .then(() => console.log("previous trip cancelled"))
+    if (loadCancel && (!toggle)) {
+      setWaiting(false)
+      console.log('trip id to be deleted', 8)
+      return Axios.delete(`http://localhost:3001/trips/8/delete`)
+      .then(() => {
+        console.log("previous trip cancelled/delete")
+        setloadedOnce(true)
+      })
       .catch(err => console.log(err));
     }
-  }, [loadCancel])
+  }, [loadCancel, toggle])
 
   const cancelTrip = useCallback(() => {
     setloadCancel(true)
+    setToggle(false)
   }, [])
 
   return (
