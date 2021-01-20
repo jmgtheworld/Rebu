@@ -88,6 +88,7 @@ export default function UserSummary(props) {
 
   useEffect(() => {
     if (loadedOnce) {
+      setWaiting(true)
       console.log('newtrip', newTrip)
       return Axios.post("http://localhost:3001/trips", newTrip)
       .then(() => console.log("new trip request created"))
@@ -112,7 +113,6 @@ export default function UserSummary(props) {
       created_at: Date.now(),
       ended_at: null
     })
-    setWaiting(true)
   }, [price])
 
   return (
