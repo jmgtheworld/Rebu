@@ -34,6 +34,7 @@ export default function UserSummary(props) {
   })
 
   const [loadedOnce, setloadedOnce] = useState(false);
+  const [loadCancel, setloadCancel] = useState(false);
 
   const distanceInNumber = Math.round(parseFloat(travelTD.distance.replace("km", "")))
   const priceRange = [];
@@ -69,22 +70,20 @@ export default function UserSummary(props) {
 
   const listofPrice = PriceRange.map( (item, index) => {
     return <li key = {index} 
-               className = "priceItem" 
-               onClick ={
-                 () => {
-                   setPrice(item.price)
-                   showPrice()        
-                  }
-                 }>
-               ${item.price} 
+              className = "priceItem" 
+              onClick ={
+                () => {
+                  setPrice(item.price)
+                  showPrice()        
+                }
+              }>
+              ${item.price} 
             </li>
   })
 
   const showPrice = () => {
     setpriceMenu(!priceMenu);
   }
-
-  const isFirstRun = useRef(true);
 
   useEffect(() => {
     if (loadedOnce) {
@@ -115,6 +114,20 @@ export default function UserSummary(props) {
     })
   }, [price])
 
+  useEffect(() => {
+    if (loadCancel) {
+      setWaiting(true)
+      console.log('trip id to be deleted', 37)
+      return Axios.put(`http://localhost:3001/trips/37/cancel`)
+      .then(() => console.log("previous trip cancelled"))
+      .catch(err => console.log(err));
+    }
+  }, [loadCancel])
+
+  const cancelTrip = useCallback(() => {
+    setloadCancel(true)
+  }, [])
+
   return (
     <Fragment>
       <article className = "userSummary">
@@ -131,7 +144,7 @@ export default function UserSummary(props) {
       <div className = "statusContainer">
         {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
-        {waiting ? <Button type = "Cancel Request" onClick = {requestTrip}/> : <div></div> }
+        {waiting ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
       </div>
     </Fragment>
     

@@ -75,6 +75,17 @@ module.exports = (db) => {
             .then(result => result.rows[0])
             .catch(err => err);
     };
+
+    const deleteTrip = (tripId) => {
+        const query = {
+            text: `DELETE FROM trips WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    }
   
     return {
         getTrips,
@@ -82,6 +93,7 @@ module.exports = (db) => {
         addTrip,
         getTripsByNotAccepted,
         acceptTrip,
-        cancelTrip
+        cancelTrip, 
+        deleteTrip
     };
   };
