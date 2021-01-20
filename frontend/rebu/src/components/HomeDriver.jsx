@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 import RequestList from "./RequestList";
-import Chat from "./Chat";
+import Chat from "./Chat/Chat";
 import "./Chat.scss"
 
 
