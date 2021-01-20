@@ -1,0 +1,50 @@
+#chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chat-container {
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 800px;
+  width: 40vw;
+  background: #FFF;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .message-container {
+    width: 100%;
+
+    
+
+    .message {
+      text-align: left;
+      margin: 0.5em;
+    }
+
+    .send-message-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: rgba(0,0,0,.03);
+      border-top: 1px solid rgba(0,0,0,.125);
+      width: 100%;
+      min-height: 50px;
+      max-height: 100px;
+
+      .new-message-container {
+
+        textarea {
+          border-radius: 1em;
+        }
+      }
+
+      .btn.btn-primary {
+        height: 40px;
+      }
+    }
+  }
+
+}

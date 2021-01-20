@@ -9,7 +9,7 @@ const Homee =  () => {
   const [ userType, setUserType ] = useState("");
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/users/1")//would be /api/users/:id instead
+    Axios.get("http://localhost:3001/users/2")//would be /api/users/:id instead
       .then((res) => {
         console.log(res.data.driver);
         res.data.driver ? setUserType("driver") : setUserType("rider");
