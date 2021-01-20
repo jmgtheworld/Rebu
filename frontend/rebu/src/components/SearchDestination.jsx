@@ -55,10 +55,10 @@ export default function SearchDestination(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value = {finishAddress}
+          value = {value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder= "Where to?"
+          placeholder= {finishAddress ? finishAddress : "Where to?"}
           className = "searchBar" 
         />
         <ComboboxPopover className = "comboboxPop">

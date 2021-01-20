@@ -58,9 +58,9 @@ export default function SearchStart(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value= {startAddress}
+          value= {value}
           onChange={handleInput}
-          placeholder= "Search your location"
+          placeholder= {startAddress ? startAddress : "Search your location"}
           className = "searchBar" 
         />
         <ComboboxPopover className = "comboboxPop">

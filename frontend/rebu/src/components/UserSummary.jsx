@@ -1,5 +1,5 @@
 
-import {Fragment, useState, useEffect} from "react";
+import {Fragment, useState, useEffect, useCallback, useRef} from "react";
 import Axios from 'axios';
 
 import * as FaIcons from 'react-icons/fa';
@@ -7,23 +7,18 @@ import './Pricebar.scss';
 import "./UserSummary.scss";
 
 import Button from './Button';
+import { Spinner } from 'react-bootstrap';
 
 export default function UserSummary(props) {
 
   const {travelTD, origin, destination, startAddress, finishAddress} = props;
 
   const [priceMenu, setpriceMenu] = useState(false);
-  const [price, setPrice] = useState("");
-
-  useEffect(() => {
-    Axios.get(`http://localhost:3001/users/:id`)//would be /api/users/:id instead
-      .then((res) => {
-        console.log(res.data.id);
-      }).catch(err => console.log(err));
-  }, []);
+  const [price, setPrice] = useState(20);
+  const [waiting, setWaiting]  = useState(false);
 
   const [ newTrip, setNewTrip ] = useState({
-    customer_id: null,
+    customer_id: 1,
     driver_id: null,
     start_address: startAddress,
     end_address: finishAddress,
@@ -37,7 +32,8 @@ export default function UserSummary(props) {
     created_at: Date.now(),
     ended_at: null
   })
- 
+
+  const [loadedOnce, setloadedOnce] = useState(false);
 
   const distanceInNumber = Math.round(parseFloat(travelTD.distance.replace("km", "")))
   const priceRange = [];
@@ -88,13 +84,36 @@ export default function UserSummary(props) {
     setpriceMenu(!priceMenu);
   }
 
-  function requestTrip () {
-    setNewTrip({...newTrip})
+  const isFirstRun = useRef(true);
 
-    return Axios.post("http://localhost:3001/trips", newTrip)
-    .then(() => console.log("new trip request created"))
-    .catch(err => console.log(err));
-  }
+  useEffect(() => {
+    if (loadedOnce) {
+      console.log('newtrip', newTrip)
+      return Axios.post("http://localhost:3001/trips", newTrip)
+      .then(() => console.log("new trip request created"))
+      .catch(err => console.log(err));
+    }
+  }, [loadedOnce])
+
+  const requestTrip = useCallback(() => {
+    setloadedOnce(true)
+    setNewTrip({
+      customer_id: 1,
+      driver_id: null,
+      start_address: startAddress,
+      end_address: finishAddress,
+      start_location_lat: origin.lat,
+      start_location_lon: origin.lng,
+      end_location_lat: destination.lat,
+      end_location_lon: destination.lng,
+      accepted: false,
+      payment_amount: price,
+      payment_status: false,
+      created_at: Date.now(),
+      ended_at: null
+    })
+    setWaiting(true)
+  }, [price])
 
   return (
     <Fragment>
@@ -109,7 +128,11 @@ export default function UserSummary(props) {
           ${price}
         </div>
       </article>
-      <Button type = "Search for Driver"/>
+      <div className = "statusContainer">
+        {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
+        <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
+        {waiting ? <Button type = "Cancel Request" onClick = {requestTrip}/> : <div></div> }
+      </div>
     </Fragment>
     
   )
