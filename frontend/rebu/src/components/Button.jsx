@@ -9,11 +9,11 @@ export default function Button(props) {
   } 
 
   if (type === "Waiting for Driver") {
-    buttonType = "btn btn-dark button waiting"
+    buttonType = "btn btn-dark button"
   } 
 
   if (type === "Cancel Request") {
-    buttonType = "btn btn-danger waiting"
+    buttonType = "btn btn-danger button"
   } 
 
   return (
