@@ -41,7 +41,6 @@ const center = {
 
 Geocode.setApiKey("");
 
-
 export default function Map(props) {
 
   const {travelTD, settravelTD, origin, setOrigin, destination, setDestination, startAddress, setstartAddress, finishAddress, setfinishAddress}  = props;
