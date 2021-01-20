@@ -18,14 +18,14 @@ export default function Login(props) {
     const user = { email, password }
 
     return Axios.post("http://localhost:3001/users/login", user)
-      .then(res => {
-        console.log(res.data)
-        // res.data.user_id ? <Homee user_id={res.data.user_id} /> : <Login />
-        if (res.data.user_id) {
+      // .then(res => {
+      //   console.log(res.data)
+      //   // res.data.user_id ? <Homee user_id={res.data.user_id} /> : <Login />
+      //   if (res.data.user_id) {
 
-        }
-      })
-      // .then(res => console.log("logged in, user id:", res.data.user_id))
+      //   }
+      // })
+      .then(res => console.log("logged in, user id:", res.data.user_id))
       .catch(err => console.log(err));
   };
 
@@ -40,7 +40,7 @@ export default function Login(props) {
   return (
     <div>
       <h1> Login Page </h1>
-      <h1>Status: {props.loggedIn}</h1>
+      {/* <h1>Status: {props.loggedIn}</h1> */}
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>

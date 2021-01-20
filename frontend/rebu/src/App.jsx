@@ -15,10 +15,10 @@ import Navbar from "./components/Navbar"
 import History from "./components/History/History"
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState("");
-  const [user, setUser] = useState({});
-  console.log("logged in:", loggedIn);
-  console.log("user:", user);
+  // const [loggedIn, setLoggedIn] = useState("");
+  // const [user, setUser] = useState({});
+  // console.log("logged in:", loggedIn);
+  // console.log("user:", user);
 
   return (
     <Router >
@@ -26,19 +26,19 @@ function App() {
         <Navbar />
         <Switch>
           <Route path = "/settings">
-            <Settings loggedIn={loggedIn} />
+            <Settings />
           </Route>
           <Route path = "/login">
-            <Login loggedIn={loggedIn} />
+            <Login />
           </Route>
           <Route path = "/register">
-            <Register loggedIn={loggedIn} />
+            <Register />
           </Route>
           <Route path = "/history">
-            <History loggedIn={loggedIn} />
+            <History />
           </Route>
           <Route path = "/">
-            <Homee loggedIn={loggedIn}/>
+            <Homee />
           </Route>
         </Switch>
       </div>
