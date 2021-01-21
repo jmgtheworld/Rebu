@@ -16,13 +16,23 @@ export default function HomeDriverwithMap () {
     distance: "0",
   })
 
-  // Coords
-  const[origin, setOrigin] = useState({lat:43.6453, lng:-79.3806});
-  const[destination, setDestination] = useState({lat:43.6706, lng:-79.3865});
-
   const [startAddress, setstartAddress] = useState("");
   const [finishAddress, setfinishAddress] = useState("");
   
+  // Coords
+  const[origin, setOrigin] = useState(
+    {
+      lat: null, 
+      lng: null 
+    }
+  );
+  
+  const[destination, setDestination] = useState(
+    {
+      lat:null, 
+      lng:null
+    }
+  );
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/trips"
@@ -48,6 +58,7 @@ export default function HomeDriverwithMap () {
         <h2>Requests</h2>
         <div className = "map">
           <MapDriver 
+            driverlocation = {driverlocation[1]}
             travelTD = {travelTD} settravelTD = {settravelTD}
             origin = {origin} setOrigin = {setOrigin} 
             destination = {destination} setDestination = {setDestination}
@@ -57,9 +68,12 @@ export default function HomeDriverwithMap () {
         </div>
         <DriverSummary travelTD = {travelTD} settravelTD = {settravelTD}/>
         <RequestList 
+          driverlocation = {driverlocation[1]}
           requests = {requests} 
           origin = {origin}
           destination = {destination}
+          setOrigin = {setOrigin} 
+          setDestination = {setDestination}
         />
       </div>
     </div>

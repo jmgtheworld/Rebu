@@ -39,13 +39,12 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("AIzaSyAmhqVM0_36KveS_23K9IevWLvaWtHxhlI");
+Geocode.setApiKey("AIzaSyB8sDvFcA2Ig2Vx6DsFun56ZtWkk0VunN0");
 
 
 export default function MapDriver(props) {
 
-  const {travelTD, settravelTD, startAddress, setstartAddress, setfinishAddress}  = props;
-
+  const {travelTD, settravelTD, startAddress, setstartAddress, setfinishAddress, origin, destination}  = props;
   const [markers, setMarkers] = React.useState([]);
 
   const [loadedOnce, setloadedOnce] = React.useState(false)
@@ -54,11 +53,6 @@ export default function MapDriver(props) {
   const[response, setResponse] = React.useState(null);
   const[travelMode, setTravelMode] = React.useState("WALKING");
 
-  const[origin, setOrigin] = React.useState(
-    {lat: null, lng: null}
-  );
-  const[destination, setDestination] = React.useState({lat:null, lng: null});
-
   console.log('origin from map_driver', origin)
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
@@ -66,42 +60,21 @@ export default function MapDriver(props) {
   ]
   
   console.log('places', places)
-  console.log('map loaded')
+  
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAmhqVM0_36KveS_23K9IevWLvaWtHxhlI",
+    googleMapsApiKey: "AIzaSyB8sDvFcA2Ig2Vx6DsFun56ZtWkk0VunN0",
     libraries,
   });
 
-  const directionsCallback = response => {
-    console.log(response)
-    if (response !== null) {
-      if (response.status === 'OK') {
-        setResponse(response)
-      } else {
-        console.log('response: ', response)
-      }
-    }
-  }
-
-  const onMapClick = React.useCallback((e) => {
-    setMarkers(() => [
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-  }, []);
-
-  const setMarker = React.useCallback((lat, lng)=> {
-    setMarkers(() => [
-      {
-        lat: lat,
-        lng: lng,
-        time: new Date(),
-      }
-    ]);
-  }, []);
+  // const onMapClick = React.useCallback((e) => {
+  //   setMarkers(() => [
+  //     {
+  //       lat: e.latLng.lat(),
+  //       lng: e.latLng.lng(),
+  //       time: new Date(),
+  //     },
+  //   ]);
+  // }, []);
 
   const getAddress = (lat, lng) => {
     Geocode.fromLatLng(lat, lng).then(
@@ -150,7 +123,6 @@ export default function MapDriver(props) {
         zoom={8}
         center={center}
         options={options}
-        onClick={onMapClick}
         onLoad={onMapLoad}
       >
         {markers.map((marker) => (
@@ -159,7 +131,7 @@ export default function MapDriver(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
         {destination && origin && <Distance 
           travelMode = {travelMode} 
           setstartAddress = {setstartAddress} 
@@ -175,7 +147,7 @@ export default function MapDriver(props) {
               time,
               distance
             })
-        }}/> } */}
+        }}/> }
       </GoogleMap>
       
       <div className = "driverInfo">

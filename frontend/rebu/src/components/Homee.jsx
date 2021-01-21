@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Home from "./Home";
 import HomeDriver from "./HomeDriver";
-// import HomeDriverwithMap from './HomeDriverwithMap';
+import HomeDriverwithMap from './HomeDriverwithMap';
 
 import Axios from "axios";
 
@@ -22,7 +22,7 @@ const Homee = (props) => {
   return (
     <div>
       {userType === "rider" && <Home />}
-      {userType === "driver" && <HomeDriver />}
+      {userType === "driver" && <HomeDriverwithMap />}
     </div>
   )
 };
