@@ -6,11 +6,7 @@ import "./UserSummary.scss";
 
 export default function DriverSummary(props) {
 
-  const {travelTD} = props;
-
-  const [price, setPrice] = useState("");
-
-  const distanceInNumber = Math.round(parseFloat(travelTD.distance.replace("km", "")))
+  const {travelMode, travelTD, price} = props;
 
   return (
     <article className = "driverSummary">

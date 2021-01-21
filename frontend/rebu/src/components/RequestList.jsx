@@ -3,7 +3,7 @@ import { Card, Col, Row, Dropdown, DropdownButton, ButtonGroup} from 'react-boot
 import RequestCard from "./RequestCard";
 
 export default function RequestList (props) {
-  const {origin, setOrigin, destination, setDestination, driverlocation} = props;
+  const {origin, setOrigin, destination, setDestination, pickup, setPickup, setPrice, driverlocation} = props;
   console.log('request list', driverlocation)
   const requests = props.requests.map(request => {
     return (
@@ -18,11 +18,16 @@ export default function RequestList (props) {
         created_at={request.created_at}
         driverlocation = {driverlocation}
         origin = {origin}
+        pickup = {pickup}
         destination= {destination}
         setOrigin = {setOrigin}
+        setPickup = {setPickup}
         setDestination = {setDestination}
+        setPrice = {setPrice}
         start_location_lat = {request.start_location_lat}
         start_location_lon = {request.start_location_lon}
+        end_location_lat = {request.end_location_lat}
+        end_location_lon = {request.end_location_lon}
       />
     )
   })
