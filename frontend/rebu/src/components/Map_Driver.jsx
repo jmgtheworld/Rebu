@@ -151,7 +151,7 @@ export default function MapDriver(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
         {destination && origin && <Distance 
           travelMode = {travelMode} 
           setstartAddress = {setstartAddress} 
@@ -167,7 +167,7 @@ export default function MapDriver(props) {
               time,
               distance
             })
-        }}/> }
+        }}/> } */}
       </GoogleMap>
       <div id="panel"></div>
       <div className = "driverInfo">
