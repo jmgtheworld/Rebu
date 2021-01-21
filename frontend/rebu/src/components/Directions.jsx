@@ -15,6 +15,7 @@ export default function MapDirectionsRenderer(props) {
       location: { lat: p.latitude, lng: p.longitude },
       stopover: true
     }));
+
     const origin = waypoints.shift().location;
     const destination = waypoints.pop().location;
 
@@ -37,7 +38,7 @@ export default function MapDirectionsRenderer(props) {
         }
       }
     );   
-  }, )
+  })
   
   if (error) {
     console.log({error})

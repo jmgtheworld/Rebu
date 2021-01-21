@@ -8,7 +8,8 @@ module.exports = ({
     getTripsByNotAccepted,
     acceptTrip,
     cancelTrip, 
-    deleteTrip
+    deleteTrip,
+    getUserAndDriverActiveTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -19,6 +20,26 @@ module.exports = ({
             }));
     });
 
+    // POST a new trip
+    router.post('/', function(req, res) {
+        const {
+            customer_id,
+            driver_id,
+            start_address,
+            end_address,
+            start_location_lat,
+            start_location_lon,
+            end_location_lat, 
+            end_location_lon
+        } = req.body;
+    
+        addTrip(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+        });
+
     // Get trip by accepted status
     router.get('/not-accepted', (req, res) => {
         getTripsByNotAccepted()
@@ -28,35 +49,28 @@ module.exports = ({
             }));
     });
 
+    // router.get('/active-trip', (req, res) => {
+    //     getUserAndDriverActiveTrip()
+    // });
+
     // Get trip by ID
     router.get('/:id', (req, res) => {
-      const tripId = req.params.id;
-      getTripById(tripId)
-          .then(users => res.json(users))
-          .catch(err => res.json({
-              error: err.message
-          }));
+    //   const tripId = req.params.id;
+    //   getTripById(tripId)
+    //       .then(users => res.json(users))
+    //       .catch(err => res.json({
+    //           error: err.message
+    //       }));
+
+        const tripId = req.params.id;
+        getUserAndDriverActiveTrip(tripId)
+            .then(trip => res.status(200).json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
     });
 
-    // POST a new trip
-    router.post('/', function(req, res) {
-      const {
-        customer_id,
-        driver_id,
-        start_address,
-        end_address,
-        start_location_lat,
-        start_location_lon,
-        end_location_lat, 
-        end_location_lon
-      } = req.body;
 
-      addTrip(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
-        .then(trip => res.json(trip))
-        .catch(err => res.json({
-            error: err.message
-        }));
-    });
 
     // Updates a trip to 'accepted'
     // NEED TO ADD driver_id somehow

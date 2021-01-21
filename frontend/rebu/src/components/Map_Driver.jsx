@@ -1,6 +1,7 @@
 import React, {Fragment} from "react";
 import Geocode from "react-geocode";
 import { Spinner, Button, ButtonGroup} from 'react-bootstrap';
+import { FaWalking, FaBus, FaBicycle } from "react-icons/fa";
 
 import {
   GoogleMap,
@@ -39,67 +40,46 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8");
+Geocode.setApiKey("");
 
 
 export default function MapDriver(props) {
 
-  const {travelTD, settravelTD}  = props;
+  const {travelTD, settravelTD, startAddress, setstartAddress, setfinishAddress, 
+    origin, pickup, destination, travelMode, setTravelMode
+  }  = props;
 
   const [markers, setMarkers] = React.useState([]);
-  const [startAddress, setstartAddress] = React.useState("");
 
   const [loadedOnce, setloadedOnce] = React.useState(false)
 
   // Directions State
   const[response, setResponse] = React.useState(null);
-  const[travelMode, setTravelMode] = React.useState("WALKING");
 
-  const[origin, setOrigin] = React.useState({lat:43.6453, lng:-79.3806});
-  const[destination, setDestination] = React.useState({lat:43.6706, lng:-79.3865});
 
+  console.log('origin from map_driver', origin)
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
+    {latitude: pickup.lat, longitude: pickup.lng},
     {latitude: destination.lat, longitude: destination.lng},
   ]
   
   console.log('places', places)
-  console.log('map loaded')
+  
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8",
+    googleMapsApiKey: "",
     libraries,
   });
 
-  const directionsCallback = response => {
-    console.log(response)
-    if (response !== null) {
-      if (response.status === 'OK') {
-        setResponse(response)
-      } else {
-        console.log('response: ', response)
-      }
-    }
-  }
-
-  const onMapClick = React.useCallback((e) => {
-    setMarkers(() => [
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-  }, []);
-
-  const setMarker = React.useCallback((lat, lng)=> {
-    setMarkers(() => [
-      {
-        lat: lat,
-        lng: lng,
-        time: new Date(),
-      }
-    ]);
-  }, []);
+  // const onMapClick = React.useCallback((e) => {
+  //   setMarkers(() => [
+  //     {
+  //       lat: e.latLng.lat(),
+  //       lng: e.latLng.lng(),
+  //       time: new Date(),
+  //     },
+  //   ]);
+  // }, []);
 
   const getAddress = (lat, lng) => {
     Geocode.fromLatLng(lat, lng).then(
@@ -136,9 +116,21 @@ export default function MapDriver(props) {
     getAddress(lat, lng)
   }, []);
 
+  const transitIcon = () => {
+    if (travelMode === "WALKING") {
+      return <FaWalking /> 
+    }
+    if (travelMode === "TRANSIT") {
+      return <FaBus /> 
+    }
+    if (travelMode === "BICYCLING") {
+      return <FaBicycle /> 
+    }
+    else {
+      return
+    }
+  }
 
-  console.log('origin', origin)
-  console.log('destinations', destination)
   console.log("tranist mode", travelMode)
 
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
@@ -151,7 +143,6 @@ export default function MapDriver(props) {
         zoom={8}
         center={center}
         options={options}
-        onClick={onMapClick}
         onLoad={onMapLoad}
       >
         {markers.map((marker) => (
@@ -161,22 +152,31 @@ export default function MapDriver(props) {
           />
         ))}
         {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
-        {destination && origin && <Distance travelMode = {travelMode} setstartAddress = {setstartAddress} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
-          settravelTD({
-            ...travelTD,
-            time,
-            distance
-          })
+        {destination && origin && <Distance 
+          travelMode = {travelMode} 
+          setstartAddress = {setstartAddress} 
+          loadedOnce = {loadedOnce} 
+          setloadedOnce = {setloadedOnce} 
+          destination = {destination} 
+          setstartAddress = {setstartAddress}
+          setfinishAddress = {setfinishAddress}
+          origin = {origin} 
+          settravelTD = {(time, distance)=> {
+            settravelTD({
+              ...travelTD,
+              time,
+              distance
+            })
         }}/> } */}
       </GoogleMap>
       
       <div className = "driverInfo">
         <> 
-          <span className = "driverSpan"> How will you get to the user? </span>
+          <span className = "driverSpan"> How will you get to the user? {transitIcon()} </span>
           <ButtonGroup size="lg" className="mb-2 transitOptions">
-            <Button key = "WALKING" variant = "secondary" onClick = {() => { setTravelMode("WALKING")} }> Walk </Button>
-            <Button key = "TRANSIT" variant= "secondary" onClick = {() => { setTravelMode("TRANSIT")} }> Transit </Button>
-            <Button key = "BICYCLING" variant= "secondary"  onClick = {() => { setTravelMode("BICYCLING")} }> Bike </Button>
+            <Button key = "WALKING" variant = {travelMode === "WALKING" ? "dark" : "secondary"} onClick = {() => { setTravelMode("WALKING")} }> Walk </Button>
+            <Button key = "TRANSIT" variant= {travelMode === "TRANSIT" ? "dark" : "secondary"}onClick = {() => { setTravelMode("TRANSIT")} }> Transit </Button>
+            <Button key = "BICYCLING" variant= {travelMode === "BICYCLING" ? "dark" : "secondary"}  onClick = {() => { setTravelMode("BICYCLING")} }> Bike </Button>
           </ButtonGroup>
         </>
       </div>

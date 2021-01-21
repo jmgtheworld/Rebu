@@ -85,7 +85,36 @@ module.exports = (db) => {
         return db.query(query)
             .then(result => result.rows[0])
             .catch(err => err);
-    }
+    };
+
+    const getUserAndDriverActiveTrip = (tripId) => {
+        const query = {
+            text: `
+                SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
+                FROM trips
+                    LEFT JOIN users customer ON trips.customer_id = customer.id
+                    LEFT JOIN users driver ON trips.driver_id = driver.id
+                WHERE accepted = FALSE
+                AND ended_at IS NULL
+                AND trips.id = $1
+            `,
+            values: [tripId],
+            // text: `
+            //     SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
+            //     FROM users
+            //     LEFT JOIN users customer ON trips.customer_id = customer.id
+            //     WHERE accepted = FALSE
+            //     AND ended_at IS NULL
+            // `
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
+    // 
+    //                     
   
     return {
         getTrips,
@@ -94,6 +123,7 @@ module.exports = (db) => {
         getTripsByNotAccepted,
         acceptTrip,
         cancelTrip, 
-        deleteTrip
+        deleteTrip,
+        getUserAndDriverActiveTrip
     };
   };
