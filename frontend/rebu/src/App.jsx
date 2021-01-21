@@ -13,13 +13,9 @@ import Register from "./components/Register"
 import Settings from "./components/Settings"
 import Navbar from "./components/Navbar"
 import History from "./components/History/History"
+import Logout from "./components/Logout";
 
 function App() {
-  // const [loggedIn, setLoggedIn] = useState("");
-  // const [user, setUser] = useState({});
-  // console.log("logged in:", loggedIn);
-  // console.log("user:", user);
-
   return (
     <Router >
       <div className = "App">
@@ -36,6 +32,9 @@ function App() {
           </Route>
           <Route path = "/history">
             <History />
+          </Route>
+          <Route path = "/logout">
+            <Logout />
           </Route>
           <Route path = "/">
             <Homee />
