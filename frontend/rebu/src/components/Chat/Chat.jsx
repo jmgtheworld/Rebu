@@ -97,7 +97,7 @@ export default function Chat () {
     <div className="outerContainer">
         <div className="chat-container">
           <InfoBar customer={customerId}/>
-          <Messages />
+          <Messages messages={messages} name={name} />
           <Input 
             message={message}
             setMessage={setMessage}
