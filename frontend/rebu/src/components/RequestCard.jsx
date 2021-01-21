@@ -10,17 +10,9 @@ export default function RequestCard (props) {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
-  const tripId = props.id;
+  const {start_address, end_address, driverlocation, origin, setOrigin, destination, setDestination, start_location_lat, start_location_lon} = props;
+  console.log('dirver location from request card', driverlocation)
   
-
-  function confirm (tripId) {
-    setIsConfirmed(true);
-    console.log("Trip Id: ",tripId)
-    return Axios.put(`http://localhost:3001/trips/${tripId}/accept`)
-      .then(()=> console.log("trip is now accepted!"))
-      .catch(err => console.log("Error from put request: ", err))
-  }
-
   return (
     <Card.Body>
       <Card>
@@ -36,12 +28,19 @@ export default function RequestCard (props) {
               </Button>
               <ConfirmModal
                 show={modalShow}
-                tripId={tripId}
+                tripId={props.tripId}
                 onHide={() => setModalShow(false)}
-                start_address={props.start_address}
-                end_address={props.end_address}
-                price={props.price}
-                confirm={confirm}
+                price = {props.price}
+                start_address={start_address}
+                end_address={end_address}
+                confirm={() => setIsConfirmed(true)}
+                driverlocation = {driverlocation}
+                origin = {origin}
+                setOrigin = {setOrigin} 
+                desination = {destination}
+                setDestination = {setDestination}
+                start_location_lat = {start_location_lat}
+                start_location_lon = {start_location_lon}
               />
             </Col>
             }
