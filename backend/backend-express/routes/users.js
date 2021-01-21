@@ -50,10 +50,9 @@ module.exports = ({
             }));
     });
 
-    // Get user by ID
-    router.get('/:id', (req, res) => {
-        const userId = req.params.id;
-        getUserById(userId)
+    // Get user data by ID
+    router.get('/data', checkToken, (req, res) => {
+        getUserById(req.userID)
             .then((users) => res.json(users))
             .catch((err) => res.json({
                 error: err.message
