@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Homee from './Homee';
+// import { locals } from '../../../../backend/backend-express/app';
 
 export default function Login(props) {
   const [ email, setEmail ] = useState("")
@@ -17,6 +18,8 @@ export default function Login(props) {
     e.preventDefault();
     const user = { email, password }
 
+    // Axios.post("http://localhost:3001/users/login", user, {headers: { "x-access-token": "asdf"}})
+
     return Axios.post("http://localhost:3001/users/login", user)
       // .then(res => {
       //   console.log(res.data)
@@ -25,7 +28,10 @@ export default function Login(props) {
 
       //   }
       // })
-      .then(res => console.log("logged in, user id:", res.data.user_id))
+      .then(res => {
+        localStorage.setItem("token", res.data.token);
+        // console.log("logged in, user id:", res.data);
+      })
       .catch(err => console.log(err));
   };
 
