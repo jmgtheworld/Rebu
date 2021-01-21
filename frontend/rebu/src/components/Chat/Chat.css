@@ -1,9 +1,15 @@
+  #chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   .outerContainer {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30vh;
+    height: 50vh;
     width: 70vw;
     min-width: 300px;
     border: 1px solid #1A1A1D;

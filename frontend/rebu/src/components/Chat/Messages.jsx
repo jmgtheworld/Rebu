@@ -16,7 +16,7 @@ export default function Messages (props) {
   })
   
   return (
-    <ScrollToBottom>
+    <ScrollToBottom className="messages">
       {messages}
     </ScrollToBottom>
   )
