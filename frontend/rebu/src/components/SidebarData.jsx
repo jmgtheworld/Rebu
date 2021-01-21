@@ -37,6 +37,10 @@ const SidebarData = [
     icon: <BsFillQuestionCircleFill />
   },
   {
+    title: 'Register',
+    path: '/register',
+  },
+  {
     title: 'Logout',
     path: '/',
     icon: <BiLogOutCircle />

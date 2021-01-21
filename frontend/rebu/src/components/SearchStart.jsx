@@ -15,7 +15,7 @@ import "@reach/combobox/styles.css";
 
 export default function SearchStart(props) {
 
-  const {panTo, startAddress} = props;
+  const {panTo, setOrigin, startAddress} = props;
   const {
     ready,
     value,
@@ -33,6 +33,10 @@ export default function SearchStart(props) {
     setValue(e.target.value);
   };
 
+  const handleCompass = () => {
+    setValue()
+  }
+
   const handleSelect = async (address) => {
     setValue(address, false);
     clearSuggestions();
@@ -41,6 +45,10 @@ export default function SearchStart(props) {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
       panTo({ lat, lng });
+      setOrigin(
+        {lat:lat, lng:lng}
+      )
+   
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -50,17 +58,16 @@ export default function SearchStart(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value= ""
+          value= {value}
           onChange={handleInput}
-          disabled={!ready}
-          placeholder= "Search your location"
+          placeholder= {startAddress ? startAddress : "Search your location"}
           className = "searchBar" 
         />
         <ComboboxPopover className = "comboboxPop">
           <ComboboxList className = "comboboxList">
             {status === "OK" &&
               data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} className = "comboboxOption"/>
+                <ComboboxOption key={description} value={description} className = "comboboxOption"/>
               ))}
           </ComboboxList>
         </ComboboxPopover>

@@ -4,10 +4,12 @@ import Axios from 'axios';
 import TripList from "./TripList"
 
 export default function History () {
-  const [ trips, setTrips ] = useState([])
+  const [ trips, setTrips ] = useState([]);
+  const token = localStorage.getItem("token");
+  // console.log(token);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/trips")
+    Axios.get("http://localhost:3001/users/trips", { headers: { "x-access-token": token} })
       .then((res) => {
         console.log(res.data);
         setTrips(res.data);

@@ -13,7 +13,7 @@ import {
 
 
 export default function SearchDestination(props) {
-  const {panTo} = props;
+  const {panTo, setDestination, finishAddress} = props;
   const {
     ready,
     value,
@@ -40,7 +40,12 @@ export default function SearchDestination(props) {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
+      console.log('beforepanto')
+      panTo ({ lat, lng });
+      console.log('lat, lng', { lat, lng });
+      setDestination(
+        {lat:lat, lng:lng}
+      )
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -50,17 +55,17 @@ export default function SearchDestination(props) {
     <div className="search">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
-          value={value}
+          value = {value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder= "Where to?"
+          placeholder= {finishAddress ? finishAddress : "Where to?"}
           className = "searchBar" 
         />
         <ComboboxPopover className = "comboboxPop">
           <ComboboxList className = "comboboxList">
             {status === "OK" &&
               data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} className = "comboboxOption"/>
+                <ComboboxOption key={description} value={description} className = "comboboxOption"/>
               ))}
           </ComboboxList>
         </ComboboxPopover>

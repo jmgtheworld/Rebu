@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import Geocode from "react-geocode";
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Button, ButtonGroup} from 'react-bootstrap';
 
 import {
   GoogleMap,
@@ -39,13 +39,15 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("");
+Geocode.setApiKey("AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8");
 
-export default function Map(props) {
 
-  const {travelTD, settravelTD, origin, setOrigin, destination, setDestination, startAddress, setstartAddress, finishAddress, setfinishAddress}  = props;
+export default function MapDriver(props) {
+
+  const {travelTD, settravelTD}  = props;
 
   const [markers, setMarkers] = React.useState([]);
+  const [startAddress, setstartAddress] = React.useState("");
 
   const [loadedOnce, setloadedOnce] = React.useState(false)
 
@@ -53,18 +55,23 @@ export default function Map(props) {
   const[response, setResponse] = React.useState(null);
   const[travelMode, setTravelMode] = React.useState("WALKING");
 
+  const[origin, setOrigin] = React.useState({lat:43.6453, lng:-79.3806});
+  const[destination, setDestination] = React.useState({lat:43.6706, lng:-79.3865});
+
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
     {latitude: destination.lat, longitude: destination.lng},
   ]
-
+  
+  console.log('places', places)
+  console.log('map loaded')
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8",
     libraries,
   });
 
   const directionsCallback = response => {
-
+    console.log(response)
     if (response !== null) {
       if (response.status === 'OK') {
         setResponse(response)
@@ -112,10 +119,11 @@ export default function Map(props) {
 
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    console.log("Inside onmapload")
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
-
+    console.log('inside panTo')
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
     setMarkers(() => [
@@ -129,31 +137,14 @@ export default function Map(props) {
   }, []);
 
 
+  console.log('origin', origin)
+  console.log('destinations', destination)
+  console.log("tranist mode", travelMode)
+
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
 
   return (
     <div>
-      <div className = "searchArea">
-        <Locate panTo={panTo} setOrigin = {setOrigin}/>
-        <SearchStart 
-          panTo={panTo} 
-          startAddress = {startAddress} 
-          setOrigin = {setOrigin} 
-          loadedOnce = {loadedOnce} 
-          setloadedOnce = {setloadedOnce} 
-        />
-      </div>
-      <div className = "destinationArea"> 
-        <SearchDestination 
-          panTo={panTo} 
-          finishAddress = {finishAddress}
-          destination = {destination} 
-          setDestination = {setDestination} 
-          loadedOnce = {loadedOnce} 
-          setloadedOnce = {setloadedOnce}
-        /> 
-      </div>
-
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -169,26 +160,26 @@ export default function Map(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        {/* <MapDirectionsRenderer places = {places} travelMode = "DRIVING" loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
-        {destination && origin && 
-          <Distance 
-            setfinishAddress = {setfinishAddress}
-            setstartAddress = {setstartAddress} 
-            travelMode = "DRIVING" 
-            loadedOnce = {loadedOnce} 
-            setloadedOnce = {setloadedOnce} 
-            destination = {destination} 
-            origin = {origin} 
-            settravelTD = {(time, distance)=> {
-              settravelTD({
-                ...travelTD,
-                time,
-                distance
-              })
-            }}
-          /> 
-        } */}
+        {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        {destination && origin && <Distance travelMode = {travelMode} setstartAddress = {setstartAddress} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
+          settravelTD({
+            ...travelTD,
+            time,
+            distance
+          })
+        }}/> } */}
       </GoogleMap>
+      
+      <div className = "driverInfo">
+        <> 
+          <span className = "driverSpan"> How will you get to the user? </span>
+          <ButtonGroup size="lg" className="mb-2 transitOptions">
+            <Button key = "WALKING" variant = "secondary" onClick = {() => { setTravelMode("WALKING")} }> Walk </Button>
+            <Button key = "TRANSIT" variant= "secondary" onClick = {() => { setTravelMode("TRANSIT")} }> Transit </Button>
+            <Button key = "BICYCLING" variant= "secondary"  onClick = {() => { setTravelMode("BICYCLING")} }> Bike </Button>
+          </ButtonGroup>
+        </>
+      </div>
     </div>
   );
 }

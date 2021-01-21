@@ -9,8 +9,7 @@ export default function MapDirectionsRenderer(props) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const { places, travelMode } = props;
-    console.log(places, travelMode)
+    const { places, travelMode, setloadedOnce } = props;
 
     const waypoints = places.map(p => ({
       location: { lat: p.latitude, lng: p.longitude },
@@ -20,6 +19,7 @@ export default function MapDirectionsRenderer(props) {
     const destination = waypoints.pop().location;
 
     const directionsService = new window.google.maps.DirectionsService();
+
     directionsService.route(
       {
         origin: origin,
@@ -28,19 +28,21 @@ export default function MapDirectionsRenderer(props) {
         waypoints: waypoints
       },
       (result, status) => {
-        console.log(result)
+        console.log('result from directions service', result)
         if (status === window.google.maps.DirectionsStatus.OK) {
+          setloadedOnce(false);
           setDirections(result);
         } else {
           setError(result);
         }
       }
-    );
-  }, []);
-
+    );   
+  }, )
+  
   if (error) {
     console.log({error})
   }
+
   return (
     directions && (
       <DirectionsRenderer directions={directions} />
