@@ -3,7 +3,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
 import * as VscIcons from 'react-icons/vsc';
 import { BsFillQuestionCircleFill } from 'react-icons/bs';
-import { BiLogOutCircle } from 'react-icons/bi'
+import { BiLogOutCircle, BiLogInCircle } from 'react-icons/bi'
 
 const SidebarData = [
   {
@@ -39,6 +39,12 @@ const SidebarData = [
   {
     title: 'Register',
     path: '/register',
+    icon: <FaIcons.FaRegistered />
+  },
+  {
+    title: 'Login',
+    path: '/login',
+    icon: <BiLogInCircle />
   },
   {
     title: 'Logout',

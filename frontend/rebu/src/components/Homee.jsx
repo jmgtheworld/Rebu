@@ -8,13 +8,6 @@ import Axios from "axios";
 
 const Homee = (props) => {
   const [ userType, setUserType ] = useState("");
-  // const user_id = props.user_id;
-  // console.log("props:", props);
-
-  // const handleSuccessfulAuth = (data) => {
-  //   props.handleLogin(data);
-  //   props.history.push("/");
-  // };
 
   useEffect(() => {
     Axios.get(`http://localhost:3001/users/2`)//would be /api/users/:id instead
