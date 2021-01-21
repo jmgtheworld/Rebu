@@ -3,6 +3,8 @@ import { Card, Col, Row, Dropdown, DropdownButton, ButtonGroup} from 'react-boot
 import RequestCard from "./RequestCard";
 
 export default function RequestList (props) {
+  const {} = props;
+ 
   const requests = props.requests.map(request => {
     return (
       <RequestCard 

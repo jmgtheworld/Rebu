@@ -39,15 +39,14 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8");
+Geocode.setApiKey("AIzaSyAmhqVM0_36KveS_23K9IevWLvaWtHxhlI");
 
 
 export default function MapDriver(props) {
 
-  const {travelTD, settravelTD}  = props;
+  const {travelTD, settravelTD, startAddress, setstartAddress, setfinishAddress}  = props;
 
   const [markers, setMarkers] = React.useState([]);
-  const [startAddress, setstartAddress] = React.useState("");
 
   const [loadedOnce, setloadedOnce] = React.useState(false)
 
@@ -55,9 +54,12 @@ export default function MapDriver(props) {
   const[response, setResponse] = React.useState(null);
   const[travelMode, setTravelMode] = React.useState("WALKING");
 
-  const[origin, setOrigin] = React.useState({lat:43.6453, lng:-79.3806});
-  const[destination, setDestination] = React.useState({lat:43.6706, lng:-79.3865});
+  const[origin, setOrigin] = React.useState(
+    {lat: null, lng: null}
+  );
+  const[destination, setDestination] = React.useState({lat:null, lng: null});
 
+  console.log('origin from map_driver', origin)
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
     {latitude: destination.lat, longitude: destination.lng},
@@ -66,7 +68,7 @@ export default function MapDriver(props) {
   console.log('places', places)
   console.log('map loaded')
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDBC46xzLtfmMz9PjuZuqH3D2yqEwN64A8",
+    googleMapsApiKey: "AIzaSyAmhqVM0_36KveS_23K9IevWLvaWtHxhlI",
     libraries,
   });
 
@@ -136,9 +138,6 @@ export default function MapDriver(props) {
     getAddress(lat, lng)
   }, []);
 
-
-  console.log('origin', origin)
-  console.log('destinations', destination)
   console.log("tranist mode", travelMode)
 
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
@@ -161,12 +160,21 @@ export default function MapDriver(props) {
           />
         ))}
         {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
-        {destination && origin && <Distance travelMode = {travelMode} setstartAddress = {setstartAddress} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce} destination = {destination} origin = {origin} settravelTD = {(time, distance)=> {
-          settravelTD({
-            ...travelTD,
-            time,
-            distance
-          })
+        {destination && origin && <Distance 
+          travelMode = {travelMode} 
+          setstartAddress = {setstartAddress} 
+          loadedOnce = {loadedOnce} 
+          setloadedOnce = {setloadedOnce} 
+          destination = {destination} 
+          setstartAddress = {setstartAddress}
+          setfinishAddress = {setfinishAddress}
+          origin = {origin} 
+          settravelTD = {(time, distance)=> {
+            settravelTD({
+              ...travelTD,
+              time,
+              distance
+            })
         }}/> } */}
       </GoogleMap>
       
