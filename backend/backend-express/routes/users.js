@@ -91,8 +91,6 @@ module.exports = ({
     });
 
     router.put('/location', checkToken, (req, res) => {
-
-        // console.log(req.userID);
         // fetch the user's current IP
         return fetchIP()
             .then(body => {
