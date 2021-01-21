@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-
 import { Form, Col } from 'react-bootstrap';
-import RiderRegisterForm from "./RiderRegisterForm"
-import DriverRegisterForm from "./DriverRegisterForm"
+import RiderRegisterForm from "./RiderRegisterForm";
+import DriverRegisterForm from "./DriverRegisterForm";
 
-
-export default function Register() {
+export default function Register(props) {
   const [ newUser, setNewUser ] = useState({
     full_name: "",
     email: "",
@@ -23,9 +21,9 @@ export default function Register() {
     country: "",
     driver: false,
     license: null
-  })
-  const [ userType, setUserType ] = useState("rider");
+  });
 
+  const [ userType, setUserType ] = useState("rider");
   // const [ errors, setErrors ] = useState({
   //   full_name: "",
   //   email: "",
@@ -42,7 +40,7 @@ export default function Register() {
   //   country: "",
   //   license: ""
   // })
-
+  // console.log("props:", props);
   function register (e) {
     e.preventDefault();
 
@@ -52,13 +50,11 @@ export default function Register() {
     .then(() => console.log("New user added!"))
     .catch(err => console.log(err))
   }
-
   // function formValid (formErrors) {
   //   let valid = true;
   //   Object.values(errors).forEach(val => val.length > 0 && (valid = false));
   //   return valid;
   // }
-
   function handleChange (e) {
     e.preventDefault();
     const { name, value } = e.target;
@@ -75,9 +71,9 @@ export default function Register() {
     }
   }
   console.log(userType)
-
   return (
     <div>
+      {/* <h1>Logged in: {props.loggedIn}</h1> */}
       <h1> Register</h1>
       <Form.Row>
         <Form.Label as="legend" column sm={2}>
@@ -120,32 +116,3 @@ export default function Register() {
     </div>
   )
 }
-
-// switch(name) {
-    //   case 'full_name':
-    //     formErrors.full_name = value.length > 0 ? 'Please enter name' : '';
-    //     break;
-    //   case 'email':
-    //     formErrors.email = value.length > 0 ? 'Please enter email' : '';
-    //     break;
-    //   case 'password':
-    //     formErrors.password = value.length > 0 ? 'Please enter password' : '';
-    //     break;
-    //   case 'phone_number':
-    //     formErrors.phone_number = value.length > 0 ? 'Please enter phone number' : '';
-    //     break;
-    //   case 'credit_card':
-    //     formErrors.credit_card = value.length > 0 ? 'Please enter credit card number' : '';
-    //     break;
-    //   case 'expiry_date':
-    //     formErrors.expiry_date = value.length > 0 ? 'Expiry date missing' : '';
-    //     break;
-    //   case 'cvc':
-    //     formErrors.cvc = value.length > 0 ? 'cvc code not valid' : '';
-    //     break;
-    //   case 'license':
-    //     formErrors.license = value.length > 0 ? 'Please enter your license number' : '';
-    //     break;
-    //   default;
-    //     break;
-    // }

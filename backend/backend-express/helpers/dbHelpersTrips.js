@@ -37,13 +37,13 @@ module.exports = (db) => {
       };
 
     // Add new trip to DB
-    const addTrip = (user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status) => {
+    const addTrip = (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon) => {
         const query = {
             text: `
-            INSERT INTO users (user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
+            INSERT INTO trips (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
             `,
-            values: [user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat,end_location_lon, payment_amount, payment_status]
+            values: [customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon]
         };
   
         return db.query(query)
@@ -75,6 +75,17 @@ module.exports = (db) => {
             .then(result => result.rows[0])
             .catch(err => err);
     };
+
+    const deleteTrip = (tripId) => {
+        const query = {
+            text: `DELETE FROM trips WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    }
   
     return {
         getTrips,
@@ -82,6 +93,7 @@ module.exports = (db) => {
         addTrip,
         getTripsByNotAccepted,
         acceptTrip,
-        cancelTrip
+        cancelTrip, 
+        deleteTrip
     };
   };

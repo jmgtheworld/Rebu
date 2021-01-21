@@ -1,15 +1,43 @@
 
-import {useState} from "react";
+import {Fragment, useState, useEffect, useCallback, useRef} from "react";
+import Axios from 'axios';
+
 import * as FaIcons from 'react-icons/fa';
 import './Pricebar.scss';
 import "./UserSummary.scss";
 
+import Button from './Button';
+import { Spinner } from 'react-bootstrap';
+
 export default function UserSummary(props) {
 
-  const {travelTD} = props;
+  const {travelTD, origin, destination, startAddress, finishAddress} = props;
 
   const [priceMenu, setpriceMenu] = useState(false);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(20);
+  const [waiting, setWaiting]  = useState(false);
+
+  const [ newTrip, setNewTrip ] = useState({
+    customer_id: 1,
+    driver_id: null,
+    start_address: startAddress,
+    end_address: finishAddress,
+    start_location_lat: origin.lat,
+    start_location_lon: origin.lng,
+    end_location_lat: destination.lat,
+    end_location_lon: destination.lng,
+    accepted: false,
+    payment_amount: price,
+    payment_status: false,
+    created_at: Date.now(),
+    ended_at: null
+  })
+
+  const [loadedOnce, setloadedOnce] = useState(false);
+  const [loadCancel, setloadCancel] = useState(false);
+
+  const [toggle, setToggle] = useState(false);
+ 
 
   const distanceInNumber = Math.round(parseFloat(travelTD.distance.replace("km", "")))
   const priceRange = [];
@@ -45,14 +73,14 @@ export default function UserSummary(props) {
 
   const listofPrice = PriceRange.map( (item, index) => {
     return <li key = {index} 
-               className = "priceItem" 
-               onClick ={
-                 () => {
-                   setPrice(item.price)
-                   showPrice()        
-                  }
-                 }>
-               ${item.price} 
+              className = "priceItem" 
+              onClick ={
+                () => {
+                  setPrice(item.price)
+                  showPrice()        
+                }
+              }>
+              ${item.price} 
             </li>
   })
 
@@ -60,17 +88,73 @@ export default function UserSummary(props) {
     setpriceMenu(!priceMenu);
   }
 
+  useEffect(() => {
+    if (loadedOnce && toggle) {
+      setWaiting(true)
+      console.log('newtrip', newTrip)
+      return Axios.post("http://localhost:3001/trips", newTrip)
+        .then(() => console.log("new trip request created"))
+        .catch(err => console.log(err));
+    }
+  }, [loadedOnce, toggle])
+
+  const requestTrip = useCallback(() => {
+    setloadedOnce(true)
+    setToggle(true)
+    setNewTrip({
+      customer_id: 1,
+      driver_id: null,
+      start_address: startAddress,
+      end_address: finishAddress,
+      start_location_lat: origin.lat,
+      start_location_lon: origin.lng,
+      end_location_lat: destination.lat,
+      end_location_lon: destination.lng,
+      accepted: false,
+      payment_amount: price,
+      payment_status: false,
+      created_at: Date.now(),
+      ended_at: null
+    })
+  }, [price])
+
+  useEffect(() => {
+    if (loadCancel && (!toggle)) {
+      setWaiting(false)
+      console.log('trip id to be deleted', 8)
+      return Axios.delete(`http://localhost:3001/trips/8/delete`)
+      .then(() => {
+        console.log("previous trip cancelled/delete")
+        setloadedOnce(true)
+      })
+      .catch(err => console.log(err));
+    }
+  }, [loadCancel, toggle])
+
+  const cancelTrip = useCallback(() => {
+    setloadCancel(true)
+    setToggle(false)
+  }, [])
+
   return (
-    <article className = "userSummary">
-      <h3> Distance from current location to home: {travelTD.distance} ({travelTD.time}) </h3>
-      <h4> Estimated Price Range: ${range.lowest.price} - ${range.highest.price}</h4> 
-      <FaIcons.FaAngleDown onClick = {showPrice} className = "dropdown"/> 
-      <div className = {priceMenu ? 'show' : 'hide' }>
-        {listofPrice}
+    <Fragment>
+      <article className = "userSummary">
+        <h3> Distance from current location to home: {travelTD.distance} ({travelTD.time}) </h3>
+        <h4> Estimated Price Range: ${range.lowest.price} - ${range.highest.price}</h4> 
+        <FaIcons.FaAngleDown onClick = {showPrice} className = "dropdown"/> 
+        <div className = {priceMenu ? 'show' : 'hide' }>
+          {listofPrice}
+        </div>
+        <div className = "selectedPrice"> 
+          ${price}
+        </div>
+      </article>
+      <div className = "statusContainer">
+        {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
+        <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
+        {waiting ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
       </div>
-      <div className = "selectedPrice"> 
-        ${price}
-      </div>
-    </article>
+    </Fragment>
+    
   )
 }

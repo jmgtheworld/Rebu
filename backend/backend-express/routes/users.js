@@ -1,6 +1,8 @@
 const { response } = require('express');
 const express = require('express');
 const router = express.Router();
+const cookieSession = require('cookie-session');
+const jwt = require('jsonwebtoken');
 
 module.exports = ({
     getUsers,
@@ -12,6 +14,33 @@ module.exports = ({
     fetchIP,
     fetchCoordsByIP
 }) => {
+    const checkToken = (req, res, next) => {
+        const token = req.headers["x-access-token"];
+        if (token) {
+            jwt.verify(token, "bigSecret", (err, decoded) => {
+                if (err) {
+                    res.status(401).json({message: "Access Denied"});
+                    return;
+                } else {
+                    req.userID = decoded.userID;
+                    console.log("testing");
+                    next();
+                }
+            })
+        } else {
+            res.status(401).json({message: "Access Denied"})
+        }
+    };
+
+    // Gets all of a user's trips
+    router.get('/trips', checkToken, (req, res) => {    
+        getTripsByUserId(req.userID)
+            .then(trips => res.status(200).json(trips))
+            .catch((err) => res.status(401).json({
+                error: err.message
+            }));
+    });
+    
     // Get all users
     router.get('/', (req, res) => {
         getUsers()
@@ -31,24 +60,39 @@ module.exports = ({
             }));
     });
 
+    // Login user
+    // Sets session id to user id if successful
     router.post('/login', (req, res) => {
         const { email, password } = req.body;
+        // req.session.user_id = null;
 
         getUserByEmail(email)
             .then(user => {
                 if (user) {
                     if (user.email === email) {
                         if (user.password === password) {
+                            // OLD STUFF WITH COOKIE SESSION
                             // send cookies here?
-                            return res.json("Logged in (backend)");
+                            // req.cookies
+                            // return res.json({"user_id": req.session.user_id});
+
+                            // req.session.user_id = user.id;
+                            // console.log("session id:", req.session.user_id );
+                            // console.log(user);
+                            // return res.json(user);
+
+                            // JWT
+                            // console.log(user.id);
+                            const token = jwt.sign({userID: user.id}, "bigSecret");
+                            return res.status(200).json({token});
                         } else {
-                            return res.json("Incorrect password");
+                            return res.status(401).json("Incorrect password");
                         }
                     } else {
-                        return res.json("Incorrect email or password");
+                        return res.status(401).json("Incorrect email or password");
                     }
                 } else {
-                    return res.json("Email does not exist");
+                    return res.status(401).json("Email does not exist");
                 }
             })
             .catch(err => res.json({
@@ -56,8 +100,16 @@ module.exports = ({
             }));
     });
 
+    // Logout
+    // Set session id to null
+    router.post('/logout', (req, res) => {
+        req.session.user_id = null;
+        return res.json(req.session.user_id);
+    });
+
     router.put('/:id/location', (req, res) => {
-        const userId = req.params.id;
+        // changed from req.params.id
+        const userId = req.session.user_id;
         // fetch the user's current IP
         return fetchIP()
             .then(body => {
@@ -75,15 +127,6 @@ module.exports = ({
             }));
     });
 
-    // Gets all of a user's trips
-    router.get('/:id/trips', (req, res) => {
-        const userId = req.params.id;
-        getTripsByUserId(userId)
-            .then(trips => res.json(trips))
-            .catch((err) => res.json({
-                error: err.message
-            }));
-    });
 
     // Add new user
     router.post('/', (req, res)=> {
@@ -94,8 +137,6 @@ module.exports = ({
 
         getUserByEmail(email)
             .then(user => {
-                // console.log(user);
-
                 if (user) {
                     res.json({
                         msg: 'Sorry, a user account with this email already exists'
@@ -105,7 +146,13 @@ module.exports = ({
                 }
 
             })
-            .then(newUser => res.json(newUser))
+            .then(newUser => {
+                // Set the session id to the new user's id
+                // console.log(newUser);
+                // req.session.user_id = newUser.id;
+                // return res.json({"user_id": req.session.newUser_id});
+                res.json(newUser)
+            })
             .catch(err => res.json({
                 error: err.message
             }));

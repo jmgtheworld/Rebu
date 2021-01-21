@@ -7,7 +7,7 @@ import SidebarData from "./SidebarData";
 
 import "./Navbar.scss";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [sidebar, setSidebar] = useState(false);
 
   const SidebarList = SidebarData.map((item, index)=> {

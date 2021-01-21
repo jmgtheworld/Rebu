@@ -7,7 +7,8 @@ module.exports = ({
     addTrip,
     getTripsByNotAccepted,
     acceptTrip,
-    cancelTrip
+    cancelTrip, 
+    deleteTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -40,19 +41,18 @@ module.exports = ({
     // POST a new trip
     router.post('/', function(req, res) {
       const {
-        user_id,
+        customer_id,
+        driver_id,
         start_address,
         end_address,
         start_location_lat,
         start_location_lon,
         end_location_lat, 
-        end_location_lon,
-        payment_amount,
-        payment_status
+        end_location_lon
       } = req.body;
 
-      addTrip(user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount, payment_status)
-        .then(trip => res.json("added trip!", trip))
+      addTrip(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
+        .then(trip => res.json(trip))
         .catch(err => res.json({
             error: err.message
         }));
@@ -88,6 +88,16 @@ module.exports = ({
       db.query(`UPDATE `, [req.params.id])
         .then(() => res.json("trip updated!"));
     });
+
+    router.delete("/:id/delete", (req, res) => {
+        const tripId = req.params.id;
+        deleteTrip(tripId)
+        .then(trip => res.json(trip))
+        .catch(err => res.json({
+            error: err.message
+        }));
+    });
+
 
     return router;
 };
