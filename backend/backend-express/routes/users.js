@@ -4,6 +4,8 @@ const router = express.Router();
 const cookieSession = require('cookie-session');
 const jwt = require('jsonwebtoken');
 
+const { checkToken } = require('../helpers/checkTokenHelper');
+
 module.exports = ({
     getUsers,
     getUserById,
@@ -14,24 +16,6 @@ module.exports = ({
     fetchIP,
     fetchCoordsByIP
 }) => {
-    const checkToken = (req, res, next) => {
-        const token = req.headers["x-access-token"];
-        if (token) {
-            jwt.verify(token, "bigSecret", (err, decoded) => {
-                if (err) {
-                    res.status(401).json({message: "Access Denied"});
-                    return;
-                } else {
-                    req.userID = decoded.userID;
-                    console.log("testing");
-                    next();
-                }
-            })
-        } else {
-            res.status(401).json({message: "Access Denied"})
-        }
-    };
-
     // Gets all of a user's trips
     router.get('/trips', checkToken, (req, res) => {    
         getTripsByUserId(req.userID)
@@ -106,9 +90,7 @@ module.exports = ({
         return res.json(req.session.user_id);
     });
 
-    router.put('/:id/location', (req, res) => {
-        // changed from req.params.id
-        const userId = req.session.user_id;
+    router.put('/location', checkToken, (req, res) => {
         // fetch the user's current IP
         return fetchIP()
             .then(body => {
@@ -117,7 +99,7 @@ module.exports = ({
                     .then(coordinates => {
                         // Update the user's current location with their new coordinates
                         const { lat, lon } = JSON.parse(coordinates);
-                        updateUserCurrentLocation(lat, lon, userId)
+                        updateUserCurrentLocation(lat, lon, req.userID)
                     })
             })
             .then(user => res.json(user))
