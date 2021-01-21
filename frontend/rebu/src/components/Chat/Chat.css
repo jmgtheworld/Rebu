@@ -12,15 +12,17 @@
     height: 50vh;
     width: 70vw;
     min-width: 300px;
-    border: 1px solid #1A1A1D;
+    max-width: 600px;
+    /* border: 1px solid #1A1A1D; */
     border-radius: 8px;
+    margin: 5em;
   }
   
   .chat-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 8px;
     height: 100%;
     width: 100%;

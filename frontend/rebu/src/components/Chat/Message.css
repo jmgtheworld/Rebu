@@ -7,6 +7,10 @@
   max-width: 80%;
 }
 
+.messageBox p {
+  margin-bottom: 0;
+}
+
 .messageText {
   width: 100%;
   letter-spacing: 0;
@@ -34,8 +38,14 @@
   letter-spacing: 0.3px;
 }
 
+p.sentText {
+  margin-bottom: 0;
+  margin-right: 1em;
+}
+
 .pl-10 {
   padding-left: 10px;
+  margin-bottom: 0;
 }
 
 .pr-10 {

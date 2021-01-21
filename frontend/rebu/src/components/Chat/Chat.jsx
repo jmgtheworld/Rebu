@@ -14,11 +14,13 @@ let socket;
 export default function Chat (props) {
   const [ trip, setTrip ] = useState({});
   const [ otherUserName, setOtherUserName] = useState("");
-  const [room, setRoom ] = useState("")
+  const [ room, setRoom ] = useState("")
   const [ message, setMessage ] = useState("");
   const [ messages, setMessages ] = useState([]);
-  // const [ messages, setMessages ] = useState([]);
-  const tripAPI = "http://localhost:3001/trips/2" //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
+
+  
+
+  const tripAPI = "http://localhost:3001/trips/1" //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
 
   const isUserDriver = props.driver;
 
@@ -28,17 +30,17 @@ export default function Chat (props) {
       return Axios.get(tripAPI)
         .then((res) => {
           console.log(res.data);
-          setTrip(res.data)
-          setOtherUserName(res.data.customer_id);
-          setRoom(res.data.id)
+          setTrip(res.data);
+          setOtherUserName(res.data.customer_name);
+          setRoom(res.data.id);
         })
     } else {
       return Axios.get(tripAPI)
         .then((res) => {
-          console.log(res.data);
-          setTrip(res.data)
-          setOtherUserName(res.data.driver_id);
-          setRoom(res.data.id)
+          console.log("TRIPINFO: ", res.data);
+          setTrip(res.data);
+          setOtherUserName(res.data.driver_name);
+          setRoom(res.data.id);
         })
     }
   },[]);
@@ -48,8 +50,9 @@ export default function Chat (props) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
       });
+
   
-      socket.emit("join", { name: props.name , room: 'chat' })
+      socket.emit("join", { name: props.name , room })
 
       socket.on('message', (message) => {
         setMessages(messages => [...messages, message]);
@@ -63,14 +66,14 @@ export default function Chat (props) {
     }
   }, [props.name])
 
-  // useEffect(() => {
-  //   socket.on('message', (message) => {
-  //     setMessages([...messages, message]);
-  //     console.log("MESSAGE EMITTED: ", message)
-      
-  //   })
-  // },[messages])
-
+  useEffect(()=> {
+    
+    return socket.on('notifyCustomer', ({ tripId }) => {
+      if (trip.id === tripId) {
+        props.setRequestAccepted(true)
+      }
+    })
+  , [trip]})
 
   //function for sending messages
   function sendMessage (event) {

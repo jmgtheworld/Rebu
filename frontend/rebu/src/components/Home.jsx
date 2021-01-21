@@ -5,6 +5,9 @@ import UserSummary from './UserSummary';
 import Chat from "./Chat/Chat";
 
 export default function Home(props) {
+  // changes to true, when the driver accepts the request
+  const [ requestAccepted, setRequestAccepted ] = useState(false);
+
   const [travelTD, settravelTD] = useState({
     time: "0",
     distance: "0",
@@ -16,6 +19,8 @@ export default function Home(props) {
   // Formated Addresses
   const [startAddress, setstartAddress] = useState("");
   const [finishAddress, setfinishAddress] = useState("");
+
+  
 
   console.log("USER NAME:", props.user)
   console.log("USER NAME:", props.user.full_name)
@@ -32,10 +37,13 @@ export default function Home(props) {
       </div>
       <div id="chat">
         <h1>Chat</h1>
-        <Chat 
-          name={props.user.full_name}
-          driver={props.user.driver}
-        />
+        { requestAccepted && 
+          <Chat 
+            name={props.user.full_name}
+            driver={props.user.driver}
+            setRequestAccepted={setRequestAccepted}
+          />
+        }
       </div>
         <UserSummary 
           travelTD = {travelTD} settravelTD = {settravelTD}

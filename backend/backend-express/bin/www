@@ -97,6 +97,11 @@ io.on('connection', socket => {
     callback()
   })
 
+  socket.on('accept', ({ tripId }) => {
+    console.log("EMITTING EVENT TO NOTIFY THE CUSTOMER")
+    socket.emit('notifyCustomer', { tripId })
+  })
+
 
   socket.on("disconnection", () => {
     removeUser(socket.id)

@@ -1,6 +1,11 @@
 import {useState, useEffect, useCallback} from 'react';
 import Axios from 'axios';
 import {Modal, Button} from 'react-bootstrap';
+import { io } from 'socket.io-client';
+
+const socket = io("http://localhost:3001", {
+        transports: ["websocket", "polling"]
+      });
 
 export default function ConfirmModal (props) {
 
@@ -43,6 +48,11 @@ export default function ConfirmModal (props) {
       console.log('destination after submit', destination)
   }
 
+  const notifyCustomer = () => {
+    const tripId = props.tripId;
+    socket.emit("accept", { tripId })
+  }
+
   return (
     <Modal
       {...props}
@@ -65,6 +75,7 @@ export default function ConfirmModal (props) {
           confirm()
           confirmTrip()
           setPrice(props.price)
+          notifyCustomer()
         }}>
           Yes
         </Button>

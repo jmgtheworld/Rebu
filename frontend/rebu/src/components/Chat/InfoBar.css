@@ -8,6 +8,11 @@
   width: 100%;
 }
 
+.infoBar p {
+  margin-bottom: 0;
+  margin-left: 1em;
+}
+
 .leftInnerContainer {
   flex: 0.5;
   display: flex;

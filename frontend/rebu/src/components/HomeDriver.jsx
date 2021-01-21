@@ -94,25 +94,5 @@ export default function HomeDriver (props) {
         />
       </div>
     </div>
-    // <div>
-    //   <div>Map to show other drivers</div>
-    //   <div className = "map">
-    //     <MapDriver travelTD = {travelTD} settravelTD = {settravelTD}/>
-    //   </div>
-    //   <DriverSummary travelTD = {travelTD} settravelTD = {settravelTD}/>
-    //   <div id="chat">
-    //     <h2>Chat</h2>
-    //     <Chat
-    //       name={props.user.full_name}
-    //       driver={props.user.driver}
-    //     />
-    //   </div>
-    //   <div>
-    //     <h2>Requests</h2>
-    //     <RequestList 
-    //       requests={requests} 
-    //     />
-    //   </div>
-    // </div>
   )
 }
