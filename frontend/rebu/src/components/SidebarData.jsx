@@ -48,7 +48,7 @@ const SidebarData = [
   },
   {
     title: 'Logout',
-    path: '/',
+    path: '/logout',
     icon: <BiLogOutCircle />
   }
 ]
