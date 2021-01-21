@@ -68,7 +68,7 @@ export default function MapDriver(props) {
   console.log('places', places)
   console.log('map loaded')
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAmhqVM0_36KveS_23K9IevWLvaWtHxhlI",
+    googleMapsApiKey: "",
     libraries,
   });
 
@@ -159,7 +159,7 @@ export default function MapDriver(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
         {destination && origin && <Distance 
           travelMode = {travelMode} 
           setstartAddress = {setstartAddress} 
@@ -175,7 +175,7 @@ export default function MapDriver(props) {
               time,
               distance
             })
-        }}/> } */}
+        }}/> }
       </GoogleMap>
       
       <div className = "driverInfo">
