@@ -7,30 +7,40 @@ import Messages from './Messages';
 import Input from './Input';
 // import TextContainer from './TextContainer';
 
-import { Accordion, Button } from 'react-bootstrap';
 import "./Chat.css"
 
 let socket;
 
-export default function Chat () {
+export default function Chat (props) {
   const [ trip, setTrip ] = useState({});
-  const [ customerId, setCustomerId] = useState("");
-  const [ name, setName ] = useState("driver");
+  const [ otherUserName, setOtherUserName] = useState("");
   const [room, setRoom ] = useState("")
   const [ message, setMessage ] = useState("");
   const [ messages, setMessages ] = useState([]);
   // const [ messages, setMessages ] = useState([]);
-  const tripAPI = "http://localhost:3001/trips/2" //api endpoint to get the trip data that matches user_id === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
+  const tripAPI = "http://localhost:3001/trips/2" //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
+
+  const isUserDriver = props.driver;
 
 
   useEffect(()=> {
-    Axios.get(tripAPI)
-      .then((res) => {
-        console.log(res.data);
-        setTrip(res.data)
-        setCustomerId(res.data.customer_id);
-        setRoom(res.data.id)
-      })
+    if (isUserDriver) {
+      return Axios.get(tripAPI)
+        .then((res) => {
+          console.log(res.data);
+          setTrip(res.data)
+          setOtherUserName(res.data.customer_id);
+          setRoom(res.data.id)
+        })
+    } else {
+      return Axios.get(tripAPI)
+        .then((res) => {
+          console.log(res.data);
+          setTrip(res.data)
+          setOtherUserName(res.data.driver_id);
+          setRoom(res.data.id)
+        })
+    }
   },[]);
 
   useEffect(() => {
@@ -38,7 +48,7 @@ export default function Chat () {
       transports: ["websocket", "polling"]
     });
 
-    socket.emit("join", { name: 'driver', room: 'chat' })
+    socket.emit("join", { name: props.name , room: 'chat' })
 
     return () => {
       socket.emit('disconnection');
@@ -72,8 +82,8 @@ export default function Chat () {
   return (
       <div className="outerContainer">
           <div className="chat-container">
-            <InfoBar customer={customerId}/>
-            <Messages messages={messages} name={name} />
+            <InfoBar otherUserName={otherUserName}/>
+            <Messages messages={messages} name={props.name} />
             <Input 
               message={message}
               setMessage={setMessage}

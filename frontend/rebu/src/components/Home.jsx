@@ -1,9 +1,11 @@
-import {useState, Fragment} from 'react';
+import {useState, Fragment, useEffect} from 'react';
+import Axios from 'axios';
 import Map from './Map';
 import UserSummary from './UserSummary';
 
-export default function Home(props) {
+import Chat from "./Chat/Chat";
 
+export default function Home(props) {
   const [travelTD, settravelTD] = useState({
     time: "0",
     distance: "0",
@@ -16,6 +18,7 @@ export default function Home(props) {
   const [startAddress, setstartAddress] = useState("");
   const [finishAddress, setfinishAddress] = useState("");
 
+
   return (
     <Fragment>
       <div className = "map">
@@ -27,6 +30,10 @@ export default function Home(props) {
           finishAddress = {finishAddress} setfinishAddress = {setfinishAddress}
         />
       </div>
+      <Chat 
+        name={props.user.full_name}
+        driver={props.user.driver}
+      />
         <UserSummary 
           travelTD = {travelTD} settravelTD = {settravelTD}
           origin = {origin} setOrigin = {setOrigin} 

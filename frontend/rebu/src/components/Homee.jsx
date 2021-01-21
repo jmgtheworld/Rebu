@@ -7,13 +7,14 @@ import HomeDriver from "./HomeDriver";
 import Axios from "axios";
 
 const Homee = (props) => {
-  const [ userType, setUserType ] = useState("");
+  const [ user, setUser ] = useState({});
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    Axios.get(`http://localhost:3001/users/2`)//would be /api/users/:id instead
+    Axios.get("http://localhost:3001/users/data", { headers: { "x-access-token": token} })
       .then((res) => {
-        console.log(res.data.driver);
-        res.data.driver ? setUserType("driver") : setUserType("rider");
+        console.log("USERINFO: ", res.data);
+        setUser(res.data);
       })
       .catch(err => console.log(err));
   }, []);
@@ -21,8 +22,8 @@ const Homee = (props) => {
   return (
     <div>
       {/* <h1>Logged In: {props.loggedIn}</h1> */}
-      {userType === "rider" && <Home />}
-      {userType === "driver" && <HomeDriver />}
+      {!user.driver && <Home user={user} />}
+      {user.driver && <HomeDriver user={user} />}
     </div>
   )
 };
