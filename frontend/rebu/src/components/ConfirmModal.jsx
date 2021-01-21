@@ -4,7 +4,10 @@ import {Modal, Button} from 'react-bootstrap';
 
 export default function ConfirmModal (props) {
 
-  const {confirm, driverlocation, origin, setOrigin, destination, setDestination, start_location_lat, start_location_lon} = props;
+  const {confirm, driverlocation, origin, setOrigin, destination, 
+    setDestination, pickup, setPickup, setPrice, start_location_lat, start_location_lon,
+    end_location_lat, end_location_lon
+  } = props;
   
   const [loaded, setloaded] = useState(false);
   console.log('driverlocation' , driverlocation)
@@ -23,15 +26,20 @@ export default function ConfirmModal (props) {
 
   const confirmTrip = () => {
     // setloaded(true)
-      setDestination({
-        lat: start_location_lat,
-        lng: start_location_lon
-      })
       setOrigin({
         lat: driverlocation.current_location_lat,
         lng: driverlocation.current_location_lon
       })
+      setPickup({
+        lat: start_location_lat,
+        lng: start_location_lon
+      })
+      setDestination({
+        lat: end_location_lat, 
+        lng: end_location_lon
+      })
       console.log('origin after submit', origin)
+      console.log('pickup after submit', pickup)
       console.log('destination after submit', destination)
   }
 
@@ -56,6 +64,7 @@ export default function ConfirmModal (props) {
         <Button onClick={() => {
           confirm()
           confirmTrip()
+          setPrice(props.price)
         }}>
           Yes
         </Button>

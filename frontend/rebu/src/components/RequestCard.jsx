@@ -10,7 +10,11 @@ export default function RequestCard (props) {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
-  const {start_address, end_address, driverlocation, origin, setOrigin, destination, setDestination, start_location_lat, start_location_lon} = props;
+  const {start_address, end_address, driverlocation, origin, setOrigin, pickup, 
+    setPickup, destination, setDestination, setPrice, start_location_lat, start_location_lon,
+    end_location_lat, end_location_lon
+  
+  } = props;
   console.log('dirver location from request card', driverlocation)
   
   return (
@@ -37,10 +41,15 @@ export default function RequestCard (props) {
                 driverlocation = {driverlocation}
                 origin = {origin}
                 setOrigin = {setOrigin} 
+                pickup = {pickup}
+                setPickup = {setPickup}
                 desination = {destination}
                 setDestination = {setDestination}
+                setPrice = {setPrice}
                 start_location_lat = {start_location_lat}
                 start_location_lon = {start_location_lon}
+                end_location_lat = {end_location_lat}
+                end_location_lon = {end_location_lon}
               />
             </Col>
             }
