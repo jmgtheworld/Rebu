@@ -8,7 +8,7 @@ import Chat from "./Chat/Chat";
 
 import './Chat/Chat.css'
 
-export default function HomeDriver () {
+export default function HomeDriver (props) {
   const [requests, setRequests] = useState([]); 
 
   const [travelTD, settravelTD] = useState({
@@ -29,6 +29,7 @@ export default function HomeDriver () {
     //put requests to api/trips/:id and changes accepted column to 'true' and input the user's id into the driver_id column
     //and directs the user to the /trip view route where the navigation starts
 
+    
   return (
     <div>
       <div>Map to show other drivers</div>
@@ -38,7 +39,10 @@ export default function HomeDriver () {
       <DriverSummary travelTD = {travelTD} settravelTD = {settravelTD}/>
       <div id="chat">
         <h2>Chat</h2>
-        <Chat />
+        <Chat
+          name={props.user.full_name}
+          driver={props.user.driver}
+        />
       </div>
       <div>
         <h2>Requests</h2>

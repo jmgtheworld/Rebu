@@ -6,7 +6,7 @@ export default function InfoBar (props) {
     <div className="infoBar"> 
       <div className="leftInnerContainer">
         <FiMessageCircle />
-        <p>Customer name: {props.otherUserName}</p>
+        <p>Other user name: {props.otherUserName}</p>
       </div>
       <div className="rightInnerContainer">
         

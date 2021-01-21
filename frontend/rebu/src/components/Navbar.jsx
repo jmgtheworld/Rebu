@@ -7,18 +7,18 @@ import SidebarData from "./SidebarData";
 
 import "./Navbar.scss";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const [sidebar, setSidebar] = useState(false);
   // const [sidebarData, setSidebarData] = useState([]);
   let sbData = [];
   const token = localStorage.getItem("token");
   console.log("navbar token", token);
 
-  if (token) {
-    sbData = SidebarData.filter(data => data.title !== 'Register' || data.title !== 'Login')
-  }
+  // if (token) {
+  //   sbData = SidebarData.filter(data => data.title !== 'Register' || data.title !== 'Login')
+  // }
 
-  const SidebarList = sbData.map((item, index)=> {
+  const SidebarList = SidebarData.map((item, index)=> {
     return (
       <li key={index} className="nav-text">
         <Link to={item.path}>

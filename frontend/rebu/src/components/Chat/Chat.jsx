@@ -44,27 +44,32 @@ export default function Chat (props) {
   },[]);
 
   useEffect(() => {
-    socket = io("http://localhost:3001", {
-      transports: ["websocket", "polling"]
-    });
+    if (props.name) {
+      socket = io("http://localhost:3001", {
+        transports: ["websocket", "polling"]
+      });
+  
+      socket.emit("join", { name: props.name , room: 'chat' })
 
-    socket.emit("join", { name: props.name , room: 'chat' })
+      socket.on('message', (message) => {
+        setMessages(messages => [...messages, message]);
+        console.log("MESSAGE EMITTED: ", message)
+      })
 
-    return () => {
-      socket.emit('disconnection');
-      socket.off();
+      return () => {
+        socket.emit('disconnection');
+        socket.off();
+      }
     }
+  }, [props.name])
 
-  }, [tripAPI])
-
-  useEffect(() => {
-    socket.on('message', (message) => {
-      console.log("EMITTING MESSAGE SOCKET")
-      setMessages([...messages, message]);
-      console.log("MESSAGE EMITTED: ", message)
+  // useEffect(() => {
+  //   socket.on('message', (message) => {
+  //     setMessages([...messages, message]);
+  //     console.log("MESSAGE EMITTED: ", message)
       
-    })
-  },[messages])
+  //   })
+  // },[messages])
 
 
   //function for sending messages
@@ -76,7 +81,6 @@ export default function Chat (props) {
     }
   }
 
-  console.log("message: ", message)
   console.log("MESSAGES NOW: ", messages)
 
   return (

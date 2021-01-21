@@ -5,7 +5,7 @@ import './Message.css';
 export default function Message (props) {
   let isSentByCurrentUser = false;
 
-  const trimmedName = props.name.trim().toLowerCase();
+  const trimmedName = props.name
 
   if (props.message.user === trimmedName){
     isSentByCurrentUser = true;
@@ -21,7 +21,6 @@ export default function Message (props) {
             <div className="messageBox backgroundBlue">
               <p className="messageText colorWhite">{props.message.text}</p>
             </div>
-
           </div>
         )
       }
