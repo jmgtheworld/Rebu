@@ -9,8 +9,16 @@ import "./Navbar.scss";
 
 const Navbar = (props) => {
   const [sidebar, setSidebar] = useState(false);
+  // const [sidebarData, setSidebarData] = useState([]);
+  let sbData = [];
+  const token = localStorage.getItem("token");
+  console.log("navbar token", token);
 
-  const SidebarList = SidebarData.map((item, index)=> {
+  if (token) {
+    sbData = SidebarData.filter(data => data.title !== 'Register' || data.title !== 'Login')
+  }
+
+  const SidebarList = sbData.map((item, index)=> {
     return (
       <li key={index} className="nav-text">
         <Link to={item.path}>
