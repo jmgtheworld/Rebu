@@ -3,8 +3,8 @@ import Axios from 'axios';
 import { io } from 'socket.io-client';
 
 import InfoBar from "./InfoBar";
-// import Messages from './Messages';
-// import Input from './Input';
+import Messages from './Messages';
+import Input from './Input';
 // import TextContainer from './TextContainer';
 
 import "./Chat.css"
@@ -95,13 +95,13 @@ export default function Chat () {
 
   return (
     <div className="outerContainer">
-        <div className="container">
-          <InfoBar />
-          <input 
-            value={message} 
-            type="text" 
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}
+        <div className="chat-container">
+          <InfoBar customer={customerId}/>
+          <Messages />
+          <Input 
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
           />
         </div>
     </div>
@@ -109,29 +109,3 @@ export default function Chat () {
 
   )
 }
-
-// <div className="chat-container">
-      // {/* <Accordion>
-        // <Card className="parent-message-container">
-        //   <Card.Header>
-        //     <Accordion.Toggle as={Button} variant="link" eventKey="0">
-        //       Click me!
-        //     </Accordion.Toggle>
-        //   </Card.Header>
-        //   <Accordion.Collapse eventKey="0">
-        //     <div className="message-container">
-        //       <div>
-        //         {messages}
-        //       </div>
-        //       <div className="send-message-container">
-        //         <div className="new-message-container">
-        //           <textarea className="message-input" type="text"/>
-        //         </div>
-        //         <div className="btn btn-primary">Send</div>
-        //       </div>
-        //     </div>
-        //   </Accordion.Collapse>
-        // </Card>
-      // </Accordion> */}
-      
-    // </div>

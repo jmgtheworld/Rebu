@@ -1,11 +1,12 @@
 import { FiMessageCircle } from 'react-icons/fi'
+import './InfoBar.css';
 
-export default function InfoBar () {
+export default function InfoBar ({ customer }) {
   return (
     <div className="infoBar"> 
       <div className="leftInnerContainer">
         <FiMessageCircle />
-        <h3>Customer Name</h3>
+        <p>Customer name: {customer}</p>
       </div>
       <div className="rightInnerContainer">
         

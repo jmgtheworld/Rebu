@@ -3,7 +3,6 @@ import Axios from 'axios';
 
 import RequestList from "./RequestList";
 import Chat from "./Chat/Chat";
-import "./Chat.scss"
 
 
 export default function HomeDriver () {
