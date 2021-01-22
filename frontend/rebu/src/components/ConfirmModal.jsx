@@ -31,13 +31,13 @@ export default function ConfirmModal (props) {
 
   const [ trip, setTrip ] = useState({
     customer_id: 1,
-    driver_id: null,
-    start_address: end_address,
-    end_address: start_address,
-    start_location_lat: controlDestinationLat(),
-    start_location_lon: controlDestinationLng(),
-    end_location_lat: start_location_lat,
-    end_location_lon: start_location_lon,
+    driver_id: 3,
+    start_address: start_address,
+    end_address: end_address,
+    start_location_lat: origin.lat,
+    start_location_lon: origin.lng,
+    end_location_lat: controlDestinationLat(),
+    end_location_lon: controlDestinationLng(),
     accepted: true,
     payment_amount: price,
     payment_status: false,
@@ -55,11 +55,11 @@ export default function ConfirmModal (props) {
   }, [loaded])
 
 
-  const confirmTrip = () => {
+  const confirmTrip = useCallback(() => {
     setloaded(true)
     setTrip({
       customer_id: 1,
-      driver_id: null,
+      driver_id: 3,
       start_address: start_address,
       end_address: end_address,
       start_location_lat: origin.lat,
@@ -73,7 +73,10 @@ export default function ConfirmModal (props) {
       ended_at: null
     })
     console.log('trip confirmed', trip)
-  }
+    return Axios.put("http://localhost:3001/trips/0/accept", trip)
+    .then(() => console.log("new trip request created"))
+    .catch(err => console.log(err));
+  }, [])
 
   return (
     <Modal

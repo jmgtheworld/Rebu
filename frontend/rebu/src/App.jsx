@@ -11,6 +11,7 @@ import Homee from "./components/Homee"
 import Login from "./components/Login"
 import Register from "./components/Register"
 import Settings from "./components/Settings"
+import Support from "./components/Support";
 import Navbar from "./components/Navbar"
 import History from "./components/History/History"
 import Logout from "./components/Logout";
@@ -21,6 +22,9 @@ function App() {
       <div className = "App">
         <Navbar />
         <Switch>
+          <Route path = "/support">
+            <Support />
+          </Route>
           <Route path = "/settings">
             <Settings />
           </Route>

@@ -22,7 +22,6 @@ export default function RequestCard (props) {
     <Card.Body>
       <Card className = "tripCard">
         <Card.Body onClick = {() => {
-          console.log("IM CLICKED")
           setOrigin({
             lat: driverlocation.current_location_lat,
             lng: driverlocation.current_location_lon
