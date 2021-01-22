@@ -79,8 +79,10 @@ module.exports = ({
         // console.log(tripId);
         // const driverId = req.params.driver_id;
         // console.log(driverId)
+        const driverId = req.body.driver_id;
+        console.log(req.body);
 
-        acceptTrip(tripId)
+        acceptTrip(tripId, driverId)
             .then(trip => res.json(trip))
             .catch(err => res.json({
                 error: err.message
