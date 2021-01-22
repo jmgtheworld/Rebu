@@ -45,14 +45,11 @@ export default function Chat (props) {
   },[]);
 
   useEffect(() => {
-    console.log(props.name)
-    if (props.name) {
+    if (props.name && room) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
       });
-
-  
-      socket.emit("join", { name: props.name , room })
+      socket.emit("join", { name: props.name , room, isUserDriver })
 
       socket.on('message', (message) => {
         setMessages(messages => [...messages, message]);
@@ -64,21 +61,24 @@ export default function Chat (props) {
         socket.off();
       }
     }
-  }, [props.name])
+  }, [props.name, room])
 
-  useEffect(()=> {
+  // useEffect(()=> {
     
-    return socket && socket.on('notifyCustomer', ({ tripId }) => {
-      console.log("REQUEST HAS BEEN ACCEPTED TRIGGERED")
-      console.log(`CLIENT SIDE TRIPID: ${trip.id}, SERVER SIDE TRIPID: ${tripId}`)
+  //   return socket && socket.on('notifyCustomer', ({ tripId }) => {
+  //     console.log("REQUEST HAS BEEN ACCEPTED TRIGGERED")
+  //     console.log(`CLIENT SIDE TRIPID: ${trip.id}, SERVER SIDE TRIPID: ${tripId}`)
       
-      if (trip.id === tripId) {
-        console.log("REQUEST HAS BEEN ACCEPTED FOR TRIP ID: ", tripId)
-        props.setRequestAccepted(true)
-        console.log("CHAT SHOULD SHOW UP")
-      }
-    })
-  , [trip]})
+  //     // if (trip.id === tripId) {
+  //     //   console.log("REQUEST HAS BEEN ACCEPTED FOR TRIP ID: ", tripId)
+  //     //   props.setRequestAccepted(true)
+  //     //   console.log("CHAT SHOULD SHOW UP")
+  //     // }
+  //   })
+  //   .then (() => {
+
+  //   })
+  // , [trip]})
 
   //function for sending messages
   function sendMessage (event) {
@@ -89,7 +89,7 @@ export default function Chat (props) {
     }
   }
 
-  console.log("MESSAGES NOW: ", messages)
+
 
   return (
       <div className="outerContainer">

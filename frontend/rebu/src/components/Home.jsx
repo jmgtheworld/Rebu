@@ -22,7 +22,7 @@ export default function Home(props) {
 
   
 
-  console.log("USER NAME:", props.user)
+  console.log("USER INFO:", props.user)
   console.log("USER NAME:", props.user.full_name)
   return (
     <Fragment>

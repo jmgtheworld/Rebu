@@ -3,9 +3,7 @@ import Axios from 'axios';
 import {Modal, Button} from 'react-bootstrap';
 import { io } from 'socket.io-client';
 
-const socket = io("http://localhost:3001", {
-        transports: ["websocket", "polling"]
-      });
+let socket;
 
 export default function ConfirmModal (props) {
 
@@ -48,12 +46,16 @@ export default function ConfirmModal (props) {
       console.log('destination after submit', destination)
   }
 
-  const notifyCustomer = () => {
-    console.log("NOTIFY CUSTOMER FN TRIGGERED")
-    const tripId = props.tripId;
-    socket.emit("accept", { tripId })
-    console.log("NOTIFY CUSTOMER FN FINISHED")
-  }
+  // const notifyCustomer = () => {
+  //   socket = io("http://localhost:3001", {
+  //       transports: ["websocket", "polling"]
+  //     });
+
+  //   console.log("NOTIFY CUSTOMER FN TRIGGERED")
+  //   const tripId = props.tripId;
+  //   socket.emit("accept")
+  //   console.log("NOTIFY CUSTOMER FN FINISHED")
+  // }
 
   return (
     <Modal
@@ -77,7 +79,7 @@ export default function ConfirmModal (props) {
           confirm()
           confirmTrip()
           setPrice(props.price)
-          notifyCustomer()
+          // notifyCustomer()
         }}>
           Yes
         </Button>
