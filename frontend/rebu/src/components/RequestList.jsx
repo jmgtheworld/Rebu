@@ -35,7 +35,7 @@ export default function RequestList (props) {
   return (
     <Card>
       <Card.Header className = "cardHeader">
-        <Row>
+        <Row className = "cardRow">
           <Col column sm={3}>From</Col>
           <Col column sm={3}>To</Col>
           <Col column sm={2}>Price</Col>
@@ -49,7 +49,7 @@ export default function RequestList (props) {
               variant="secondary"
               className = "distanceFilter"
             >
-              Distance
+              Filter By Distance
               <Dropdown.Divider />
               <Dropdown.Item eventKey="1">500m</Dropdown.Item>
               <Dropdown.Item eventKey="2">1km</Dropdown.Item>
