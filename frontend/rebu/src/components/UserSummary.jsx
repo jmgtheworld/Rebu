@@ -14,7 +14,7 @@ export default function UserSummary(props) {
   const {travelTD, origin, destination, startAddress, finishAddress} = props;
 
   const [priceMenu, setpriceMenu] = useState(false);
-  const [price, setPrice] = useState(20);
+  const [price, setPrice] = useState(0);
   const [waiting, setWaiting]  = useState(false);
 
   const [ newTrip, setNewTrip ] = useState({
