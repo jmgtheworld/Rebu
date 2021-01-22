@@ -2,7 +2,7 @@ module.exports = (db) => {
     // Gets all trips in DB
     const getTrips = () => {
       const query = {
-          text: 'SELECT * FROM trips',
+          text: 'SELECT * FROM trips ORDER BY created_at',
       };
   
       return db

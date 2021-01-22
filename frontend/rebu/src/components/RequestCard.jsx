@@ -13,7 +13,7 @@ export default function RequestCard (props) {
 
   const {start_address, end_address, driverlocation, origin, setOrigin, pickup, 
     setPickup, destination, setDestination, setPrice, start_location_lat, start_location_lon,
-    end_location_lat, end_location_lon
+    end_location_lat, end_location_lon, created_at
   
   } = props;
   console.log('dirver location from request card', driverlocation)
@@ -65,6 +65,7 @@ export default function RequestCard (props) {
                 start_location_lon = {start_location_lon}
                 end_location_lat = {end_location_lat}
                 end_location_lon = {end_location_lon}
+                created_at = {created_at}
 
               />
             </Col>
