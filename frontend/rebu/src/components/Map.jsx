@@ -41,7 +41,7 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("AIzaSyB8sDvFcA2Ig2Vx6DsFun56ZtWkk0VunN0");
+Geocode.setApiKey("");
 
 export default function Map(props) {
 
@@ -61,7 +61,7 @@ export default function Map(props) {
   ]
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyB8sDvFcA2Ig2Vx6DsFun56ZtWkk0VunN0",
+    googleMapsApiKey: "",
     libraries,
   });
 

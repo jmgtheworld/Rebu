@@ -45,14 +45,14 @@ export default function ConfirmModal (props) {
     ended_at: null
   })
 
-  useEffect(() => {
-    if (loaded) {
-      console.log('newtrip', trip)
-      return Axios.put("http://localhost:3001/trips/1/accept", trip)
-        .then(() => console.log("new trip request created"))
-        .catch(err => console.log(err));
-    }
-  }, [loaded])
+  // useEffect(() => {
+  //   if (loaded) {
+  //     console.log('newtrip', trip)
+  //     return Axios.put("http://localhost:3001/trips/1/accept", trip)
+  //       .then(() => console.log("new trip request created"))
+  //       .catch(err => console.log(err));
+  //   }
+  // }, [loaded])
 
 
   const confirmTrip = useCallback(() => {
@@ -73,7 +73,7 @@ export default function ConfirmModal (props) {
       ended_at: null
     })
     console.log('trip confirmed', trip)
-    return Axios.put("http://localhost:3001/trips/0/accept", trip)
+    return Axios.put("http://localhost:3001/trips/1/accept", trip)
     .then(() => console.log("new trip request created"))
     .catch(err => console.log(err));
   }, [])
