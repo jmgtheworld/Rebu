@@ -4,7 +4,7 @@ import {Modal, Button} from 'react-bootstrap';
 
 export default function ConfirmModal (props) {
 
-  const {confirm, driverlocation, origin, setOrigin, destination, 
+  const {id, customer_id, confirm, driverlocation, origin, setOrigin, destination, 
     start_address, end_address, price,
     setDestination, pickup, setPickup, setPrice, start_location_lat, start_location_lon,
     end_location_lat, end_location_lon, created_at
@@ -29,9 +29,22 @@ export default function ConfirmModal (props) {
     return null
   }
 
+  const token = localStorage.getItem("token");
+  const [currentDriverId, setCurrentDriverId] = useState(null);
+
+  useEffect(() => {
+    const requestsAPI = "http://localhost:3001/users/data"
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
+      .then(res => {
+        console.log(res.data.id);
+        setCurrentDriverId(res.data.id)
+      });
+  }, {})
+  console.log(currentDriverId);
+
   const [ trip, setTrip ] = useState({
-    customer_id: 1,
-    driver_id: 3,
+    customer_id: customer_id,
+    driver_id: currentDriverId,
     start_address: start_address,
     end_address: end_address,
     start_location_lat: origin.lat,
@@ -58,8 +71,8 @@ export default function ConfirmModal (props) {
   const confirmTrip = useCallback(() => {
     setloaded(true)
     setTrip({
-      customer_id: 1,
-      driver_id: 3,
+      customer_id: customer_id,
+      driver_id: currentDriverId,
       start_address: start_address,
       end_address: end_address,
       start_location_lat: origin.lat,
@@ -73,10 +86,10 @@ export default function ConfirmModal (props) {
       ended_at: null
     })
     console.log('trip confirmed', trip)
-    return Axios.put("http://localhost:3001/trips/1/accept", trip)
+    return currentDriverId && Axios.put(`http://localhost:3001/trips/${id}/accept`, { driver_id : currentDriverId})
     .then(() => console.log("new trip request created"))
     .catch(err => console.log(err));
-  }, [])
+  }, [currentDriverId])
 
   return (
     <Modal

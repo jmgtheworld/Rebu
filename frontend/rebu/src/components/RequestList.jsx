@@ -10,6 +10,7 @@ export default function RequestList (props) {
       <RequestCard 
         key={request.id}
         id={request.id}
+        customer_id = {request.customer_id}
         price={request.payment_amount}
         accepted={request.accepted}
         status={request.accepted}

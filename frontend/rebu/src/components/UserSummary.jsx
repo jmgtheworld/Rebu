@@ -98,11 +98,23 @@ export default function UserSummary(props) {
     }
   }, [loadedOnce, toggle])
 
+  const token = localStorage.getItem("token");
+  
+  
+  const [currentDrvier, setCurrentDriver]  = useState(null)
+
+  useEffect(() => {
+    const requestsAPI = "http://localhost:3001/users/data"
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
+      .then(res => setCurrentDriver(res.data.id));
+  })
+
+
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
     setNewTrip({
-      customer_id: 1,
+      customer_id: currentDrvier,
       driver_id: null,
       start_address: startAddress,
       end_address: finishAddress,
