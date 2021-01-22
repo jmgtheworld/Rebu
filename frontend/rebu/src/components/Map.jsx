@@ -2,6 +2,7 @@ import React, {Fragment} from "react";
 import Geocode from "react-geocode";
 import { Spinner } from 'react-bootstrap';
 
+
 import {
   GoogleMap,
   useLoadScript,
@@ -15,6 +16,7 @@ import {
 import MapDirectionsRenderer from './Directions';
 import Distance from './Distance'
 import Locate from './Locate';
+import LocateHome from './LocateHome';
 import SearchStart from './SearchStart';
 import SearchDestination from './SearchDestination';
 
@@ -144,6 +146,7 @@ export default function Map(props) {
         />
       </div>
       <div className = "destinationArea"> 
+        {/* <LocateHome panTo={panTo} setDestination = {setDestination}/> */}
         <SearchDestination 
           panTo={panTo} 
           finishAddress = {finishAddress}

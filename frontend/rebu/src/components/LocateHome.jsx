@@ -1,9 +1,9 @@
-import {Fragment} from 'react';
-import {FaRegCompass} from "react-icons/fa";
- 
-export default function Locate (props) {
+import { Fragment } from 'react';
+import { FaHome } from "react-icons/fa";
 
-  const {panTo, setOrigin} = props;
+export default function LocateHome (props) {
+
+  const {panTo, setDestination} = props;
 
   return (
     <Fragment>
@@ -17,13 +17,13 @@ export default function Locate (props) {
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 });
-                setOrigin({lat:position.coords.latitude, lng:position.coords.longitude})
+                setDestination({lat:position.coords.latitude, lng:position.coords.longitude})
               },
               () => null
             );
           }}
         >
-          <FaRegCompass />
+          <FaHome />
         </button>
     </Fragment>
   );
