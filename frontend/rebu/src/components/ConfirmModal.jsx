@@ -7,7 +7,7 @@ export default function ConfirmModal (props) {
   const {confirm, driverlocation, origin, setOrigin, destination, 
     start_address, end_address, price,
     setDestination, pickup, setPickup, setPrice, start_location_lat, start_location_lon,
-    end_location_lat, end_location_lon
+    end_location_lat, end_location_lon, created_at
   } = props;
   
   const [loaded, setloaded] = useState(false);
@@ -41,7 +41,7 @@ export default function ConfirmModal (props) {
     accepted: true,
     payment_amount: price,
     payment_status: false,
-    created_at: Date.now(),
+    created_at: created_at,
     ended_at: null
   })
 
@@ -69,7 +69,7 @@ export default function ConfirmModal (props) {
       accepted: true,
       payment_amount: price,
       payment_status: false,
-      created_at: Date.now(),
+      created_at: created_at,
       ended_at: null
     })
     console.log('trip confirmed', trip)
