@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const { checkToken } = require('../helpers/checkTokenHelper');
 
@@ -123,16 +125,17 @@ module.exports = ({
                         msg: 'Sorry, a user account with this email already exists'
                     });
                 } else {
-                    return addUser(driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password)
+                    return addUser(driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password);
                 }
-
             })
-            .then(newUser => {
+            .then(()=> {
                 // Set the session id to the new user's id
                 // console.log(newUser);
                 // req.session.user_id = newUser.id;
                 // return res.json({"user_id": req.session.newUser_id});
                 res.json(newUser)
+                const token = jwt.sign({userID: user.id}, "bigSecret");
+                return res.status(200).json({token});
             })
             .catch(err => res.json({
                 error: err.message
