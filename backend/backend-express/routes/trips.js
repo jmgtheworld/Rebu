@@ -71,7 +71,6 @@ module.exports = ({
     });
 
 
-
     // Updates a trip to 'accepted'
     // NEED TO ADD driver_id somehow
     router.put('/:id/accept', (req, res) => {

@@ -16,7 +16,8 @@ module.exports = ({
     getTripsByUserId,
     updateUserCurrentLocation,
     fetchIP,
-    fetchCoordsByIP
+    fetchCoordsByIP,
+    getUserActiveTrip
 }) => {
     // Gets all of a user's trips
     router.get('/trips', checkToken, (req, res) => {    
@@ -40,6 +41,14 @@ module.exports = ({
     router.get('/data', checkToken, (req, res) => {
         getUserById(req.userID)
             .then((users) => res.json(users))
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/active-trip', checkToken, (req, res) => {
+        getUserActiveTrip(req.userID)
+            .then(trip => res.status(200).json(trip))
             .catch((err) => res.json({
                 error: err.message
             }));
