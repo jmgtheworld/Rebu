@@ -34,19 +34,20 @@ export default function RequestList (props) {
 
   return (
     <Card>
-      <Card.Header>
+      <Card.Header className = "cardHeader">
         <Row>
           <Col column sm={3}>From</Col>
           <Col column sm={3}>To</Col>
           <Col column sm={2}>Price</Col>
-          <Col>
+          <Col column sm={3}>
             <DropdownButton
               as={ButtonGroup}
               menuAlign="right"
               key="Secondary"
               id="dropdown-variants-Secondary"
-              title="Settings"
+              title="Distance"
               variant="secondary"
+              className = "distanceFilter"
             >
               Distance
               <Dropdown.Divider />
