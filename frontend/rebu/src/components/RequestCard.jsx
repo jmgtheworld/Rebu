@@ -10,7 +10,7 @@ export default function RequestCard (props) {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
-  const {start_address, end_address, driverlocation, origin, setOrigin, pickup, 
+  const {id, customer_id, start_address, end_address, driverlocation, origin, setOrigin, pickup, 
     setPickup, destination, setDestination, setPrice, start_location_lat, start_location_lon,
     end_location_lat, end_location_lon, created_at
   
@@ -46,7 +46,8 @@ export default function RequestCard (props) {
               </Button>
               <ConfirmModal
                 show={modalShow}
-                tripId={props.tripId}
+                id = {id}
+                customer_id = {customer_id}
                 onHide={() => setModalShow(false)}
                 price = {props.price}
                 start_address={start_address}
