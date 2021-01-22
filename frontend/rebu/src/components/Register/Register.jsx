@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import Axios from 'axios';
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./RiderRegisterForm";
 import DriverRegisterForm from "./DriverRegisterForm";
