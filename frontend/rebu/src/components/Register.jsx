@@ -4,6 +4,8 @@ import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./RiderRegisterForm";
 import DriverRegisterForm from "./DriverRegisterForm";
 
+import "./Register.scss";
+
 export default function Register(props) {
   const [ newUser, setNewUser ] = useState({
     full_name: "",
@@ -72,47 +74,49 @@ export default function Register(props) {
   }
   console.log(userType)
   return (
-    <div>
+    <div id="register" classname="container">
       {/* <h1>Logged in: {props.loggedIn}</h1> */}
-      <h1> Register</h1>
-      <Form.Row>
-        <Form.Label as="legend" column sm={2}>
-          User Type
-        </Form.Label>
-        <Form.Row as={Col}>
-          <Form.Check
-            type="radio"
-            label="Rider"
-            name="formHorizontalRadios"
-            value="rider"
-            id="formHorizontalRadios1"
-            defaultChecked
-            onClick={userCheck}
-          />
-          <Form.Check
-            type="radio"
-            label="Driver"
-            name="formHorizontalRadios"
-            value="driver"
-            id="formHorizontalRadios2"
-            onClick={userCheck}
-          />
+      <div className="outer-container">
+        <h1> Register</h1>
+        <Form.Row>
+          <Form.Label as="legend" column sm={2}>
+            User Type
+          </Form.Label>
+          <Form.Row as={Col}>
+            <Form.Check
+              type="radio"
+              label="Rider"
+              name="formHorizontalRadios"
+              value="rider"
+              id="formHorizontalRadios1"
+              defaultChecked
+              onClick={userCheck}
+            />
+            <Form.Check
+              type="radio"
+              label="Driver"
+              name="formHorizontalRadios"
+              value="driver"
+              id="formHorizontalRadios2"
+              onClick={userCheck}
+            />
+          </Form.Row>
         </Form.Row>
-      </Form.Row>
-      {userType === "rider" && 
-        <RiderRegisterForm 
-          register={register}
+        {userType === "rider" && 
+          <RiderRegisterForm 
+            register={register}
+            change={handleChange}
+            userInfo={newUser}
+          />
+        }
+        {userType === "driver" && 
+          <DriverRegisterForm 
           change={handleChange}
+          register={register}
           userInfo={newUser}
-        />
-      }
-      {userType === "driver" && 
-        <DriverRegisterForm 
-        change={handleChange}
-        register={register}
-        userInfo={newUser}
-        />
-      }
+          />
+        }
+      </div>
     </div>
   )
 }

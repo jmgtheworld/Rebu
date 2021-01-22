@@ -49,8 +49,10 @@ export default function ConfirmModal (props) {
   }
 
   const notifyCustomer = () => {
+    console.log("NOTIFY CUSTOMER FN TRIGGERED")
     const tripId = props.tripId;
     socket.emit("accept", { tripId })
+    console.log("NOTIFY CUSTOMER FN FINISHED")
   }
 
   return (

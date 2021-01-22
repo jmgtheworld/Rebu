@@ -46,6 +46,7 @@ export default function Chat (props) {
   },[]);
 
   useEffect(() => {
+    console.log(props.name)
     if (props.name) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
@@ -68,9 +69,14 @@ export default function Chat (props) {
 
   useEffect(()=> {
     
-    return socket.on('notifyCustomer', ({ tripId }) => {
+    return socket && socket.on('notifyCustomer', ({ tripId }) => {
+      console.log("REQUEST HAS BEEN ACCEPTED TRIGGERED")
+      console.log(`CLIENT SIDE TRIPID: ${trip.id}, SERVER SIDE TRIPID: ${tripId}`)
+      
       if (trip.id === tripId) {
+        console.log("REQUEST HAS BEEN ACCEPTED FOR TRIP ID: ", tripId)
         props.setRequestAccepted(true)
+        console.log("CHAT SHOULD SHOW UP")
       }
     })
   , [trip]})
