@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./RiderRegisterForm";
 import DriverRegisterForm from "./DriverRegisterForm";
+
 
 export default function Register(props) {
   const [ newUser, setNewUser ] = useState({
@@ -24,6 +26,7 @@ export default function Register(props) {
   });
 
   const [ userType, setUserType ] = useState("rider");
+  const [registered, setRegistered] = useState(false);
   // const [ errors, setErrors ] = useState({
   //   full_name: "",
   //   email: "",
@@ -47,8 +50,8 @@ export default function Register(props) {
     console.log("UserInfo: ", newUser);
     
     return Axios.post("http://localhost:3001/users", newUser)
-    .then(() => console.log("New user added!"))
-    .catch(err => console.log(err))
+      .then(() => setRegistered(true))
+      .catch(err => console.log(err))
   }
   // function formValid (formErrors) {
   //   let valid = true;
@@ -73,7 +76,7 @@ export default function Register(props) {
   console.log(userType)
   return (
     <div>
-      {/* <h1>Logged in: {props.loggedIn}</h1> */}
+      {registered && <Redirect to="/login" />}
       <h1> Register</h1>
       <Form.Row>
         <Form.Label as="legend" column sm={2}>

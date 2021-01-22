@@ -6,6 +6,6 @@ export default function Logout() {
   localStorage.removeItem("token");
   // console.log(token)
   return(
-    <Redirect to = "/" />
+    <Redirect to = "/login" />
   )
 }

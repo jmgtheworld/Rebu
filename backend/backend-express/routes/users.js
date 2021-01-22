@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 const { checkToken } = require('../helpers/checkTokenHelper');
 
@@ -47,25 +49,13 @@ module.exports = ({
     // Sets session id to user id if successful
     router.post('/login', (req, res) => {
         const { email, password } = req.body;
-        // req.session.user_id = null;
 
         getUserByEmail(email)
             .then(user => {
                 if (user) {
                     if (user.email === email) {
-                        if (user.password === password) {
-                            // OLD STUFF WITH COOKIE SESSION
-                            // send cookies here?
-                            // req.cookies
-                            // return res.json({"user_id": req.session.user_id});
-
-                            // req.session.user_id = user.id;
-                            // console.log("session id:", req.session.user_id );
-                            // console.log(user);
-                            // return res.json(user);
-
+                        if (bcrypt.compareSync(password, user.password)) {
                             // JWT
-                            // console.log(user.id);
                             const token = jwt.sign({userID: user.id}, "bigSecret");
                             return res.status(200).json({token});
                         } else {
@@ -112,7 +102,8 @@ module.exports = ({
     // Add new user
     router.post('/', (req, res)=> {
         const driver = req.body.license ? true : false;
-        const { full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password } = req.body;
+        const { full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country } = req.body;
+        const password = bcrypt.hashSync(req.body.password, saltRounds);
         const current_location_lat = null; 
         const current_location_lon = null;
 
@@ -123,17 +114,10 @@ module.exports = ({
                         msg: 'Sorry, a user account with this email already exists'
                     });
                 } else {
-                    return addUser(driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password)
+                    return addUser(driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, current_location_lat, current_location_lon, password);
                 }
-
             })
-            .then(newUser => {
-                // Set the session id to the new user's id
-                // console.log(newUser);
-                // req.session.user_id = newUser.id;
-                // return res.json({"user_id": req.session.newUser_id});
-                res.json(newUser)
-            })
+            .then(newUser => res.json(newUser))
             .catch(err => res.json({
                 error: err.message
             }));
