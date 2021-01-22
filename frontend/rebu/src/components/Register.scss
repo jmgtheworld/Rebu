@@ -1,5 +1,20 @@
 #register {
   height: 100vh;
+
+  .usertype-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+
+    span {
+      font-weight: 600;
+    }
+
+    .choose-usertype {
+      margin: 0 1em;
+    }
+  }
   
 
   .outer-container {

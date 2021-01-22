@@ -78,9 +78,9 @@ export default function Register(props) {
       {/* <h1>Logged in: {props.loggedIn}</h1> */}
       <div className="outer-container">
         <h1> Register</h1>
-        <Form.Row>
+        <Form.Row className="usertype-container">
           <Form.Label as="legend" column sm={2}>
-            User Type
+            <span>User Type</span>
           </Form.Label>
           <Form.Row as={Col}>
             <Form.Check
@@ -91,6 +91,7 @@ export default function Register(props) {
               id="formHorizontalRadios1"
               defaultChecked
               onClick={userCheck}
+              className="choose-usertype"
             />
             <Form.Check
               type="radio"
@@ -99,9 +100,11 @@ export default function Register(props) {
               value="driver"
               id="formHorizontalRadios2"
               onClick={userCheck}
+              className="choose-usertype"
             />
           </Form.Row>
         </Form.Row>
+        <hr />
         {userType === "rider" && 
           <RiderRegisterForm 
             register={register}
