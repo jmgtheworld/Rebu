@@ -95,21 +95,8 @@ io.on('connection', socket => {
 
   socket.on('accept', ({ room }) => {
     console.log("EMITTING EVENT TO NOTIFY THE CUSTOMER")
-    // const user = getUser(socket.id)
-    // console.log("USERINFO EMITTING THE MESSAGE: ", user);
-    // socket.emit('notifyCustomer', { tripId })
-    // const customer = users.find( user => {
-    //   return user.isUserDriver === false && user.room === tripId;
-    // })
-    // const driver = users.find( user => {
-    //   return user.isUserDriver === true && user.room === tripId;
-    // })
-    // console.log("CUSOMTER: ", customer)
-    // console.log("DRIVER: ", driver)
-    // if (customer && driver ) {
-      socket.broadcast.to(room).emit('message', { user: 'admin', text: `Your request has been accepted! You driver will let you know once he arrives.`} )
+      socket.broadcast.to(room).emit('message', { user: 'admin', text: `The request has been accepted`} )
       console.log("EVENT EMITTED")
-    // }
 
     })
 
