@@ -9,7 +9,7 @@ import './App.css';
 
 import Homee from "./components/Homee"
 import Login from "./components/Login"
-import Register from "./components/Register"
+import Register from "./components/Register/Register"
 import Settings from "./components/Settings"
 import Navbar from "./components/Navbar"
 import History from "./components/History/History"

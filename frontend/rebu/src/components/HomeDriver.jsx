@@ -76,10 +76,12 @@ export default function HomeDriver (props) {
         <DriverSummary price = {price} travelMode = {travelMode} travelTD = {travelTD} settravelTD = {settravelTD}/>
         <div id="chat">
           <h2>Chat</h2>
-          <Chat
-            name={props.user.full_name}
-            driver={props.user.driver}
-          />
+          { props.chatSelected && 
+            <Chat
+              name={props.user.full_name}
+              driver={props.user.driver}
+            />
+          }
       </div>
         <RequestList 
           driverlocation = {driverlocation[1]}

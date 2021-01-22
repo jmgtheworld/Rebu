@@ -5,7 +5,6 @@ import { io } from 'socket.io-client';
 import InfoBar from "./InfoBar";
 import Messages from './Messages';
 import Input from './Input';
-// import TextContainer from './TextContainer';
 
 import "./Chat.css"
 

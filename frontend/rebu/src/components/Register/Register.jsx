@@ -6,7 +6,7 @@ import DriverRegisterForm from "./DriverRegisterForm";
 
 import "./Register.scss";
 
-export default function Register(props) {
+export default function Register() {
   const [ newUser, setNewUser ] = useState({
     full_name: "",
     email: "",
