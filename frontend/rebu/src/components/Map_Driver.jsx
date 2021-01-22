@@ -60,8 +60,7 @@ export default function MapDriver(props) {
   console.log('origin from map_driver', origin)
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
-    {latitude: pickup.lat, longitude: pickup.lng},
-    {latitude: destination.lat, longitude: destination.lng},
+    {latitude: pickup.lat, longitude: pickup.lng}
   ]
   
   console.log('places', places)
@@ -144,6 +143,7 @@ export default function MapDriver(props) {
         center={center}
         options={options}
         onLoad={onMapLoad}
+        panel={ document.getElementById('panel') } 
       >
         {markers.map((marker) => (
           <Marker
@@ -169,7 +169,7 @@ export default function MapDriver(props) {
             })
         }}/> } */}
       </GoogleMap>
-      
+      <div id="panel"></div>
       <div className = "driverInfo">
         <> 
           <span className = "driverSpan"> How will you get to the user? {transitIcon()} </span>

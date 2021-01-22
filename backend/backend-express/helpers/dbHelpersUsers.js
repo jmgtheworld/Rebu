@@ -32,8 +32,6 @@ module.exports = (db) => {
             values: [email]
         }
 
-
-
         return db
             .query(query)
             .then(result => result.rows[0])
@@ -46,11 +44,6 @@ module.exports = (db) => {
             text: `SELECT * FROM trips WHERE customer_id = $1`,
             values: [id]
         };
-        console.log(id);
-        // const query = {
-        //     text: `SELECT * FROM trips WHERE customer_id = 2`,
-        // };
-        console.log(query);
 
         return db
             .query(query)

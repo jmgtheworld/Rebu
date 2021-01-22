@@ -1,0 +1,16 @@
+
+.tripCard:hover{
+  border-color: #343a40;
+  border-width: 2px;
+  cursor: pointer;
+}
+
+.cardRow {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.distanceFilter {
+  margin-top: 10px;
+}

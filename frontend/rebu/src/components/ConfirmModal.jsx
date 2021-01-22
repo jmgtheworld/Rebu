@@ -8,8 +8,9 @@ let socket;
 export default function ConfirmModal (props) {
 
   const {confirm, driverlocation, origin, setOrigin, destination, 
+    start_address, end_address, price,
     setDestination, pickup, setPickup, setPrice, start_location_lat, start_location_lon,
-    end_location_lat, end_location_lon
+    end_location_lat, end_location_lon, created_at
   } = props;
   
   const [loaded, setloaded] = useState(false);
@@ -17,34 +18,68 @@ export default function ConfirmModal (props) {
   console.log('start location lat' , start_location_lat)
   console.log('start location lon' , start_location_lon)
 
-  useEffect(() => {
-    if (loaded) {
-      console.log('newtrip', )
-      return Axios.put("http://localhost:3001/trips/1/accept", )
-        .then(() => console.log("new trip request created"))
-        .catch(err => console.log(err));
+  const controlDestinationLat = () => {
+    if ( end_location_lat){
+      return  end_location_lat
     }
-  }, [loaded])
-
-
-  const confirmTrip = () => {
-    // setloaded(true)
-      setOrigin({
-        lat: driverlocation.current_location_lat,
-        lng: driverlocation.current_location_lon
-      })
-      setPickup({
-        lat: start_location_lat,
-        lng: start_location_lon
-      })
-      setDestination({
-        lat: end_location_lat, 
-        lng: end_location_lon
-      })
-      console.log('origin after submit', origin)
-      console.log('pickup after submit', pickup)
-      console.log('destination after submit', destination)
+    return null
   }
+
+  const controlDestinationLng = () => {
+    if (end_location_lon){
+      return end_location_lon
+    }
+    return null
+  }
+
+  const [ trip, setTrip ] = useState({
+    customer_id: 1,
+    driver_id: 3,
+    start_address: start_address,
+    end_address: end_address,
+    start_location_lat: origin.lat,
+    start_location_lon: origin.lng,
+    end_location_lat: controlDestinationLat(),
+    end_location_lon: controlDestinationLng(),
+    accepted: true,
+    payment_amount: price,
+    payment_status: false,
+    created_at: created_at,
+    ended_at: null
+  })
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     console.log('newtrip', trip)
+  //     return Axios.put("http://localhost:3001/trips/1/accept", trip)
+  //       .then(() => console.log("new trip request created"))
+  //       .catch(err => console.log(err));
+  //   }
+  // }, [loaded])
+
+
+  const confirmTrip = useCallback(() => {
+    setloaded(true)
+    setTrip({
+      customer_id: 1,
+      driver_id: 3,
+      start_address: start_address,
+      end_address: end_address,
+      start_location_lat: origin.lat,
+      start_location_lon: origin.lng,
+      end_location_lat: controlDestinationLat(),
+      end_location_lon: controlDestinationLng(),
+      accepted: true,
+      payment_amount: price,
+      payment_status: false,
+      created_at: created_at,
+      ended_at: null
+    })
+    console.log('trip confirmed', trip)
+    return Axios.put("http://localhost:3001/trips/1/accept", trip)
+    .then(() => console.log("new trip request created"))
+    .catch(err => console.log(err));
+  }, [])
 
   // const notifyCustomer = () => {
   //   socket = io("http://localhost:3001", {

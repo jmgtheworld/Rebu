@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import Homee from './Homee';
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 export default function Login() {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   //login page
   // get request to  /users/login
@@ -20,7 +22,7 @@ export default function Login() {
     return Axios.post("http://localhost:3001/users/login", user)
       .then(res => {
         localStorage.setItem("token", res.data.token);
-        // console.log("logged in, user id:", res.data);
+        setToken(localStorage.getItem("token"));
       })
       .catch(err => console.log(err));
   };
@@ -34,9 +36,9 @@ export default function Login() {
   };
 
   return (
-    <div>
+      <div>
       <h1> Login Page </h1>
-      {/* <h1>Status: {props.loggedIn}</h1> */}
+      {token && <Redirect to= "/" />}
       <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -54,5 +56,5 @@ export default function Login() {
         </Button>
       </Form>
     </div>
-  )
+  );
 }

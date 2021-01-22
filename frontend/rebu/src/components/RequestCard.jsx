@@ -4,6 +4,7 @@ import Axios from "axios";
 import { Card, Col, Row, Button, Badge } from 'react-bootstrap';
 
 import ConfirmModal from "./ConfirmModal";
+import './RequestCard.scss'
 
 export default function RequestCard (props) {
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -11,15 +12,29 @@ export default function RequestCard (props) {
 
   const {start_address, end_address, driverlocation, origin, setOrigin, pickup, 
     setPickup, destination, setDestination, setPrice, start_location_lat, start_location_lon,
-    end_location_lat, end_location_lon
+    end_location_lat, end_location_lon, created_at
   
   } = props;
   console.log('dirver location from request card', driverlocation)
   
   return (
     <Card.Body>
-      <Card>
-        <Card.Body>
+      <Card className = "tripCard">
+        <Card.Body onClick = {() => {
+          setOrigin({
+            lat: driverlocation.current_location_lat,
+            lng: driverlocation.current_location_lon
+          })
+          setPickup({
+            lat: start_location_lat,
+            lng: start_location_lon
+          })
+          setDestination({
+            lat: end_location_lat, 
+            lng: end_location_lon
+          })
+        }
+        }>
           <Row>
             <Col column sm={3}>{props.start_address}, Distance to the customer</Col>
             <Col column sm={3}>{props.end_address}, duration of the drive</Col>
@@ -49,6 +64,8 @@ export default function RequestCard (props) {
                 start_location_lon = {start_location_lon}
                 end_location_lat = {end_location_lat}
                 end_location_lon = {end_location_lon}
+                created_at = {created_at}
+
               />
             </Col>
             }

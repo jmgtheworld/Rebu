@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Axios from 'axios';
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./RiderRegisterForm";
 import DriverRegisterForm from "./DriverRegisterForm";
 
 import "./Register.scss";
 
-export default function Register() {
+export default function Register(props) {
   const [ newUser, setNewUser ] = useState({
     full_name: "",
     email: "",
@@ -26,6 +27,7 @@ export default function Register() {
   });
 
   const [ userType, setUserType ] = useState("rider");
+  const [registered, setRegistered] = useState(false);
   // const [ errors, setErrors ] = useState({
   //   full_name: "",
   //   email: "",
@@ -49,8 +51,8 @@ export default function Register() {
     console.log("UserInfo: ", newUser);
     
     return Axios.post("http://localhost:3001/users", newUser)
-    .then(() => console.log("New user added!"))
-    .catch(err => console.log(err))
+      .then(() => setRegistered(true))
+      .catch(err => console.log(err))
   }
   // function formValid (formErrors) {
   //   let valid = true;
@@ -74,52 +76,54 @@ export default function Register() {
   }
   console.log(userType)
   return (
-    <div id="register" classname="container">
-      {/* <h1>Logged in: {props.loggedIn}</h1> */}
-      <div className="outer-container">
-        <h1> Register</h1>
-        <Form.Row className="usertype-container">
-          <Form.Label as="legend" column sm={2}>
-            <span>User Type</span>
-          </Form.Label>
-          <Form.Row as={Col}>
-            <Form.Check
-              type="radio"
-              label="Rider"
-              name="formHorizontalRadios"
-              value="rider"
-              id="formHorizontalRadios1"
-              defaultChecked
-              onClick={userCheck}
-              className="choose-usertype"
-            />
-            <Form.Check
-              type="radio"
-              label="Driver"
-              name="formHorizontalRadios"
-              value="driver"
-              id="formHorizontalRadios2"
-              onClick={userCheck}
-              className="choose-usertype"
-            />
+    <Fragment>
+      {registered && <Redirect to="/login" />}
+      <div id="register" classname="container">
+        <div className="outer-container">
+          <h1> Register</h1>
+          <Form.Row className="usertype-container">
+            <Form.Label as="legend" column sm={2}>
+              <span>User Type</span>
+            </Form.Label>
+            <Form.Row as={Col}>
+              <Form.Check
+                type="radio"
+                label="Rider"
+                name="formHorizontalRadios"
+                value="rider"
+                id="formHorizontalRadios1"
+                defaultChecked
+                onClick={userCheck}
+                className="choose-usertype"
+              />
+              <Form.Check
+                type="radio"
+                label="Driver"
+                name="formHorizontalRadios"
+                value="driver"
+                id="formHorizontalRadios2"
+                onClick={userCheck}
+                className="choose-usertype"
+              />
+            </Form.Row>
           </Form.Row>
-        </Form.Row>
-        <hr />
-        {userType === "rider" && 
-          <RiderRegisterForm 
-            register={register}
+          <hr />
+          {userType === "rider" && 
+            <RiderRegisterForm 
+              register={register}
+              change={handleChange}
+              userInfo={newUser}
+            />
+          }
+          {userType === "driver" && 
+            <DriverRegisterForm 
             change={handleChange}
+            register={register}
             userInfo={newUser}
-          />
-        }
-        {userType === "driver" && 
-          <DriverRegisterForm 
-          change={handleChange}
-          register={register}
-          userInfo={newUser}
-          />
-        }
+            />
+          }
+        </div>
       </div>
-    </div>
+    </Fragment>
   )
 }

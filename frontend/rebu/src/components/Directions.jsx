@@ -46,7 +46,17 @@ export default function MapDirectionsRenderer(props) {
 
   return (
     directions && (
-      <DirectionsRenderer directions={directions} />
+      <DirectionsRenderer 
+        panel = { document.getElementById('panel') }
+        directions={directions}  
+        options={{
+          polylineOptions: {
+            strokeColor: 'rgb(20, 139, 213)',
+            // strokeOpacity: 0.5,
+            // strokeWeight: 4
+          },
+  
+    }}/>
     )
   );
 }
