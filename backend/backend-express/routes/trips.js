@@ -9,7 +9,9 @@ module.exports = ({
     acceptTrip,
     cancelTrip, 
     deleteTrip,
-    getUserAndDriverActiveTrip
+    getUserAndDriverActiveTrip,
+    getCustomersActiveTrip,
+    getDriversActiveTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -80,6 +82,28 @@ module.exports = ({
             }));
     });
 
+    //gets a route that matches the rider Id === customer_id and the accepted === true and ended_at === null
+    router.get('/rider/:id', (req, res) => {
+
+        const userId = req.params.id;
+        getCustomersActiveTrip(userId)
+            .then(trip => res.status(200).json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/driver/:id', (req, res) => {
+
+        const userId = req.params.id;
+        getDriversActiveTrip(userId)
+            .then(trip => res.status(200).json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+
     // Updates a trip to 'accepted'
     // NEED TO ADD driver_id somehow
     router.put('/:id/accept', (req, res) => {
@@ -108,10 +132,7 @@ module.exports = ({
             }));
       });
 
-    // router.put("/:id/cancel", (req, res) => {
-    //   db.query(`UPDATE `, [req.params.id])
-    //     .then(() => res.json("trip updated!"));
-    // });
+
 
     router.delete("/:id/delete", (req, res) => {
         const tripId = req.params.id;
@@ -126,61 +147,4 @@ module.exports = ({
     return router;
 };
 
-// var express = require('express');
-// var router = express.Router();
 
-// /* GET users listing. */
-// router.get('/', function(req, res) {
-//   db.query(
-//     "SELECT * FROM trips"
-//   ).then(({ rows: trips }) => {
-//     res.json(trips);
-//   });
-// });
-
-// router.get('/:id', function(req, res) {
-//   db.query(
-//     `SELECT * FROM trips WHERE id=$1`
-//   , [req.params.id]).then(({ rows: trip }) => {
-//     res.json(trip);
-//   });
-// });
-
-// router.post('/', function(req, res) {
-//   const {
-//     user_id,
-//     start_address,
-//     end_address,
-//     start_location_lat,
-//     start_location_lon,
-//     end_location_lat, 
-//     end_location_lon,
-//     payment_amount,
-//     payment_status
-//   } = req.body;
-
-//   db.query(
-//     `
-//     INSERT INTO users (
-//       user_id,
-//       start_address,
-//       end_address,
-//       start_location_lat,
-//       start_location_lon,
-//       end_location_lat, 
-//       end_location_lon,
-//       payment_amount,
-//       payment_status)
-//     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-//     `
-//   , [user_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat,end_location_lon, payment_amount, payment_status])
-//     .then(() => res.json("added trip!"));
-// });
-
-// router.put("/:id/cancel", (req, res) => {
-//   db.query(`UPDATE `, [req.params.id])
-//     .then(() => res.json("trip updated!"));
-// });
-
-
-// module.exports = router;

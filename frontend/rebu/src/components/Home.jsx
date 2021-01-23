@@ -1,4 +1,4 @@
-import {useState, Fragment, useEffect} from 'react';
+import {useState, Fragment} from 'react';
 import Map from './Map';
 import UserSummary from './UserSummary';
 
@@ -6,8 +6,6 @@ import Chat from "./Chat/Chat";
 
 export default function Home(props) {
   // changes to true, when the driver accepts the request
-  const [ requestAccepted, setRequestAccepted ] = useState(false);
-
   const [travelTD, settravelTD] = useState({
     time: "0",
     distance: "0",
@@ -41,8 +39,7 @@ export default function Home(props) {
           <Chat 
             name={props.user.full_name}
             driver={props.user.driver}
-            setRequestAccepted={setRequestAccepted}
-            acceptedTrip={props.acceptedTrip}
+            user={props.user}
           />
         }
       </div>

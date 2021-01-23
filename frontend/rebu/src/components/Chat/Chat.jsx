@@ -17,33 +17,43 @@ export default function Chat (props) {
   const [ message, setMessage ] = useState("");
   const [ messages, setMessages ] = useState([]);
 
-
-
+  
   const isUserDriver = props.driver;
+
+  const driverTripAPI = `http://localhost:3001/trips/driver/${props.user.id}` 
+  const customerTripAPI = `http://localhost:3001/trips/rider/${props.user.id}`
+  
+  //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
+
 
 
   useEffect(()=> {
-    console.log("IS USER DRIVER? :", isUserDriver)
-    if (isUserDriver && props.acceptedTrip) {
-      setOtherUserName(props.acceptedTrip.customer_name)
-      setRoom(props.acceptedTrip.id)
-    } else if (!isUserDriver && props.acceptedTrip) {
-      console.log("DRIVER NAME ON ACCEPTED TRIP: ", props.acceptedTrip.driver_name)
-      setOtherUserName(props.acceptedTrip.driver_name)
-      setRoom(props.acceptedTrip.id)
+    if (isUserDriver && trip) {
+      return Axios.get(driverTripAPI)
+        .then((res) => {
+          setTrip(res.data);
+          setOtherUserName(res.data.customer_name);
+          setRoom(res.data.id);
+        })
+    } else if (!isUserDriver && trip) {
+      return Axios.get(customerTripAPI)
+        .then((res) => {
+          setTrip(res.data);
+          setOtherUserName(res.data.driver_name);
+          setRoom(res.data.id);
+        })
     }
-  },[props.acceptedTrip]);
+  },[]);
 
   useEffect(() => {
-    if (props.name && room && props.acceptedTrip ) {
+    if (props.name && trip && room) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
       });
-      socket.emit("join", { name: props.name , room, isUserDriver })
+      socket.emit("join", { name: props.name , room , isUserDriver })
 
       socket.on('message', (message) => {
         setMessages(messages => [...messages, message]);
-        console.log("MESSAGE EMITTED: ", message)
       })
 
       return () => {
@@ -51,24 +61,7 @@ export default function Chat (props) {
         socket.off();
       }
     }
-  }, [props.name, room, props.acceptedTrip])
-
-  // useEffect(()=> {
-    
-  //   return socket && socket.on('notifyCustomer', ({ tripId }) => {
-  //     console.log("REQUEST HAS BEEN ACCEPTED TRIGGERED")
-  //     console.log(`CLIENT SIDE TRIPID: ${trip.id}, SERVER SIDE TRIPID: ${tripId}`)
-      
-  //     // if (trip.id === tripId) {
-  //     //   console.log("REQUEST HAS BEEN ACCEPTED FOR TRIP ID: ", tripId)
-  //     //   props.setRequestAccepted(true)
-  //     //   console.log("CHAT SHOULD SHOW UP")
-  //     // }
-  //   })
-  //   .then (() => {
-
-  //   })
-  // , [trip]})
+  })
 
   //function for sending messages
   function sendMessage (event) {
