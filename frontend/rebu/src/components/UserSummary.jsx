@@ -136,9 +136,7 @@ export default function UserSummary(props) {
     const requestsAPI = `http://localhost:3001/trips/`
     Axios.get(requestsAPI) 
       .then(res => {
-        console.log(res.data)
         setCurrentTripID(res.data.length + counter)
-
       });
   })
 
