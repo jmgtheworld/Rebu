@@ -53,10 +53,10 @@ module.exports = (db) => {
 
     // Updates a trip to 'accepted'
     // NEED TO ADD driver_id somehow
-    const acceptTrip = (tripId) => {
+    const acceptTrip = (tripId, driverId) => {
         const query = {
-            text: `UPDATE trips SET accepted = TRUE WHERE id = $1`,
-            values: [tripId]
+            text: `UPDATE trips SET accepted = TRUE, driver_id = $2 WHERE id = $1`,
+            values: [tripId, driverId]
         };
 
         return db.query(query)

@@ -44,14 +44,22 @@ export default function HomeDriverwithMap () {
   });
 
   useEffect(() => {
-    const requestsAPI = "http://localhost:3001/trips"
+    const requestsAPI = "http://localhost:3001/trips/not-accepted"
     Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => setRequests(res.data));
   },[])
 
+  // useEffect(() => {
+  //   const requestsAPI = "http://localhost:3001/users"
+  //   Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
+  //     .then(res => setDriverlocation(res.data));
+  // },[])
+
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    const requestsAPI = "http://localhost:3001/users"
-    Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
+    const requestsAPI = "http://localhost:3001/users/data"
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => setDriverlocation(res.data));
   },[])
 
@@ -59,7 +67,7 @@ export default function HomeDriverwithMap () {
   //function when the request is accepted
     //post requests to api/trips/:id and changes accepted column to 'true'
     //and directs the user to the /trip view route where the navigation starts
-  console.log(driverlocation[1])
+  console.log(driverlocation)
   return (
     <div>
       <div>Map to show other drivers</div>
@@ -67,7 +75,7 @@ export default function HomeDriverwithMap () {
         <h2>Requests</h2>
         <div className = "map">
           <MapDriver 
-            driverlocation = {driverlocation[1]}
+            driverlocation = {driverlocation}
             travelMode = {travelMode}
             setTravelMode = {setTravelMode}
             travelTD = {travelTD} settravelTD = {settravelTD}
@@ -80,7 +88,7 @@ export default function HomeDriverwithMap () {
         </div>
         <DriverSummary price = {price} travelMode = {travelMode} travelTD = {travelTD} settravelTD = {settravelTD}/>
         <RequestList 
-          driverlocation = {driverlocation[1]}
+          driverlocation = {driverlocation}
           requests = {requests} 
           origin = {origin}
           pickup = {pickup}

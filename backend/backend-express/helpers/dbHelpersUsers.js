@@ -90,6 +90,18 @@ module.exports = (db) => {
             .then(result => result.rows[0])
             .catch(err => err);
     };
+
+    const getUserActiveTrip = (id) => {
+        const query = {
+            text: `SELECT * FROM trips WHERE customer_id = $1 and ended_at is NULL`,
+            values: [id]
+        };
+
+        return db
+            .query(query)
+            .then(result => result.rows[0])
+            .catch((err) => err);
+    };
   
     // Sample code, can be modified later
     // const getUsersPosts = () => {
@@ -114,6 +126,7 @@ module.exports = (db) => {
         getTripsByUserId,
         updateUserCurrentLocation,
         fetchIP,
-        fetchCoordsByIP
+        fetchCoordsByIP,
+        getUserActiveTrip
     };
   };
