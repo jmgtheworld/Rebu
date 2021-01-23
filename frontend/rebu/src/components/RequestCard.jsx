@@ -36,9 +36,9 @@ export default function RequestCard (props) {
         }
         }>
           <Row>
-            <Col column sm={3}>{props.start_address}, Distance to the customer</Col>
-            <Col column sm={3}>{props.end_address}, duration of the drive</Col>
-            <Col column sm={2}>{props.price}</Col>
+            <Col column sm={3}>{props.start_address}</Col>
+            <Col column sm={3}>{props.end_address}</Col>
+            <Col column sm={2}>$ {props.price}</Col>
             {!isConfirmed &&
             <Col>
               <Button variant="primary" onClick={() => setModalShow(true)}>
