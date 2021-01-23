@@ -12,7 +12,7 @@ const Navbar = () => {
   // const [sidebarData, setSidebarData] = useState([]);
   let sbData = [];
   const token = localStorage.getItem("token");
-  console.log("navbar token", token);
+  // console.log("navbar token", token);
 
   // if (token) {
   //   sbData = SidebarData.filter(data => data.title !== 'Register' || data.title !== 'Login')

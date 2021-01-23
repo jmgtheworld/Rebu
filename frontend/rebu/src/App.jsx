@@ -5,7 +5,7 @@ import {
   Route
 } from "react-router-dom";
 
-import './App.css';
+import './App.scss';
 
 import Homee from "./components/Homee"
 import Login from "./components/Login"
