@@ -35,7 +35,7 @@ export default function Chat (props) {
   },[props.acceptedTrip]);
 
   useEffect(() => {
-    if (props.name && room && props.acceptedTrip) {
+    if (props.name && room && props.acceptedTrip ) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
       });
