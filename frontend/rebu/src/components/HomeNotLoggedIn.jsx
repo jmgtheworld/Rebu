@@ -32,10 +32,10 @@ const HomeNotLoggedIn = () => {
       </Trail>
       {/* <h2>test</h2> */}
       <div className="button-group">
-        <Button variant="success" size="lg" onClick={login}>
+        <Button variant="success" size="lg" onClick={login} className = "RLbutton">
             Login
         </Button>
-        <Button variant="info" size="lg" onClick={register}>
+        <Button variant="info" size="lg" onClick={register} className = "RLbutton">
             Register
         </Button>
       </div>

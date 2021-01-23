@@ -31,12 +31,18 @@
 // }
 
 .button-group {
-  display: flex;
+
   // flex-direction: flex-start;
-  flex-direction: column;
+  margin-top: 80px;
   // flex-direction: row;
   // justify-content: space-around;
   // justify-content: space-between;
+}
+
+.RLbutton {
+  display: inline-block;
+  width: 60%;
+  margin: 10px;
 }
 
 
@@ -57,6 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 50px;
 }
 
 .trails-text {
