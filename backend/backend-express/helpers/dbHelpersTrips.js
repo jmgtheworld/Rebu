@@ -37,13 +37,13 @@ module.exports = (db) => {
       };
 
     // Add new trip to DB
-    const addTrip = (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon) => {
+    const addTrip = (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount) => {
         const query = {
             text: `
-            INSERT INTO trips (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+            INSERT INTO trips (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
             `,
-            values: [customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon]
+            values: [customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount]
         };
   
         return db.query(query)
