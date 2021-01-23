@@ -9,7 +9,9 @@ module.exports = ({
     acceptTrip,
     cancelTrip, 
     deleteTrip,
-    getUserAndDriverActiveTrip
+    getUserAndDriverActiveTrip,
+    getCustomersActiveTrip,
+    getDriversActiveTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -64,6 +66,27 @@ module.exports = ({
 
         const tripId = req.params.id;
         getUserAndDriverActiveTrip(tripId)
+            .then(trip => res.status(200).json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+    //gets a route that matches the rider Id === customer_id and the accepted === true and ended_at === null
+    router.get('/rider/:id', (req, res) => {
+
+        const userId = req.params.id;
+        getCustomersActiveTrip(userId)
+            .then(trip => res.status(200).json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+    router.get('/driver/:id', (req, res) => {
+
+        const userId = req.params.id;
+        getDriversActiveTrip(userId)
             .then(trip => res.status(200).json(trip))
             .catch(err => res.json({
                 error: err.message

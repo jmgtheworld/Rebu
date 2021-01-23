@@ -82,7 +82,7 @@ export default function HomeDriver (props) {
             <Chat
               name={props.user.full_name}
               driver={props.user.driver}
-              acceptedTrip={props.acceptedTrip}
+              user={props.user}
             />
           }
       </div>

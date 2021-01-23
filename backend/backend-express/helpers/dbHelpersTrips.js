@@ -87,6 +87,42 @@ module.exports = (db) => {
             .catch(err => err);
     };
 
+    const getCustomersActiveTrip = (userId) => {
+        const query = {
+            text: `
+                SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
+                FROM trips
+                LEFT JOIN users customer ON trips.customer_id = customer.id
+                LEFT JOIN users driver ON trips.driver_id = driver.id
+                WHERE accepted = TRUE
+                AND ended_at IS NULL
+                AND customer_id = $1`,
+            values: [userId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
+    const getDriversActiveTrip = (userId) => {
+        const query = {
+            text: `
+                SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
+                FROM trips
+                LEFT JOIN users customer ON trips.customer_id = customer.id
+                LEFT JOIN users driver ON trips.driver_id = driver.id
+                WHERE accepted = TRUE
+                AND ended_at IS NULL
+                AND driver_id = $1`,
+            values: [userId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
     const getUserAndDriverActiveTrip = (tripId) => {
         const query = {
             text: `
@@ -124,6 +160,8 @@ module.exports = (db) => {
         acceptTrip,
         cancelTrip, 
         deleteTrip,
-        getUserAndDriverActiveTrip
+        getUserAndDriverActiveTrip,
+        getCustomersActiveTrip,
+        getDriversActiveTrip
     };
   };

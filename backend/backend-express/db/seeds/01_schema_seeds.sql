@@ -18,7 +18,7 @@ VALUES
 
 INSERT INTO trips(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, accepted, payment_amount, payment_status, created_at, ended_at)
 VALUES
-  (1, 2, '255 Bremner Blvd, Toronto, ON M5V 3M9', '40 Bay St, Toronto, ON M5J 2X2', 43.641788, -79.386429, 43.643970, -79.378929, true, 20, true, current_timestamp, NULL),
+  (4, 7, '255 Bremner Blvd, Toronto, ON M5V 3M9', '40 Bay St, Toronto, ON M5J 2X2', 43.641788, -79.386429, 43.643970, -79.378929, true, 20, true, current_timestamp, NULL),
   (1, 4, '328 Spadina Ave, Toronto, ON M5T 2E7', '40 Bay St, Toronto, ON M5J 2X2', 43.653790, -79.398697, 43.643970, -79.378929, true, 25, true, current_timestamp - interval '1 day', current_timestamp - interval '1 day' + interval '1 hour'),
   (3, 4, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '18 Duncan St, Toronto, ON M5H 3G8', 43.649110, -79.389560, 43.647869, -79.388687, true, 10, true, current_timestamp, current_timestamp + interval '1 hour'),
   (3, 5, '909 Lake Shore Blvd W, Toronto, ON M6K 3L3', '18 Duncan St, Toronto, ON M5H 3G8', 43.629330, -79.415123, 43.647869, -79.388687, true, 15, true, current_timestamp - interval '2 day', current_timestamp - interval '2 day' + interval '1 hour'),
