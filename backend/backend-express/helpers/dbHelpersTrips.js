@@ -14,7 +14,27 @@ module.exports = (db) => {
     // Gets trip by ID
     const getTripById = id => {
         const query = {
-            text: `SELECT * FROM trips WHERE id = $1` ,
+            text: `SELECT 
+                        trips.id,
+                        trips.customer_id,
+                        trips.driver_id,
+                        trips.start_address,
+                        trips.end_address,
+                        trips.start_location_lat,
+                        trips.start_location_lon,
+                        trips.end_location_lat,
+                        trips.end_location_lon,
+                        trips.accepted,
+                        trips.payment_amount,
+                        trips.payment_status,
+                        trips.created_at,
+                        trips.ended_at,
+                        customer.full_name AS customer_name,
+                        driver.full_name AS driver_name 
+                    FROM trips
+                        JOIN users customer ON trips.customer_id = customer.id
+                        JOIN users driver ON trips.driver_id = driver.id
+                    WHERE trips.id = $1` ,
             values: [id]
         };
 
