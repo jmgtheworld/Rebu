@@ -94,16 +94,17 @@ export default function ConfirmModal (props) {
     .catch(err => console.log(err));
   }, [currentDriverId])
 
-  // const notifyCustomer = () => {
-  //   socket = io("http://localhost:3001", {
-  //       transports: ["websocket", "polling"]
-  //     });
+  const notifyCustomer = () => {
+    socket = io("http://localhost:3001", {
+        transports: ["websocket", "polling"]
+      });
 
-  //   console.log("NOTIFY CUSTOMER FN TRIGGERED")
-  //   const tripId = props.tripId;
-  //   socket.emit("accept")
-  //   console.log("NOTIFY CUSTOMER FN FINISHED")
-  // }
+    console.log("NOTIFY CUSTOMER FN TRIGGERED")
+    socket.emit("accept", ({ room: 2 }))
+    console.log("NOTIFY CUSTOMER FN FINISHED")
+
+    return;
+  }
 
   return (
     <Modal
@@ -127,7 +128,8 @@ export default function ConfirmModal (props) {
           confirm()
           confirmTrip()
           setPrice(props.price)
-          // notifyCustomer()
+          notifyCustomer()
+          props.getAcceptedTrip(id)
         }}>
           Yes
         </Button>

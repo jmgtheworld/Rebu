@@ -42,6 +42,7 @@ export default function Home(props) {
             name={props.user.full_name}
             driver={props.user.driver}
             setRequestAccepted={setRequestAccepted}
+            acceptedTrip={props.acceptedTrip}
           />
         }
       </div>

@@ -1,4 +1,3 @@
-
 import {Fragment, useState, useEffect, useCallback, useRef} from "react";
 import Axios from 'axios';
 
@@ -7,7 +6,7 @@ import './Pricebar.scss';
 import "./UserSummary.scss";
 
 import Button from './Button';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 
 export default function UserSummary(props) {
 
@@ -43,15 +42,22 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = (distanceInNumber * 3.0);
-    const startingPrice = medianPrice - 2.0;
-    const highestPrice = medianPrice + 3.0;
+    const medianPrice = Math.round((distanceInNumber * 3 ));
+    const startingPrice = medianPrice - (medianPrice * 0.25);
+    const highestPrice = medianPrice + (medianPrice * 0.25);
 
-    for (let i = startingPrice; i <= highestPrice; i++) {
-      priceRange.push({
-        price: i
-      })
-    }
+    priceRange.push({price: medianPrice})
+    priceRange.push({price: medianPrice + medianPrice*0.05})
+    priceRange.push({price: medianPrice + medianPrice*0.15})
+    priceRange.push({price: medianPrice + medianPrice*0.25})
+    priceRange.push({price: medianPrice + medianPrice*0.35})
+    priceRange.push({price: medianPrice + medianPrice*0.45})
+
+    // for (let i = startingPrice; i <= highestPrice; i++) {
+    //   priceRange.push({
+    //     price: i
+    //   })
+    // }
 
     return priceRange
   }
@@ -204,7 +210,9 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {accepted ? <Button type = "Request accepted!" /> : <div></div> }
+        {accepted ?   <Alert variant = "success" >
+          Request Accepted!
+        </Alert> : <div></div> }
       </div>
     </Fragment>
     
