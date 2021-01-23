@@ -49,6 +49,15 @@ module.exports = ({
             }));
     });
 
+    router.get('/trip/:id', (req, res) => {
+        const tripId = req.params.id;
+        getTripById(tripId)
+            .then(users => res.json(users))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
     // router.get('/active-trip', (req, res) => {
     //     getUserAndDriverActiveTrip()
     // });
@@ -69,7 +78,6 @@ module.exports = ({
                 error: err.message
             }));
     });
-
 
     // Updates a trip to 'accepted'
     // NEED TO ADD driver_id somehow
