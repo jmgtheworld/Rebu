@@ -7,7 +7,7 @@ import './Pricebar.scss';
 import "./UserSummary.scss";
 
 import Button from './Button';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 
 export default function UserSummary(props) {
 
@@ -204,7 +204,9 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {accepted ? <Button type = "Request accepted!" /> : <div></div> }
+        {accepted ?   <Alert variant = "success" >
+          Request Accepted!
+        </Alert> : <div></div> }
       </div>
     </Fragment>
     
