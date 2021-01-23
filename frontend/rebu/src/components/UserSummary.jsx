@@ -42,7 +42,7 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = Math.round((distanceInNumber * 3 ));
+    const medianPrice = Math.round((5 * 3 ));
     const startingPrice = medianPrice - (medianPrice * 0.25);
     const highestPrice = medianPrice + (medianPrice * 0.25);
 
@@ -123,7 +123,6 @@ export default function UserSummary(props) {
     Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => {
         if (res.data[res.data.length-1]) {
-          console.log(res.data[res.data.length-1])
           if (res.data[res.data.length-1].accepted) {
             setAccepted(true)
           }
@@ -131,15 +130,17 @@ export default function UserSummary(props) {
       });
   })
 
-  // useEffect(() => {
-  //   const requestsAPI = `http://localhost:3001/trips/`
-  //   Axios.get(requestsAPI) 
-  //     .then(res => {
-  //       console.log(res.data)
-  //       setCurrentTripID(res.data.length + 1)
-  //       console.log(currentTripID)
-  //     });
-  // })
+  let counter = 0;
+
+  useEffect(() => {
+    const requestsAPI = `http://localhost:3001/trips/`
+    Axios.get(requestsAPI) 
+      .then(res => {
+        console.log(res.data)
+        setCurrentTripID(res.data.length + counter)
+
+      });
+  })
 
   // useEffect(() => {
   //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
@@ -157,7 +158,6 @@ export default function UserSummary(props) {
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
-    console.log(currentDriver)
     setNewTrip({
       customer_id: currentDriver,
       driver_id: null,
@@ -173,6 +173,8 @@ export default function UserSummary(props) {
       created_at: Date.now(),
       ended_at: null
     })
+    counter += 1
+    console.log('currenttrip id', currentTripID)
   }, [price])
 
   useEffect(() => {
