@@ -1,4 +1,3 @@
-
 import {Fragment, useState, useEffect, useCallback, useRef} from "react";
 import Axios from 'axios';
 
@@ -108,12 +107,9 @@ export default function UserSummary(props) {
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/data"
-    return Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
-      .then(res => {
-        setCurrentDriver(res.data.id)}
-      );
-
-  },[])
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
+      .then(res => setCurrentDriver(res.data.id));
+  })
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/active-trip"
@@ -141,6 +137,7 @@ export default function UserSummary(props) {
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
+    console.log("CURRNETDRIVER: ", currentDriver);
     setNewTrip({
       customer_id: currentDriver,
       driver_id: null,
