@@ -142,6 +142,14 @@ export default function UserSummary(props) {
       });
   })
 
+  useEffect(() => {
+    const requestsAPI = `http://localhost:3001/trips/trip/${currentTripID}`
+    Axios.get(requestsAPI) 
+      .then(res => {
+        setDriverName(res.data.driver_name)
+      });
+  })
+
   // useEffect(() => {
   //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
   //   Axios.get(requestsAPI) 
@@ -213,7 +221,7 @@ export default function UserSummary(props) {
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
         {accepted ?   <Alert variant = "success" >
-          Request Accepted!
+          {driverName} has accepted your request. He will message you once he is nearby!
         </Alert> : <div></div> }
       </div>
     </Fragment>
