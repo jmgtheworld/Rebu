@@ -54,6 +54,8 @@ export default function HomeDriver (props) {
       .then(res => setDriverlocation(res.data));
   },[])
 
+  
+
     
   return (
     <div>
@@ -80,6 +82,7 @@ export default function HomeDriver (props) {
             <Chat
               name={props.user.full_name}
               driver={props.user.driver}
+              acceptedTrip={props.acceptedTrip}
             />
           }
       </div>
@@ -93,6 +96,8 @@ export default function HomeDriver (props) {
           setPickup = {setPickup}
           setDestination = {setDestination}
           setPrice = {setPrice}
+          setChatSelected={props.setChatSelected}
+          getAcceptedTrip={props.getAcceptedTrip}
         />
       </div>
     </div>

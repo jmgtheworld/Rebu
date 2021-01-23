@@ -94,7 +94,7 @@ module.exports = (db) => {
                 FROM trips
                     LEFT JOIN users customer ON trips.customer_id = customer.id
                     LEFT JOIN users driver ON trips.driver_id = driver.id
-                WHERE accepted = FALSE
+                WHERE accepted = TRUE
                 AND ended_at IS NULL
                 AND trips.id = $1
             `,

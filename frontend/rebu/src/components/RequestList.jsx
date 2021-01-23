@@ -29,6 +29,8 @@ export default function RequestList (props) {
         start_location_lon = {request.start_location_lon}
         end_location_lat = {request.end_location_lat}
         end_location_lon = {request.end_location_lon}
+        setChatSelected={props.setChatSelected}
+        getAcceptedTrip={props.getAcceptedTrip}
       />
     )
   })

@@ -107,10 +107,10 @@ module.exports = ({
             }));
       });
 
-    router.put("/:id/cancel", (req, res) => {
-      db.query(`UPDATE `, [req.params.id])
-        .then(() => res.json("trip updated!"));
-    });
+    // router.put("/:id/cancel", (req, res) => {
+    //   db.query(`UPDATE `, [req.params.id])
+    //     .then(() => res.json("trip updated!"));
+    // });
 
     router.delete("/:id/delete", (req, res) => {
         const tripId = req.params.id;
