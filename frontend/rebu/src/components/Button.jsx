@@ -16,6 +16,10 @@ export default function Button(props) {
     buttonType = "btn btn-danger button"
   } 
 
+  if (type === "Request accepted!") {
+    buttonType = "btn btn-success button"
+  }
+
   return (
     <button className = {buttonType} onClick = {onClick}> {type} </button> 
   )

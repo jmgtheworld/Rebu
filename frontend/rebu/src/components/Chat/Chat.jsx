@@ -17,35 +17,18 @@ export default function Chat (props) {
   const [ message, setMessage ] = useState("");
   const [ messages, setMessages ] = useState([]);
 
-  
 
-  const tripAPI = "http://localhost:3001/trips/1" //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
 
   const isUserDriver = props.driver;
 
 
   useEffect(()=> {
-    // if (isUserDriver && props.acceptedTrip) {
-    //   return Axios.get(tripAPI)
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       setTrip(res.data);
-    //       setOtherUserName(res.data.customer_name);
-    //       setRoom(res.data.id);
-    //     })
-    // } else {
-    //   return Axios.get(tripAPI)
-    //     .then((res) => {
-    //       console.log("TRIPINFO: ", res.data);
-    //       setTrip(res.data);
-    //       setOtherUserName(res.data.driver_name);
-    //       setRoom(res.data.id);
-    //     })
-    // }
+    console.log("IS USER DRIVER? :", isUserDriver)
     if (isUserDriver && props.acceptedTrip) {
       setOtherUserName(props.acceptedTrip.customer_name)
       setRoom(props.acceptedTrip.id)
     } else if (!isUserDriver && props.acceptedTrip) {
+      console.log("DRIVER NAME ON ACCEPTED TRIP: ", props.acceptedTrip.driver_name)
       setOtherUserName(props.acceptedTrip.driver_name)
       setRoom(props.acceptedTrip.id)
     }
