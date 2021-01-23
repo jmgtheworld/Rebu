@@ -1,4 +1,4 @@
-import {useState, Fragment, useEffect} from 'react';
+import {useState, Fragment} from 'react';
 import Map from './Map';
 import UserSummary from './UserSummary';
 
