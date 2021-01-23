@@ -6,7 +6,7 @@ import './Pricebar.scss';
 import "./UserSummary.scss";
 
 import Button from './Button';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, Alert } from 'react-bootstrap';
 
 export default function UserSummary(props) {
 
@@ -17,7 +17,7 @@ export default function UserSummary(props) {
   const [waiting, setWaiting]  = useState(false);
 
   const [ newTrip, setNewTrip ] = useState({
-    customer_id: 1,
+    customer_id: null,
     driver_id: null,
     start_address: startAddress,
     end_address: finishAddress,
@@ -42,15 +42,22 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = (distanceInNumber * 3.0);
-    const startingPrice = medianPrice - 2.0;
-    const highestPrice = medianPrice + 3.0;
+    const medianPrice = Math.round((5 * 3 ));
+    const startingPrice = medianPrice - (medianPrice * 0.25);
+    const highestPrice = medianPrice + (medianPrice * 0.25);
 
-    for (let i = startingPrice; i <= highestPrice; i++) {
-      priceRange.push({
-        price: i
-      })
-    }
+    priceRange.push({price: medianPrice})
+    priceRange.push({price: medianPrice + medianPrice*0.05})
+    priceRange.push({price: medianPrice + medianPrice*0.15})
+    priceRange.push({price: medianPrice + medianPrice*0.25})
+    priceRange.push({price: medianPrice + medianPrice*0.35})
+    priceRange.push({price: medianPrice + medianPrice*0.45})
+
+    // for (let i = startingPrice; i <= highestPrice; i++) {
+    //   priceRange.push({
+    //     price: i
+    //   })
+    // }
 
     return priceRange
   }
@@ -115,29 +122,48 @@ export default function UserSummary(props) {
     const requestsAPI = "http://localhost:3001/users/active-trip"
     Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => {
-        setCurrentTripID(res.data.id)
-        console.log(res.data.id)
-      });
-  })
-
-  useEffect(() => {
-    const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
-    Axios.get(requestsAPI) 
-      .then(res => {
-        if (res.data.accepted) {
-          setDriverName(res.data.driver_name)
-          setAccepted(true)
-          console.log('accepted?', accepted)
+        if (res.data[res.data.length-1]) {
+          if (res.data[res.data.length-1].accepted) {
+            setAccepted(true)
+          }
         }
       });
   })
 
-  
+  let counter = 0;
+
+  useEffect(() => {
+    const requestsAPI = `http://localhost:3001/trips/`
+    Axios.get(requestsAPI) 
+      .then(res => {
+        setCurrentTripID(res.data.length + counter)
+      });
+  })
+
+  useEffect(() => {
+    const requestsAPI = `http://localhost:3001/trips/trip/${currentTripID}`
+    Axios.get(requestsAPI) 
+      .then(res => {
+        setDriverName(res.data.driver_name)
+      });
+  })
+
+  // useEffect(() => {
+  //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
+  //   Axios.get(requestsAPI) 
+  //     .then(res => {
+  //       console.log(res.data)
+  //       if (res.data.accepted) {
+  //         setDriverName(res.data.driver_name)
+  //         setAccepted(true)
+  //         console.log('accepted?', accepted)
+  //       }
+  //     });
+  // })
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
-    console.log("CURRNETDRIVER: ", currentDriver);
     setNewTrip({
       customer_id: currentDriver,
       driver_id: null,
@@ -153,6 +179,8 @@ export default function UserSummary(props) {
       created_at: Date.now(),
       ended_at: null
     })
+    counter += 1
+    console.log('currenttrip id', currentTripID)
   }, [price])
 
   useEffect(() => {
@@ -187,10 +215,12 @@ export default function UserSummary(props) {
         </div>
       </article>
       <div className = "statusContainer">
-        {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
-        <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
-        {waiting ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {(driverName && accepted) ? <Button type = "Request accepted!" /> : <div></div> }
+        {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
+        {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
+        {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
+        {accepted ?   <Alert variant = "success" >
+          {driverName} has accepted your request. He will message you once he is nearby!
+        </Alert> : <div></div> }
       </div>
     </Fragment>
     

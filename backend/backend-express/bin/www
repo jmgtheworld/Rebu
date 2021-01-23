@@ -69,10 +69,8 @@ io.on('connection', socket => {
   socket.on("join", ({ name, room, isUserDriver }) => {
     //add user to the chat
     const user = { id: socket.id, name, room, isUserDriver };
+    users.push(user);
     
-      users.push(user);
-    
-    //io.to(socketId).emit("hey", "I just met you");
     console.log("USERS: ", users)
 
     // socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});

@@ -7,9 +7,8 @@ let socket;
 
 export default function ConfirmModal (props) {
 
-  const {id, customer_id, confirm, driverlocation, origin, setOrigin, destination, 
-    start_address, end_address, price,
-    setDestination, pickup, setPickup, setPrice, start_location_lat, start_location_lon,
+  const {id, customer_id, confirm, driverlocation, origin, 
+    start_address, end_address, price, setPrice, start_location_lat, start_location_lon,
     end_location_lat, end_location_lon, created_at
   } = props;
   

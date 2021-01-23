@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import Geocode from "react-geocode";
 import { Spinner } from 'react-bootstrap';
 

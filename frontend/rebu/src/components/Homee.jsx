@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import Home from "./Home";
 import HomeDriver from "./HomeDriver";
-import HomeDriverwithMap from './HomeDriverwithMap';
 import ChatModal from './ChatModal';
+import HomeNotLoggedIn from './HomeNotLoggedIn';
 
 import Axios from "axios";
 
@@ -18,7 +18,6 @@ const Homee = () => {
   useEffect(() => {
     Axios.get("http://localhost:3001/users/data", { headers: { "x-access-token": token} })
       .then((res) => {
-        console.log("USERINFO: ", res.data);
         setUser(res.data);
       })
       .catch(err => console.log(err));
@@ -26,14 +25,14 @@ const Homee = () => {
 
   return (
     <div id="homepage">
-      {/* <h1>Logged In: {props.loggedIn}</h1> */}
-      {!user.driver && 
+      {!token && <HomeNotLoggedIn />}
+      {!user.driver && token &&
         <Home 
           user={user} 
           chatSelected={chatSelected}
         />
       }
-      {user.driver && 
+      {user.driver && token &&
         <HomeDriver 
           user={user} 
           setChatSelected={setChatSelected} 

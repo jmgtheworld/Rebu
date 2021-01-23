@@ -14,7 +14,27 @@ module.exports = (db) => {
     // Gets trip by ID
     const getTripById = id => {
         const query = {
-            text: `SELECT * FROM trips WHERE id = $1` ,
+            text: `SELECT 
+                        trips.id,
+                        trips.customer_id,
+                        trips.driver_id,
+                        trips.start_address,
+                        trips.end_address,
+                        trips.start_location_lat,
+                        trips.start_location_lon,
+                        trips.end_location_lat,
+                        trips.end_location_lon,
+                        trips.accepted,
+                        trips.payment_amount,
+                        trips.payment_status,
+                        trips.created_at,
+                        trips.ended_at,
+                        customer.full_name AS customer_name,
+                        driver.full_name AS driver_name 
+                    FROM trips
+                        JOIN users customer ON trips.customer_id = customer.id
+                        JOIN users driver ON trips.driver_id = driver.id
+                    WHERE trips.id = $1` ,
             values: [id]
         };
 
@@ -37,13 +57,13 @@ module.exports = (db) => {
       };
 
     // Add new trip to DB
-    const addTrip = (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon) => {
+    const addTrip = (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount) => {
         const query = {
             text: `
-            INSERT INTO trips (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
+            INSERT INTO trips (customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *
             `,
-            values: [customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon]
+            values: [customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount]
         };
   
         return db.query(query)
@@ -52,7 +72,6 @@ module.exports = (db) => {
     };
 
     // Updates a trip to 'accepted'
-    // NEED TO ADD driver_id somehow
     const acceptTrip = (tripId, driverId) => {
         const query = {
             text: `UPDATE trips SET accepted = TRUE, driver_id = $2 WHERE id = $1`,
@@ -126,31 +145,37 @@ module.exports = (db) => {
     const getUserAndDriverActiveTrip = (tripId) => {
         const query = {
             text: `
-                SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
+                SELECT 
+                    trips.id,
+                    trips.customer_id,
+                    trips.driver_id,
+                    trips.start_address,
+                    trips.end_address,
+                    trips.start_location_lat,
+                    trips.start_location_lon,
+                    trips.end_location_lat,
+                    trips.end_location_lon,
+                    trips.accepted,
+                    trips.payment_amount,
+                    trips.payment_status,
+                    trips.created_at,
+                    trips.ended_at,
+                    customer.full_name AS customer_name,
+                    driver.full_name AS driver_name 
                 FROM trips
-                    LEFT JOIN users customer ON trips.customer_id = customer.id
-                    LEFT JOIN users driver ON trips.driver_id = driver.id
+                    JOIN users customer ON trips.customer_id = customer.id
+                    JOIN users driver ON trips.driver_id = driver.id
                 WHERE accepted = TRUE
                 AND ended_at IS NULL
                 AND trips.id = $1
             `,
             values: [tripId],
-            // text: `
-            //     SELECT *, customer.full_name AS customer_name, driver.full_name AS driver_name 
-            //     FROM users
-            //     LEFT JOIN users customer ON trips.customer_id = customer.id
-            //     WHERE accepted = FALSE
-            //     AND ended_at IS NULL
-            // `
         };
 
         return db.query(query)
             .then(result => result.rows[0])
             .catch(err => err);
-    };
-
-    // 
-    //                     
+    };              
   
     return {
         getTrips,
