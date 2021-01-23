@@ -3,8 +3,8 @@ import { React, useState, useEffect } from "react";
 import Axios from 'axios';
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Form, Col } from 'react-bootstrap';
-import RiderRegisterForm from "./RiderRegisterForm";
-import DriverRegisterForm from "./DriverRegisterForm";
+import RiderRegisterForm from "./Register/RiderRegisterForm";
+import DriverRegisterForm from './Register/DriverRegisterForm';
 
 export default function Settings(props) {
   const token = localStorage.getItem("token");
