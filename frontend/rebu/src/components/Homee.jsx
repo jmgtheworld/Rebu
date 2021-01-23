@@ -4,6 +4,7 @@ import Home from "./Home";
 import HomeDriver from "./HomeDriver";
 import HomeDriverwithMap from './HomeDriverwithMap';
 import ChatModal from './ChatModal';
+import HomeNotLoggedIn from './HomeNotLoggedIn';
 
 import Axios from "axios";
 
@@ -26,9 +27,9 @@ const Homee = () => {
 
   return (
     <div id="homepage">
-      {/* <h1>Logged In: {props.loggedIn}</h1> */}
-      {!user.driver && <Home user={user} chatSelected={chatSelected} />}
-      {user.driver && <HomeDriver user={user} chatSelected={chatSelected} />}
+      {!token && <HomeNotLoggedIn />}
+      {!user.driver && token && <Home user={user} chatSelected={chatSelected} />}
+      {user.driver && token && <HomeDriver user={user} chatSelected={chatSelected} />}
       <ChatModal setChatSelected={setChatSelected} chatSelected={chatSelected} />
     </div>
   )
