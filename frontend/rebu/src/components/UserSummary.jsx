@@ -101,7 +101,10 @@ export default function UserSummary(props) {
   const token = localStorage.getItem("token");
   
   
-  const [currentDrvier, setCurrentDriver]  = useState(null)
+  const [currentDriver, setCurrentDriver]  = useState(null)
+  const [currentTripID, setCurrentTripID]  = useState(null)
+  const [driverName, setDriverName] = useState(null)
+  const [accepted, setAccepted] = useState(false)
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/data"
@@ -112,12 +115,34 @@ export default function UserSummary(props) {
 
   },[])
 
+  useEffect(() => {
+    const requestsAPI = "http://localhost:3001/users/active-trip"
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
+      .then(res => {
+        setCurrentTripID(res.data.id)
+        console.log(res.data.id)
+      });
+  })
+
+  useEffect(() => {
+    const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
+    Axios.get(requestsAPI) 
+      .then(res => {
+        if (res.data.accepted) {
+          setDriverName(res.data.driver_name)
+          setAccepted(true)
+          console.log('accepted?', accepted)
+        }
+      });
+  })
+
+  
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
     setNewTrip({
-      customer_id: currentDrvier,
+      customer_id: currentDriver,
       driver_id: null,
       start_address: startAddress,
       end_address: finishAddress,
@@ -136,8 +161,8 @@ export default function UserSummary(props) {
   useEffect(() => {
     if (loadCancel && (!toggle)) {
       setWaiting(false)
-      console.log('trip id to be deleted', 8)
-      return Axios.delete(`http://localhost:3001/trips/8/delete`)
+      console.log('trip id to be deleted', currentTripID)
+      return Axios.delete(`http://localhost:3001/trips/${currentTripID}/delete`)
       .then(() => {
         console.log("previous trip cancelled/delete")
         setloadedOnce(true)
@@ -168,6 +193,7 @@ export default function UserSummary(props) {
         {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
         {waiting ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
+        {(driverName && accepted) ? <Button type = "Request accepted!" /> : <div></div> }
       </div>
     </Fragment>
     
