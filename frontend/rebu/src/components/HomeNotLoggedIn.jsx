@@ -1,48 +1,45 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import { render } from 'react-dom'
-import { useTransition, animated } from 'react-spring'
+import { Spinner, Button, ButtonGroup} from 'react-bootstrap';
+import { Redirect } from 'react-router';
+// import { render } from 'react-dom'
 
-import Home from "./Home";
-import HomeDriver from "./HomeDriver";
-import HomeDriverwithMap from './HomeDriverwithMap';
-import ChatModal from './ChatModal';
-import App from '../App';
-
-import Axios from "axios";
+import Trail from './Animations/Trail';
+import './HomeNotLoggedIn.scss';
 
 const HomeNotLoggedIn = () => {
-  const ref = useRef([])
-  const [items, set] = useState([])
-  const transitions = useTransition(items, null, {
-    from: { opacity: 0, height: 0, innerHeight: 0, transform: 'perspective(600px) rotateX(0deg)', color: '#8fa5b6' },
-    enter: [
-      { opacity: 1, height: 80, innerHeight: 80 },
-      { transform: 'perspective(600px) rotateX(180deg)', color: '#28d79f' },
-      { transform: 'perspective(600px) rotateX(0deg)' },
-    ],
-    leave: [{ color: '#c23369' }, { innerHeight: 0 }, { opacity: 0, height: 0 }],
-    update: { color: '#28b4d7' },
-  })
+  const [open, set] = useState(true);
 
-  const reset = useCallback(() => {
-    ref.current.map(clearTimeout)
-    ref.current = []
-    set([])
-    ref.current.push(setTimeout(() => set(['Apples', 'Oranges', 'Kiwis']), 2000))
-    ref.current.push(setTimeout(() => set(['Apples', 'Kiwis']), 5000))
-    ref.current.push(setTimeout(() => set(['Apples', 'Bananas', 'Kiwis']), 8000))
-  }, [])
+  function login () {
+    return (
+      <Redirect to="/login"/>
+    )
+  };
 
-  useEffect(() => void reset(), [])
+  const register = () => {
+    return (
+      <Redirect to="/register"/>
+    )
+  };
 
   return (
-    <div>
-      <h1>Not logged in (adding stuff to this rn)</h1>
-      {transitions.map(({ item, props: { innerHeight, ...rest }, key }) => (
-        <animated.div className="transitions-item" key={key} style={rest} onClick={reset}>
-          <animated.div style={{ overflow: 'hidden', height: innerHeight }}>{item}</animated.div>
-        </animated.div>
-      ))}
+    <div id="body">
+      {/* <h1>Not logged in (adding stuff to this rn)</h1> */}
+      <Trail open={open} onClick={() => set((state) => !state)}>
+        <span id="app-name">Rebu</span>
+        <span className="slogan">designated</span>
+        <span className="slogan">driving</span>
+        <span className="slogan">service</span>
+      </Trail>
+      {/* <h2>test</h2> */}
+      <div className="button-group">
+        <Button variant="success" size="lg" onClick={login}>
+            Login
+        </Button>
+        <Button variant="info" size="lg" onClick={register}>
+            Register
+        </Button>
+      </div>
+      
     </div>
   )
 }

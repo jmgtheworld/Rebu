@@ -30,10 +30,11 @@ module.exports = ({
             start_location_lat,
             start_location_lon,
             end_location_lat, 
-            end_location_lon
+            end_location_lon,
+            payment_amount
         } = req.body;
     
-        addTrip(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon)
+        addTrip(customer_id, driver_id, start_address, end_address, start_location_lat, start_location_lon, end_location_lat, end_location_lon, payment_amount)
             .then(trip => res.json(trip))
             .catch(err => res.json({
                 error: err.message
