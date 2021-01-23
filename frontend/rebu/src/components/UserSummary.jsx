@@ -18,7 +18,7 @@ export default function UserSummary(props) {
   const [waiting, setWaiting]  = useState(false);
 
   const [ newTrip, setNewTrip ] = useState({
-    customer_id: 1,
+    customer_id: null,
     driver_id: null,
     start_address: startAddress,
     end_address: finishAddress,
@@ -116,28 +116,42 @@ export default function UserSummary(props) {
     const requestsAPI = "http://localhost:3001/users/active-trip"
     Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => {
-        setCurrentTripID(res.data.id)
-        console.log(res.data.id)
-      });
-  })
-
-  useEffect(() => {
-    const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
-    Axios.get(requestsAPI) 
-      .then(res => {
-        if (res.data.accepted) {
-          setDriverName(res.data.driver_name)
-          setAccepted(true)
-          console.log('accepted?', accepted)
+        if (res.data[res.data.length-1]) {
+          console.log(res.data[res.data.length-1])
+          if (res.data[res.data.length-1].accepted) {
+            setAccepted(true)
+          }
         }
       });
   })
 
-  
+  // useEffect(() => {
+  //   const requestsAPI = `http://localhost:3001/trips/`
+  //   Axios.get(requestsAPI) 
+  //     .then(res => {
+  //       console.log(res.data)
+  //       setCurrentTripID(res.data.length + 1)
+  //       console.log(currentTripID)
+  //     });
+  // })
+
+  // useEffect(() => {
+  //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
+  //   Axios.get(requestsAPI) 
+  //     .then(res => {
+  //       console.log(res.data)
+  //       if (res.data.accepted) {
+  //         setDriverName(res.data.driver_name)
+  //         setAccepted(true)
+  //         console.log('accepted?', accepted)
+  //       }
+  //     });
+  // })
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
     setToggle(true)
+    console.log(currentDriver)
     setNewTrip({
       customer_id: currentDriver,
       driver_id: null,
@@ -187,10 +201,10 @@ export default function UserSummary(props) {
         </div>
       </article>
       <div className = "statusContainer">
-        {waiting ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
-        <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/>
-        {waiting ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {(driverName && accepted) ? <Button type = "Request accepted!" /> : <div></div> }
+        {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
+        {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
+        {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
+        {accepted ? <Button type = "Request accepted!" /> : <div></div> }
       </div>
     </Fragment>
     
