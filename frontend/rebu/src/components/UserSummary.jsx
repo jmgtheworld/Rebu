@@ -43,15 +43,22 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = (distanceInNumber * 3.0);
-    const startingPrice = medianPrice - 2.0;
-    const highestPrice = medianPrice + 3.0;
+    const medianPrice = Math.round((distanceInNumber * 3 ));
+    const startingPrice = medianPrice - (medianPrice * 0.25);
+    const highestPrice = medianPrice + (medianPrice * 0.25);
 
-    for (let i = startingPrice; i <= highestPrice; i++) {
-      priceRange.push({
-        price: i
-      })
-    }
+    priceRange.push({price: medianPrice})
+    priceRange.push({price: medianPrice + medianPrice*0.05})
+    priceRange.push({price: medianPrice + medianPrice*0.15})
+    priceRange.push({price: medianPrice + medianPrice*0.25})
+    priceRange.push({price: medianPrice + medianPrice*0.35})
+    priceRange.push({price: medianPrice + medianPrice*0.45})
+
+    // for (let i = startingPrice; i <= highestPrice; i++) {
+    //   priceRange.push({
+    //     price: i
+    //   })
+    // }
 
     return priceRange
   }
