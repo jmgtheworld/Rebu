@@ -24,11 +24,38 @@ const Homee = () => {
       .catch(err => console.log(err));
   }, []);
 
+  const [ acceptedTrip, setAcceptedTrip ] = useState("")
+
+  function getAcceptedTrip (tripId) {
+    //stores the trip info with the driver id and customer id in the acceptedTrip state
+    // gets triggered when the driver accepts the requset
+    // 
+    return Axios.get(`http://localhost:3001/trips/${tripId}`)
+      .then((res) => {
+        console.log("TRIP THAT WAS ACCEPTED: ", res.data)
+        setAcceptedTrip(res.data);
+      })
+  }
+
   return (
     <div id="homepage">
       {/* <h1>Logged In: {props.loggedIn}</h1> */}
-      {!user.driver && <Home user={user} chatSelected={chatSelected} />}
-      {user.driver && <HomeDriver user={user} chatSelected={chatSelected} />}
+      {!user.driver && 
+        <Home 
+          user={user} 
+          chatSelected={chatSelected}
+          acceptedTrip={acceptedTrip}
+        />
+      }
+      {user.driver && 
+        <HomeDriver 
+          user={user} 
+          setChatSelected={setChatSelected} 
+          chatSelected={chatSelected} 
+          getAcceptedTrip={getAcceptedTrip}
+          acceptedTrip={acceptedTrip}
+        />
+      }
       <ChatModal setChatSelected={setChatSelected} chatSelected={chatSelected} />
     </div>
   )

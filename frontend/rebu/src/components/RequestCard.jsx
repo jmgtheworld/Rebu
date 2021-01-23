@@ -66,7 +66,8 @@ export default function RequestCard (props) {
                 end_location_lat = {end_location_lat}
                 end_location_lon = {end_location_lon}
                 created_at = {created_at}
-
+                setChatSelected={props.setChatSelected}
+                getAcceptedTrip={props.getAcceptedTrip}
               />
             </Col>
             }

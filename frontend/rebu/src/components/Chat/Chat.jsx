@@ -25,27 +25,34 @@ export default function Chat (props) {
 
 
   useEffect(()=> {
-    if (isUserDriver) {
-      return Axios.get(tripAPI)
-        .then((res) => {
-          console.log(res.data);
-          setTrip(res.data);
-          setOtherUserName(res.data.customer_name);
-          setRoom(res.data.id);
-        })
-    } else {
-      return Axios.get(tripAPI)
-        .then((res) => {
-          console.log("TRIPINFO: ", res.data);
-          setTrip(res.data);
-          setOtherUserName(res.data.driver_name);
-          setRoom(res.data.id);
-        })
+    // if (isUserDriver && props.acceptedTrip) {
+    //   return Axios.get(tripAPI)
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       setTrip(res.data);
+    //       setOtherUserName(res.data.customer_name);
+    //       setRoom(res.data.id);
+    //     })
+    // } else {
+    //   return Axios.get(tripAPI)
+    //     .then((res) => {
+    //       console.log("TRIPINFO: ", res.data);
+    //       setTrip(res.data);
+    //       setOtherUserName(res.data.driver_name);
+    //       setRoom(res.data.id);
+    //     })
+    // }
+    if (isUserDriver && props.acceptedTrip) {
+      setOtherUserName(props.acceptedTrip.customer_name)
+      setRoom(props.acceptedTrip.id)
+    } else if (!isUserDriver && props.acceptedTrip) {
+      setOtherUserName(props.acceptedTrip.driver_name)
+      setRoom(props.acceptedTrip.id)
     }
-  },[]);
+  },[props.acceptedTrip]);
 
   useEffect(() => {
-    if (props.name && room) {
+    if (props.name && room && props.acceptedTrip) {
       socket = io("http://localhost:3001", {
         transports: ["websocket", "polling"]
       });
@@ -61,7 +68,7 @@ export default function Chat (props) {
         socket.off();
       }
     }
-  }, [props.name, room])
+  }, [props.name, room, props.acceptedTrip])
 
   // useEffect(()=> {
     
