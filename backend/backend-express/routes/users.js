@@ -17,7 +17,8 @@ module.exports = ({
     updateUserCurrentLocation,
     fetchIP,
     fetchCoordsByIP,
-    getUserActiveTrip
+    getUserActiveTrip,
+    updateUserInfo
 }) => {
     // Gets all of a user's trips
     router.get('/trips', checkToken, (req, res) => {    
@@ -46,6 +47,24 @@ module.exports = ({
             }));
     });
 
+    router.put('/data', checkToken, (req, res) => {
+        getUserById(req.userID)
+            .then(user => {
+                const { id } = user;
+                const { driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country } = req.body;
+                const password = bcrypt.hashSync(req.body.password, saltRounds);
+                console.log(id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password );
+                updateUserInfo(id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password )
+                    .then(user => res.status(200).json(user))
+                    .catch((err) => res.json({
+                        error: err.message
+                    }));
+            })
+            .catch((err) => res.json({
+                error: err.message
+            }));
+    });
+
     router.get('/active-trip', checkToken, (req, res) => {
         getUserActiveTrip(req.userID)
             .then(trip => res.status(200).json(trip))
@@ -55,7 +74,6 @@ module.exports = ({
     });
 
     // Login user
-    // Sets session id to user id if successful
     router.post('/login', (req, res) => {
         const { email, password } = req.body;
 
@@ -83,7 +101,7 @@ module.exports = ({
     });
 
     // Logout
-    // Set session id to null
+    // Not used?
     router.post('/logout', (req, res) => {
         req.session.user_id = null;
         return res.json(req.session.user_id);
@@ -107,9 +125,8 @@ module.exports = ({
             }));
     });
 
-
     // Add new user
-    router.post('/', (req, res)=> {
+    router.post('/', (req, res) => {
         const driver = req.body.license ? true : false;
         const { full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country } = req.body;
         const password = bcrypt.hashSync(req.body.password, saltRounds);

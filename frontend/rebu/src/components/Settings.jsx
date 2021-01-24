@@ -6,6 +6,8 @@ import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./Register/RiderRegisterForm";
 import DriverRegisterForm from './Register/DriverRegisterForm';
 
+import './Register/Register.scss';
+
 export default function Settings(props) {
   const token = localStorage.getItem("token");
   // console.log("settings", token);
