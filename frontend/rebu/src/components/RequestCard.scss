@@ -1,9 +1,5 @@
 
-.tripCard:hover{
-  border-color: #343a40;
-  border-width: 2px;
-  cursor: pointer;
-}
+
 
 .cardRow {
   display: flex;
@@ -13,4 +9,68 @@
 
 .distanceFilter {
   margin-top: 10px;
+}
+
+.request-container {
+  padding-bottom: 0;
+  max-width: 850px;
+  padding: 0;
+
+  .start-address,
+  .end-address {
+    font-weight: 500;
+  }
+
+  
+  .tripCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1em;
+    box-shadow: 0 5px 15px 0 rgba(0,0,0, .25);
+    max-width: 800px;
+    height: 170px;
+    
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 5px 15px 5px #348d8a67;
+
+    }
+
+
+    .trip-price {
+      font-weight: 600;
+      color: #20B2AA;
+      padding: 0;
+      height: 40px;
+
+    }
+
+    .btn-container {
+      margin: 0;
+      padding: 0;
+      height: 40px;
+      width: 60px;
+    }
+    .accept-btn {
+      font-weight: 600;
+      color: #1E90FF;
+      background-color: #fff;
+      border: 2px solid #1E90FF;
+      width: 100px;
+      height: 50px;
+
+      &:hover {
+        background-color: #84c2ff;
+      }
+    }
+  }
+
+  .created-at {
+    font-size: 0.7em;
+    margin: 3em 1em 0 1em;
+  }
+
 }

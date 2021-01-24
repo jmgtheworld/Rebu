@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Axios from "axios";
 
 import { Card, Col, Row, Button, Badge } from 'react-bootstrap';
 
@@ -15,12 +14,12 @@ export default function RequestCard (props) {
     end_location_lat, end_location_lon, created_at
   
   } = props;
-  console.log('dirver location from request card', driverlocation)
+  // console.log('dirver location from request card', driverlocation)
   
   return (
-    <Card.Body>
+    <Card.Body className="request-container">
       <Card className = "tripCard">
-        <Card.Body onClick = {() => {
+        <Card.Body className="request-card" onClick = {() => {
           setOrigin({
             lat: driverlocation.current_location_lat,
             lng: driverlocation.current_location_lon
@@ -36,12 +35,12 @@ export default function RequestCard (props) {
         }
         }>
           <Row>
-            <Col column sm={3}>{props.start_address}</Col>
-            <Col column sm={3}>{props.end_address}</Col>
-            <Col column sm={2}>$ {props.price}</Col>
+            <Col className="start-address">{props.start_address}</Col>
+            <Col className="end-address">{props.end_address}</Col>
+            <Col className="trip-price">$ {props.price}</Col>
             {!isConfirmed &&
-            <Col>
-              <Button variant="primary" onClick={() => setModalShow(true)}>
+            <Col className="btn-container">
+              <Button variant="primary" onClick={() => setModalShow(true)} className="accept-btn">
               Accept
               </Button>
               <ConfirmModal
@@ -76,6 +75,9 @@ export default function RequestCard (props) {
                 <Badge pill variant="success">Accepted</Badge>
               </div>
             }
+          </Row>
+          <Row className="created-at">
+            Posted 2min go
           </Row>
         </Card.Body>
       </Card>

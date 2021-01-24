@@ -2,6 +2,8 @@ import { Card, Col, Row, Dropdown, DropdownButton, ButtonGroup} from 'react-boot
 
 import RequestCard from "./RequestCard";
 
+import "./RequestList.scss";
+
 export default function RequestList (props) {
   const {origin, setOrigin, destination, setDestination, pickup, setPickup, setPrice, driverlocation} = props;
   console.log('request list', driverlocation)
@@ -36,7 +38,7 @@ export default function RequestList (props) {
   })
 
   return (
-    <Card>
+    <Card className="requestList-container">
       <Card.Header className = "cardHeader">
         <Row className = "cardRow">
           <Col column sm={3}>From</Col>
@@ -63,7 +65,9 @@ export default function RequestList (props) {
           </Col>
         </Row>
       </Card.Header>
-      {requests}
+      <div className="request-list">
+        {requests}
+      </div>
     </Card>
   )
 }
