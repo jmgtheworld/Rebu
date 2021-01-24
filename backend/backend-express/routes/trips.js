@@ -11,7 +11,8 @@ module.exports = ({
     deleteTrip,
     getUserAndDriverActiveTrip,
     getCustomersActiveTrip,
-    getDriversActiveTrip
+    getDriversActiveTrip,
+    completeTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -135,10 +136,19 @@ module.exports = ({
     router.delete("/:id/delete", (req, res) => {
         const tripId = req.params.id;
         deleteTrip(tripId)
-        .then(trip => res.json(trip))
-        .catch(err => res.json({
-            error: err.message
-        }));
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+    router.put("/:id/complete", (req, res) => {
+        const tripId = req.params.id;
+        completeTrip(tripId)
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
     });
 
 
