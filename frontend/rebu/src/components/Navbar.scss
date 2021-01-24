@@ -10,9 +10,9 @@ $navbar-color: #1A1A1D;
   .navbar {
     background-color: $navbar-color;
     height: 80px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    // display: flex;
+    // justify-content: flex-start;
+    // align-items: center;
   }
   
   .menu-bars {
@@ -20,6 +20,11 @@ $navbar-color: #1A1A1D;
     font-size: 2rem;
     background: none;
     color: #fff;
+
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+    align-items: center;
   }
 
   .menu-bars:hover {
@@ -91,11 +96,12 @@ $navbar-color: #1A1A1D;
     // border-style: dashed;
     cursor: pointer;
     color: white;
-    display: block;
-    flex-direction: row;
+    display: inline-block;
+    // flex-direction: row;
     justify-content: center;
-    // align-items: center;
+    align-items: center;
     margin: auto;
+    // margin-left: 450%;
     // text-align: center;
     // margin-top: 11%;
     // margin: 50%;
