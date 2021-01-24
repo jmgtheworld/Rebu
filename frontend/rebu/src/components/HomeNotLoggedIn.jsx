@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router';
-// import { render } from 'react-dom'
+import { Link } from 'react-router-dom';
 
 import Trail from './Animations/Trail';
 import './HomeNotLoggedIn.scss';
@@ -9,41 +9,29 @@ import './HomeNotLoggedIn.scss';
 const HomeNotLoggedIn = () => {
   const [open, set] = useState(true);
 
-  function login () {
-    return (
-      <Redirect to="/login"/>
-    )
-  };
-
-  const register = () => {
-    return (
-      <Redirect to="/register"/>
-    )
-  };
-
   return (
     <div id="body">
-      {/* <h1>Not logged in (adding stuff to this rn)</h1> */}
       <Trail open={open} onClick={() => set((state) => !state)}>
         <span id="app-name">Rebu</span>
         <span className="slogan">designated</span>
         <span className="slogan">driving</span>
         <span className="slogan">service</span>
       </Trail>
-      {/* <h2>test</h2> */}
       <div className="button-group">
-        <Button variant="success" size="lg" onClick={login} className = "RLbutton">
+        <Link to="/login">
+          <Button variant="success" size="lg" className = "RLbutton">
             Login
-        </Button>
-        <Button variant="info" size="lg" onClick={register} className = "RLbutton">
+          </Button>
+        </Link>
+        <Link to ="/register">
+          <Button variant="info" size="lg" className = "RLbutton">
             Register
-        </Button>
+          </Button>
+        </Link>
       </div>
       
     </div>
   )
 }
-
-// render(<HomeNotLoggenIn />, document.getElementById('root'))
 
 export default HomeNotLoggedIn;

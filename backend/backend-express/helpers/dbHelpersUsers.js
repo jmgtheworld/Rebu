@@ -102,21 +102,21 @@ module.exports = (db) => {
             .then(result => result.rows)
             .catch((err) => err);
     };
-  
-    // Sample code, can be modified later
-    // const getUsersPosts = () => {
-    //     const query = {
-    //         text: `SELECT users.id as user_id, first_name, last_name, email, posts.id as post_id, title, content
-    //     FROM users
-    //     INNER JOIN posts
-    //     ON users.id = posts.user_id`
-    //     }
-  
-    //     return db.query(query)
-    //         .then(result => result.rows)
-    //         .catch(err => err);
-  
-    // }
+
+    const updateUserInfo = (id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password ) => {
+        const query = {
+            text: `
+                UPDATE users 
+                SET driver = $2, full_name = $3, email = $4, phone_number = $5, credit_card = $6, month_year = $7, cvc = $8, license = $9, street_address = $10, apartment_number = $11, city = $12, postal_code = $13, province = $14, country = $15, password = $16
+                WHERE id = $1`,
+            values: [id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password]
+        };
+
+        return db
+            .query(query)
+            .then(user => result.rows[0])
+            .catch((err) => err);
+    };
   
     return {
         getUsers,
@@ -127,6 +127,7 @@ module.exports = (db) => {
         updateUserCurrentLocation,
         fetchIP,
         fetchCoordsByIP,
-        getUserActiveTrip
+        getUserActiveTrip,
+        updateUserInfo
     };
   };
