@@ -1,4 +1,8 @@
-
+#home-driver {
+  h2 {
+    font-size: 25px;
+  }
+}
 
 .modal-container {
   position: fixed;
@@ -26,4 +30,17 @@
   }
 }
 
-// request cards
+//MAP
+@media (min-width: 320px) and (max-width: 480px) {
+  .map-container {
+    width: 100vw;
+
+
+  
+    #map {
+      width: 100vw !important;
+    }
+  }
+
+}
+

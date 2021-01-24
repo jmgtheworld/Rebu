@@ -22,3 +22,24 @@
 
 
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .requestList-container {
+    width: 100%;
+
+    .cardHeader {
+      font-size: 0.8em;
+      height: 50px;
+
+      .distanceFilter {
+        display: none;
+      }
+    }
+  }
+}
+
+// @media (min-width: 480px) and (max-width: 1200px) {
+//   .container {
+//     width: 60%;
+//   }
+// }

@@ -35,11 +35,12 @@ export default function RequestCard (props) {
             lng: end_location_lon
           })
         }
+        
         }>
           <Row className="card-container">
             <Col className="start-address">{props.start_address}</Col>
             <Col className="end-address">{props.end_address}</Col>
-            <Col className="trip-price">$ {props.price}</Col>
+            <div className="trip-price">$ {props.price}</div>
             {!isConfirmed &&
             <Col className="btn-container">
               <Button variant="primary" onClick={() => setModalShow(true)} className="accept-btn">
