@@ -10,7 +10,6 @@ export default function MapDirectionsRenderer(props) {
 
   useEffect(() => {
     const { places, travelMode, setloadedOnce } = props;
-
     const waypoints = places.map(p => ({
       location: { lat: p.latitude, lng: p.longitude },
       stopover: true

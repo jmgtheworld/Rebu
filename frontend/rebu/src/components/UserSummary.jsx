@@ -42,7 +42,7 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = Math.round((distanceInNumber * 3 ));
+    const medianPrice = Math.round((5 * 3 ));
     const startingPrice = medianPrice - (medianPrice * 0.25);
     const highestPrice = medianPrice + (medianPrice * 0.25);
 
@@ -130,7 +130,7 @@ export default function UserSummary(props) {
       });
   })
 
-  let counter = 0;
+  let counter = 1;
 
   useEffect(() => {
     const requestsAPI = `http://localhost:3001/trips/`
@@ -141,10 +141,12 @@ export default function UserSummary(props) {
   })
 
   useEffect(() => {
-    const requestsAPI = `http://localhost:3001/trips/trip/${currentTripID}`
+    const requestsAPI = `http://localhost:3001/trips/rider/${currentDriver}`
     Axios.get(requestsAPI) 
       .then(res => {
         setDriverName(res.data.driver_name)
+        console.log(res.data)
+        console.log('driver name:', driverName)
       });
   })
 
@@ -187,7 +189,8 @@ export default function UserSummary(props) {
     if (loadCancel && (!toggle)) {
       setWaiting(false)
       console.log('trip id to be deleted', currentTripID)
-      return Axios.delete(`http://localhost:3001/trips/${currentTripID}/delete`)
+      let deleteid = currentTripID - 1
+      return Axios.delete(`http://localhost:3001/trips/${deleteid}/delete`)
       .then(() => {
         console.log("previous trip cancelled/delete")
         setloadedOnce(true)

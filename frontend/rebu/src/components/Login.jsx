@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
-import Homee from './Homee';
+import Home from './Home';
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 import "./Login.scss";

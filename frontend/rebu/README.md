@@ -70,12 +70,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 1)
-Driver's location: 396 St Clair Ave W, Toronto, ON M5P 3N3
-User's location: My home
-Destination: 277 Queen St E
-
-
-2)
-Driver's location: 5576 Tolman St
+Driver's location: 18 Finch Ave W, Toronto, ON J4Y 0K7
 User's location: 6034 Yonge St, North York, ON M2M 3W5
-Destination: St. Andrews, Toronto, ON
+Destination: 172 Fenn Avenue, North York, ON
