@@ -5,7 +5,7 @@ export default function Button(props) {
   let buttonType;
 
   if (type === "Search for Driver") {
-    buttonType = "btn btn-dark button"
+    buttonType = "btn btn-dark button search"
   } 
 
   if (type === "Waiting for Driver") {
