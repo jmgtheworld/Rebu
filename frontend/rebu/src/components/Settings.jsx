@@ -8,7 +8,7 @@ import DriverRegisterForm from './Register/DriverRegisterForm';
 
 import "./Register/Register.scss";
 
-export default function Settings(props) {
+export default function Settings() {
   const token = localStorage.getItem("token");
 
   const [currentUser, setCurrentUser] = useState({});

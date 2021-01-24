@@ -9,21 +9,6 @@ import './HomeNotLoggedIn.scss';
 const HomeNotLoggedIn = () => {
   const [open, set] = useState(true);
 
-  function login () {
-    // <Redirect to="/login"/>
-    return (
-      // <Link to="/login"/>
-      <Redirect to="/login"/>
-    )
-  };
-
-  const register = () => {
-    <Redirect to="/register"/>
-    return (
-      <Redirect to="/register"/>
-    )
-  };
-
   return (
     <div id="body">
       <Trail open={open} onClick={() => set((state) => !state)}>
@@ -33,12 +18,16 @@ const HomeNotLoggedIn = () => {
         <span className="slogan">service</span>
       </Trail>
       <div className="button-group">
-        <Button variant="success" size="lg" onClick={login} className = "RLbutton">
-          Login
-        </Button>
-        <Button variant="info" size="lg" onClick={register} className = "RLbutton">
-          Register
-        </Button>
+        <Link to="/login">
+          <Button variant="success" size="lg" className = "RLbutton">
+            Login
+          </Button>
+        </Link>
+        <Link to ="/register">
+          <Button variant="info" size="lg" className = "RLbutton">
+            Register
+          </Button>
+        </Link>
       </div>
       
     </div>
