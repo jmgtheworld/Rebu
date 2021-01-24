@@ -1,4 +1,5 @@
 import {Fragment, useState, useEffect, useCallback, useRef} from "react";
+import { Redirect } from "react-router-dom";
 import Axios from 'axios';
 
 import * as FaIcons from 'react-icons/fa';
@@ -15,7 +16,6 @@ export default function UserSummary(props) {
   const [priceMenu, setpriceMenu] = useState(false);
   const [price, setPrice] = useState(0);
   const [waiting, setWaiting]  = useState(false);
-
   const [ newTrip, setNewTrip ] = useState({
     customer_id: null,
     driver_id: null,
@@ -31,10 +31,8 @@ export default function UserSummary(props) {
     created_at: Date.now(),
     ended_at: null
   })
-
   const [loadedOnce, setloadedOnce] = useState(false);
   const [loadCancel, setloadCancel] = useState(false);
-
   const [toggle, setToggle] = useState(false);
  
 
@@ -42,9 +40,7 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = Math.round((5 * 3 ));
-    const startingPrice = medianPrice - (medianPrice * 0.25);
-    const highestPrice = medianPrice + (medianPrice * 0.25);
+    const medianPrice = Math.round((distanceInNumber * 3 ));
 
     priceRange.push({price: medianPrice})
     priceRange.push({price: medianPrice + medianPrice*0.05})
@@ -52,12 +48,6 @@ export default function UserSummary(props) {
     priceRange.push({price: medianPrice + medianPrice*0.25})
     priceRange.push({price: medianPrice + medianPrice*0.35})
     priceRange.push({price: medianPrice + medianPrice*0.45})
-
-    // for (let i = startingPrice; i <= highestPrice; i++) {
-    //   priceRange.push({
-    //     price: i
-    //   })
-    // }
 
     return priceRange
   }
@@ -105,12 +95,11 @@ export default function UserSummary(props) {
   }, [loadedOnce, toggle])
 
   const token = localStorage.getItem("token");
-  
-  
   const [currentDriver, setCurrentDriver]  = useState(null)
   const [currentTripID, setCurrentTripID]  = useState(null)
   const [driverName, setDriverName] = useState(null)
   const [accepted, setAccepted] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/data"
@@ -130,13 +119,11 @@ export default function UserSummary(props) {
       });
   })
 
-  let counter = 1;
-
   useEffect(() => {
     const requestsAPI = `http://localhost:3001/trips/`
     Axios.get(requestsAPI) 
       .then(res => {
-        setCurrentTripID(res.data.length + counter)
+        setCurrentTripID(res.data.length)
       });
   })
 
@@ -149,19 +136,6 @@ export default function UserSummary(props) {
         console.log('driver name:', driverName)
       });
   })
-
-  // useEffect(() => {
-  //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
-  //   Axios.get(requestsAPI) 
-  //     .then(res => {
-  //       console.log(res.data)
-  //       if (res.data.accepted) {
-  //         setDriverName(res.data.driver_name)
-  //         setAccepted(true)
-  //         console.log('accepted?', accepted)
-  //       }
-  //     });
-  // })
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
@@ -181,7 +155,6 @@ export default function UserSummary(props) {
       created_at: Date.now(),
       ended_at: null
     })
-    counter += 1
     console.log('currenttrip id', currentTripID)
   }, [price])
 
@@ -189,8 +162,8 @@ export default function UserSummary(props) {
     if (loadCancel && (!toggle)) {
       setWaiting(false)
       console.log('trip id to be deleted', currentTripID)
-      let deleteid = currentTripID - 1
-      return Axios.delete(`http://localhost:3001/trips/${deleteid}/delete`)
+      // let deleteid = currentTripID - 1
+      return Axios.put(`http://localhost:3001/trips/${currentTripID}/cancel`)
       .then(() => {
         console.log("previous trip cancelled/delete")
         setloadedOnce(true)
@@ -199,10 +172,20 @@ export default function UserSummary(props) {
     }
   }, [loadCancel, toggle])
 
+
   const cancelTrip = useCallback(() => {
     setloadCancel(true)
     setToggle(false)
   }, [])
+  
+  const completeTrip = () => {
+    setCompleted(true)
+    return Axios.put(`http://localhost:3001/trips/${currentTripID}/complete`)
+    .then(() => {
+      console.log('Trip completed')
+    })
+    .catch(err => console.log(err));
+  }
 
   return (
     <Fragment>
@@ -221,9 +204,10 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {accepted ?   <Alert variant = "success" >
+        {accepted && (!completed) ? <Fragment> <Alert variant = "success" >
           {driverName} has accepted your request. He will message you once he is nearby!
-        </Alert> : <div></div> }
+        </Alert>  <Button type = "Trip Complete" onClick = {completeTrip}/> </Fragment> : <div></div>}
+        {completed ? <Button type = "Trip Completed!" onClick = {completeTrip}/> : <div></div> } 
       </div>
     </Fragment>
     
