@@ -106,6 +106,17 @@ module.exports = (db) => {
             .catch(err => err);
     };
 
+    const completeTrip = (tripId) => {
+        const query = {
+            text: `UPDATE trips SET ended_at = current_timestamp WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
     const getCustomersActiveTrip = (userId) => {
         const query = {
             text: `
@@ -187,6 +198,7 @@ module.exports = (db) => {
         deleteTrip,
         getUserAndDriverActiveTrip,
         getCustomersActiveTrip,
-        getDriversActiveTrip
+        getDriversActiveTrip,
+        completeTrip
     };
   };
