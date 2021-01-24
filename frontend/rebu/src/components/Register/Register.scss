@@ -3,7 +3,7 @@
   display:inline-block;
 
   .registerH1 {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     padding-bottom: 25px;
     border-style: none none solid none;
     border-width: 2px;
@@ -13,10 +13,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50px;
 
     .form-row{
       justify-content: flex-start;
+
     }
 
     span {
@@ -41,4 +41,8 @@
   .submit-btn {
     margin: 2em 0;
   }
+}
+
+.formRow {
+  margin-top: 15px;
 }
