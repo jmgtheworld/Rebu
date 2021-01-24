@@ -42,7 +42,7 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = Math.round((5 * 3 ));
+    const medianPrice = Math.round((distanceInNumber * 3 ));
     const startingPrice = medianPrice - (medianPrice * 0.25);
     const highestPrice = medianPrice + (medianPrice * 0.25);
 

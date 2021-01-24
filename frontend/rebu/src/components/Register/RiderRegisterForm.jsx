@@ -74,7 +74,7 @@ export default function RiderRegisterForm (props) {
           <Form.Label>Country</Form.Label>
           <Form.Control name="country" value={props.userInfo.country} onChange={props.change} type="text" placeholder="Country" />
         </Form.Group>
-        <Form.Group as={Col} column sm={2}>
+        <Form.Group as={Col} column sm={3}>
           <Form.Label>Postal Code</Form.Label>
           <Form.Control name="postal_code" value={props.userInfo.postal_code} onChange={props.change} type="text" placeholder="A1B 2L5" />
         </Form.Group>
