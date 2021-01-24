@@ -98,6 +98,7 @@ export default function UserSummary(props) {
   const [currentTripID, setCurrentTripID]  = useState(null)
   const [driverName, setDriverName] = useState(null)
   const [accepted, setAccepted] = useState(false)
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/data"
@@ -177,9 +178,11 @@ export default function UserSummary(props) {
   }, [])
   
   const completeTrip = () => {
+    setCompleted(true)
     return Axios.put(`http://localhost:3001/trips/${currentTripID}/complete`)
     .then(() => {
       console.log('Trip completed')
+      //redirect to home(?)
     })
     .catch(err => console.log(err));
   }
@@ -203,7 +206,8 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
         {accepted ? <Fragment><Alert variant = "success" >
           {driverName} has accepted your request. He will message you once he is nearby!
-        </Alert> <Button type = "Trip Complete" onClick = {completeTrip}/> </Fragment> : <div></div> }
+        </Alert> 
+          {completed ? <Button type = "Trip Completed!" onClick = {completeTrip}/> :<Button type = "Trip Complete" onClick = {completeTrip}/> } </Fragment> : <div></div> }
       </div>
     </Fragment>
     
