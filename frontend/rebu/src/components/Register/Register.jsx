@@ -28,44 +28,21 @@ export default function Register(props) {
 
   const [ userType, setUserType ] = useState("rider");
   const [registered, setRegistered] = useState(false);
-  // const [ errors, setErrors ] = useState({
-  //   full_name: "",
-  //   email: "",
-  //   password: "",
-  //   phone_number: "",
-  //   credit_card: "",
-  //   expirty_date: "",
-  //   cvc: "",
-  //   street_address: "",
-  //   appartment_number: null,
-  //   city: "",
-  //   postal_code: "",
-  //   province: "",
-  //   country: "",
-  //   license: ""
-  // })
-  // console.log("props:", props);
+
   function register (e) {
     e.preventDefault();
-
-    console.log("UserInfo: ", newUser);
     
     return Axios.post("http://localhost:3001/users", newUser)
       .then(() => setRegistered(true))
       .catch(err => console.log(err))
   }
-  // function formValid (formErrors) {
-  //   let valid = true;
-  //   Object.values(errors).forEach(val => val.length > 0 && (valid = false));
-  //   return valid;
-  // }
+
   function handleChange (e) {
     e.preventDefault();
     const { name, value } = e.target;
 
     setNewUser({ ...newUser, [name]: value});
   };
-
 
   function userCheck (e) {
     setUserType(e.target.value);
@@ -74,13 +51,13 @@ export default function Register(props) {
       setNewUser({...newUser, driver: true });
     }
   }
-  console.log(userType)
+
   return (
     <Fragment>
       {registered && <Redirect to="/login" />}
       <div id="register" classname="container">
         <div className="outer-container">
-          <h1> Register</h1>
+          <h1 className = "registerH1"> Register</h1>
           <Form.Row className="usertype-container">
             <Form.Label as="legend" column sm={2}>
               <span>User Type</span>

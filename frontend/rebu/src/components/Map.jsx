@@ -26,8 +26,8 @@ import mapStyles from "../styles/mapStyles"
 
 const libraries = ["places"];
 const mapContainerStyle = {
-  height: "60vh",
-  width: "50vw",
+  height: "65vh",
+  width: "850px",
 };
 const options = {
   styles: mapStyles,
@@ -136,25 +136,27 @@ export default function Map(props) {
   return (
     <div>
       <div className = "searchArea">
-        <Locate panTo={panTo} setOrigin = {setOrigin}/>
-        <SearchStart 
-          panTo={panTo} 
-          startAddress = {startAddress} 
-          setOrigin = {setOrigin} 
-          loadedOnce = {loadedOnce} 
-          setloadedOnce = {setloadedOnce} 
-        />
-      </div>
-      <div className = "destinationArea"> 
+        <div className = 'onlySearch'>
+          <Locate panTo={panTo} setOrigin = {setOrigin}/>
+          <SearchStart 
+            panTo={panTo} 
+            startAddress = {startAddress} 
+            setOrigin = {setOrigin} 
+            loadedOnce = {loadedOnce} 
+            setloadedOnce = {setloadedOnce} 
+          />
+        </div>
         {/* <LocateHome panTo={panTo} setDestination = {setDestination}/> */}
-        <SearchDestination 
-          panTo={panTo} 
-          finishAddress = {finishAddress}
-          destination = {destination} 
-          setDestination = {setDestination} 
-          loadedOnce = {loadedOnce} 
-          setloadedOnce = {setloadedOnce}
-        /> 
+        <div className = "onlyDestination"> 
+          <SearchDestination 
+            panTo={panTo} 
+            finishAddress = {finishAddress}
+            destination = {destination} 
+            setDestination = {setDestination} 
+            loadedOnce = {loadedOnce} 
+            setloadedOnce = {setloadedOnce}
+          /> 
+        </div>
       </div>
 
       <GoogleMap

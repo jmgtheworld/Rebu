@@ -17,7 +17,6 @@ const getPostsByUsers = (usersPosts) => {
           title: post.title,
           content: post.content,
       });
-
   }
 
   return Object.values(postsByUsers);

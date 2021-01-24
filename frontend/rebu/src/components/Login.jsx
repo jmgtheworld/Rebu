@@ -4,6 +4,8 @@ import Axios from 'axios';
 import Homee from './Homee';
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
+import "./Login.scss";
+
 export default function Login() {
   const [ email, setEmail ] = useState("")
   const [ password, setPassword ] = useState("")
@@ -36,22 +38,23 @@ export default function Login() {
   };
 
   return (
-      <div>
-      <h1> Login Page </h1>
+      <div className = "loginDiv">
+      <h1> Log in </h1>
       {token && <Redirect to= "/" />}
-      <Form>
+      <Form className = "loginForm">
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label className = "formLabel">Email address</Form.Label>
           <Form.Control type="email" onChange={handleEmailChange} value={email} placeholder="Enter email"/>
-          <Form.Text className="text-muted">
+          <Form.Text className="text-muted muted">
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+        <Form.Group controlId="formBasicPassword" className = "passwordForm">
+          <Form.Label className = "formLabel">Password</Form.Label>
           <Form.Control onChange={handlePwChange} value={password} type="password" placeholder="Password" />
+          <a className = "forgotpassword" href = ""> Forgot password? </a>
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={login}>
+        <Button size = "lg" variant="primary" type="submit" onClick={login} className ="submitButton">
           Submit
         </Button>
       </Form>
