@@ -20,6 +20,10 @@ export default function Button(props) {
     buttonType = "btn btn-success button"
   }
 
+  if (type === "Trip Complete") {
+    buttonType = "btn btn-danger button"
+  }
+
   return (
     <button className = {buttonType} onClick = {onClick}> {type} </button> 
   )

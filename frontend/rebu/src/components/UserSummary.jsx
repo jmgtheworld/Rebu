@@ -130,13 +130,12 @@ export default function UserSummary(props) {
       });
   })
 
-  let counter = 1;
 
   useEffect(() => {
     const requestsAPI = `http://localhost:3001/trips/`
     Axios.get(requestsAPI) 
       .then(res => {
-        setCurrentTripID(res.data.length + counter)
+        setCurrentTripID(res.data.length)
       });
   })
 
@@ -181,7 +180,6 @@ export default function UserSummary(props) {
       created_at: Date.now(),
       ended_at: null
     })
-    counter += 1
     console.log('currenttrip id', currentTripID)
   }, [price])
 
@@ -189,8 +187,8 @@ export default function UserSummary(props) {
     if (loadCancel && (!toggle)) {
       setWaiting(false)
       console.log('trip id to be deleted', currentTripID)
-      let deleteid = currentTripID - 1
-      return Axios.delete(`http://localhost:3001/trips/${deleteid}/delete`)
+      // let deleteid = currentTripID - 1
+      return Axios.put(`http://localhost:3001/trips/${currentTripID}/cancel`)
       .then(() => {
         console.log("previous trip cancelled/delete")
         setloadedOnce(true)
@@ -203,6 +201,28 @@ export default function UserSummary(props) {
     setloadCancel(true)
     setToggle(false)
   }, [])
+  
+  const completeTrip = useCallback(() => {
+    setloadedOnce(true)
+    setToggle(true)
+    setNewTrip({
+      customer_id: currentDriver,
+      driver_id: null,
+      start_address: startAddress,
+      end_address: finishAddress,
+      start_location_lat: origin.lat,
+      start_location_lon: origin.lng,
+      end_location_lat: destination.lat,
+      end_location_lon: destination.lng,
+      accepted: false,
+      payment_amount: price,
+      payment_status: false,
+      created_at: Date.now(),
+      ended_at: Date.now(),
+    })
+    
+  })
+
 
   return (
     <Fragment>
@@ -221,9 +241,9 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {accepted ?   <Alert variant = "success" >
+        {accepted ? <Fragment><Alert variant = "success" >
           {driverName} has accepted your request. He will message you once he is nearby!
-        </Alert> : <div></div> }
+        </Alert> <Button type = "Trip Complete" onClick = {completeTrip}/> </Fragment> : <div></div> }
       </div>
     </Fragment>
     
