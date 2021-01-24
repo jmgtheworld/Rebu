@@ -1,4 +1,5 @@
 import {Fragment, useState, useEffect, useCallback, useRef} from "react";
+import { Redirect } from "react-router-dom";
 import Axios from 'axios';
 
 import * as FaIcons from 'react-icons/fa';
@@ -39,7 +40,7 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    const medianPrice = Math.round((5 * 3 ));
+    const medianPrice = Math.round((distanceInNumber * 3 ));
 
     priceRange.push({price: medianPrice})
     priceRange.push({price: medianPrice + medianPrice*0.05})
@@ -182,7 +183,6 @@ export default function UserSummary(props) {
     return Axios.put(`http://localhost:3001/trips/${currentTripID}/complete`)
     .then(() => {
       console.log('Trip completed')
-      //redirect to home(?)
     })
     .catch(err => console.log(err));
   }
@@ -204,10 +204,10 @@ export default function UserSummary(props) {
         {(waiting && (!accepted)) ? <Spinner animation="grow" variant="secondary" /> : <div></div>}
         {(!accepted) ? <Button type = {waiting ? "Waiting for Driver" : "Search for Driver"} onClick = {requestTrip}/> : <div></div> }
         {(waiting && (!accepted)) ? <Button type = "Cancel Request" onClick = {cancelTrip}/> : <div></div> }
-        {accepted ? <Fragment><Alert variant = "success" >
+        {accepted && (!completed) ? <Fragment> <Alert variant = "success" >
           {driverName} has accepted your request. He will message you once he is nearby!
-        </Alert> 
-          {completed ? <Button type = "Trip Completed!" onClick = {completeTrip}/> :<Button type = "Trip Complete" onClick = {completeTrip}/> } </Fragment> : <div></div> }
+        </Alert>  <Button type = "Trip Complete" onClick = {completeTrip}/> </Fragment> : <div></div>}
+        {completed ? <Button type = "Trip Completed!" onClick = {completeTrip}/> : <div></div> } 
       </div>
     </Fragment>
     

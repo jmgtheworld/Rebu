@@ -11,8 +11,8 @@ export default function Home(props) {
     distance: "0",
   })
   // Coords
-  const[origin, setOrigin] = useState({lat:43.6453, lng:-79.3806});
-  const[destination, setDestination] = useState({lat:43.6706, lng:-79.3865});
+  const[origin, setOrigin] = useState({lat:null, lng:null});
+  const[destination, setDestination] = useState({lat:null, lng:null});
 
   // Formated Addresses
   const [startAddress, setstartAddress] = useState("");
