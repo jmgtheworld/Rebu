@@ -1,3 +1,4 @@
+
 .map {
   display: flex;
   justify-content: center;
@@ -5,31 +6,44 @@
 
 .searchArea{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 30px;
 }
 
-.destinationArea{
-  display:flex;
-  justify-content: center;
-  margin: 0 0 50px 100px;
+.onlySearch{
+  display: flex;
+  align-items: center;
+}
+
+.onlyDestination{
+  margin-left: 95px;
 }
 
 .searchBar{
   font-family: Arial, Helvetica, sans-serif;
-  width: 400px;
+  width: 550px;
   padding: 10px;
 }
 
 .locate {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   margin: 25px;
+  background-color: white;
+  border-radius: 8px;
+  border-color: black;
+}
+
+.locate:hover{
+  background-color: black;
+  color: white;
 }
 
 .compass{
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
 }
 
 .comboboxPop{

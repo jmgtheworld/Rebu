@@ -12,7 +12,8 @@
 .dropdown{
   width: 30px;
   height: 30px;
-  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .dropdown:hover{
@@ -20,17 +21,20 @@
 }
 
 .priceItem{
+  font-family: sans-serif;
   width: 140px;
   padding: 15px;
-  background-color: #495867;
+  background-color: #B2BABB;
   justify-content: center;
-  color: white;
+  color: black;
   font-size: 17px;
 }
 
 .priceItem:hover{
   background-color: gray;
   color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .selectedPrice {

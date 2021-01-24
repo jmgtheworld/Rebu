@@ -34,7 +34,6 @@ export default function Home(props) {
         />
       </div>
       <div id="chat">
-        <h1>Chat</h1>
         { props.chatSelected && 
           <Chat 
             name={props.user.full_name}
