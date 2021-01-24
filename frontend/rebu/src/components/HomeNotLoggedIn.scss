@@ -1,10 +1,11 @@
 .button-group {
   margin-top: 80px;
+  display: flex;
+  flex-direction: column;
 }
 
 .RLbutton {
-  display: inline-block;
-  width: 60%;
+  width: 500px;
   margin: 10px;
 }
 
