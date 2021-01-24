@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 
 import { Card, Col, Row, Button, Badge } from 'react-bootstrap';
 
@@ -15,6 +16,7 @@ export default function RequestCard (props) {
   
   } = props;
   // console.log('dirver location from request card', driverlocation)
+  const timestamp = moment(props.created_at).fromNow();
   
   return (
     <Card.Body className="request-container">
@@ -34,7 +36,7 @@ export default function RequestCard (props) {
           })
         }
         }>
-          <Row>
+          <Row className="card-container">
             <Col className="start-address">{props.start_address}</Col>
             <Col className="end-address">{props.end_address}</Col>
             <Col className="trip-price">$ {props.price}</Col>
@@ -70,14 +72,15 @@ export default function RequestCard (props) {
               />
             </Col>
             }
+            
             {isConfirmed &&
-              <div>
+              <Col className="confirmed-badge">
                 <Badge pill variant="success">Accepted</Badge>
-              </div>
+              </Col>
             }
           </Row>
           <Row className="created-at">
-            Posted 2min go
+            {`Posted ${timestamp}`}
           </Row>
         </Card.Body>
       </Card>
