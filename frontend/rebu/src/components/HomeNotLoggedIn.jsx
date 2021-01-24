@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import { Redirect } from 'react-router';
-// import { render } from 'react-dom'
+import { Link } from 'react-router-dom';
 
 import Trail from './Animations/Trail';
 import './HomeNotLoggedIn.scss';
@@ -10,12 +10,15 @@ const HomeNotLoggedIn = () => {
   const [open, set] = useState(true);
 
   function login () {
+    // <Redirect to="/login"/>
     return (
+      // <Link to="/login"/>
       <Redirect to="/login"/>
     )
   };
 
   const register = () => {
+    <Redirect to="/register"/>
     return (
       <Redirect to="/register"/>
     )
@@ -31,10 +34,10 @@ const HomeNotLoggedIn = () => {
       </Trail>
       <div className="button-group">
         <Button variant="success" size="lg" onClick={login} className = "RLbutton">
-            Login
+          Login
         </Button>
         <Button variant="info" size="lg" onClick={register} className = "RLbutton">
-            Register
+          Register
         </Button>
       </div>
       
