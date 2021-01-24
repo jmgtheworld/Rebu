@@ -41,7 +41,7 @@
 
     &:hover {
       cursor: pointer;
-      box-shadow: 0 5px 15px 5px rgba(67, 175, 116, 0.288);
+      box-shadow: 0 5px 15px 5px rgba(67, 96, 175, 0.315);
 
     }
 
@@ -66,14 +66,15 @@
     }
     .accept-btn {
       font-weight: 600;
+      background-color:#FFF;
       color:#1E90FF;
-      background-color: #fff;
-      border: 2px solid#1E90FF;
       width: 100px;
       height: 50px;
 
       &:hover {
-        background-color:#1e8fff49;
+        color:#FFF;
+        background-color: #1E90FF;
+        border: 2px solid#1E90FF;
       }
     }
 
@@ -86,7 +87,7 @@
 
   .created-at {
     font-size: 0.7em;
-    margin: 3em 1em 0 1em;
+    margin: 3em 1em 0.5em 1em;
   }
 
 }
