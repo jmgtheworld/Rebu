@@ -80,7 +80,7 @@ export default function Register(props) {
       {registered && <Redirect to="/login" />}
       <div id="register" classname="container">
         <div className="outer-container">
-          <h1> Register</h1>
+          <h1 className = "registerH1"> Register</h1>
           <Form.Row className="usertype-container">
             <Form.Label as="legend" column sm={2}>
               <span>User Type</span>

@@ -1,11 +1,23 @@
 #register {
   height: 100vh;
+  display:inline-block;
+
+  .registerH1 {
+    margin-bottom: 60px;
+    padding-bottom: 25px;
+    border-style: none none solid none;
+    border-width: 2px;
+  }
 
   .usertype-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 50px;
+
+    .form-row{
+      justify-content: flex-start;
+    }
 
     span {
       font-weight: 600;
@@ -15,7 +27,6 @@
       margin: 0 1em;
     }
   }
-  
 
   .outer-container {
     margin: 1em;
