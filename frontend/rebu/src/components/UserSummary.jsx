@@ -79,7 +79,7 @@ export default function UserSummary(props) {
 
   const listofPrice = PriceRange.map( (item, index) => {
     return <li key = {index} 
-              className = "priceItem" 
+              className = "priceItem"
               onClick ={
                 () => {
                   setPrice(item.price)

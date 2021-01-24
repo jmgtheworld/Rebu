@@ -28,12 +28,17 @@
   justify-content: center;
   color: black;
   font-size: 17px;
+  border-width: 2px;
+  border-color: white;
+  border-style: none solid none solid;
 }
 
 .priceItem:hover{
   background-color: gray;
   color: white;
   font-weight: bold;
+  border-color: black;
+  border-style: solid;
   cursor: pointer;
 }
 
