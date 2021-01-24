@@ -10,25 +10,16 @@ import './HomeNotLoggedIn.scss';
 const HomeNotLoggedIn = () => {
   const [open, set] = useState(true);
 
-  setInterval(() => set((state) => !state), 4000);
-
   return (
     <div id="body">
-      <Trail open={open} >
+      <Trail open={open} onClick={() => set((state) => !state)} >
         <span id="app-name">Rebu</span>
-        {/* <span className="slogan">designated</span>
-        <span className="slogan">driving</span>
-        <span className="slogan">service</span> */}
       </Trail>
-      <Trail open={!open} >
+      <Trail open={!open} onClick={() => set((state) => !state)} >
         <span className="slogan">Designated</span>
         <span className="slogan">Driving</span>
         <span className="slogan">Service</span>
       </Trail>
-
-      {/* {!open &&
-        <img id="logo" src={logo} />
-      } */}
       <div className="button-group">
         <Link to="/login">
           <Button variant="success" size="lg" className = "RLbutton">
