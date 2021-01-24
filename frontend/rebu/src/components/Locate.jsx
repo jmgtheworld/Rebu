@@ -1,5 +1,7 @@
 import {Fragment} from 'react';
 import {FaRegCompass} from "react-icons/fa";
+
+import '../styles/map.css'
  
 export default function Locate (props) {
 
@@ -23,7 +25,7 @@ export default function Locate (props) {
             );
           }}
         >
-          <FaRegCompass />
+          <FaRegCompass className = "compass"/>
         </button>
     </Fragment>
   );
