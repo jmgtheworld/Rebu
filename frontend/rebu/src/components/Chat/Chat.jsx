@@ -12,7 +12,7 @@ let socket;
 
 export default function Chat (props) {
   const [ trip, setTrip ] = useState({});
-  const [ otherUserName, setOtherUserName] = useState("");
+  const [ otherUserName, setOtherUserName] = useState(null);
   const [ room, setRoom ] = useState("")
   const [ message, setMessage ] = useState("");
   const [ messages, setMessages ] = useState([]);
@@ -26,6 +26,9 @@ export default function Chat (props) {
   //api endpoint to get the trip data that matches token === driver_id AND accepted === true AND ended_at === null (meaning the trip didn't end yet)
 
 
+  if (otherUserName) {
+    props.setIsAcceptedTrip(true);
+  }
 
   useEffect(()=> {
     if (isUserDriver && trip) {

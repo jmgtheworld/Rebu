@@ -80,6 +80,7 @@ export default function HomeDriver (props) {
               name={props.user.full_name}
               driver={props.user.driver}
               user={props.user}
+              setIsTripAccepted={props.setIsTripAccepted}
             />
           }
         </div>
