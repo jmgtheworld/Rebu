@@ -147,4 +147,5 @@ module.exports = ({
     return router;
 };
 
-
+// removed for now
+// (6, NULL, '398 Church St, Toronto, ON M5B 2A2', '27 Kings College Cir, Toronto, ON M5S', 43.660410, -79.379010, 43.661369, -79.396263, false, 25, false, current_timestamp, NULL),
