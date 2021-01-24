@@ -59,9 +59,7 @@ export default function HomeDriver (props) {
     
   return (
     <div>
-      <div>Map to show other drivers</div>
       <div>
-        <h2>Requests</h2>
         <div className = "map">
           <MapDriver 
             driverlocation = {driverlocation[1]}
@@ -77,7 +75,6 @@ export default function HomeDriver (props) {
         </div>
         <DriverSummary price = {price} travelMode = {travelMode} travelTD = {travelTD} settravelTD = {settravelTD}/>
         <div id="chat">
-          <h2>Chat</h2>
           { props.chatSelected && 
             <Chat
               name={props.user.full_name}
@@ -85,7 +82,8 @@ export default function HomeDriver (props) {
               user={props.user}
             />
           }
-      </div>
+        </div>
+        <h2>Requests</h2>
         <RequestList 
           driverlocation = {driverlocation[1]}
           requests = {requests} 

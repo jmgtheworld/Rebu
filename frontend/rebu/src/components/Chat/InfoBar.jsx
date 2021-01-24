@@ -1,12 +1,14 @@
 import { FiMessageCircle } from 'react-icons/fi'
 import './InfoBar.css';
 
-export default function InfoBar (props) {
+export default function InfoBar ({ otherUserName }) {
+
+  const otherUserFirstName = otherUserName.split(' ')[0];
   return (
     <div className="infoBar"> 
       <div className="leftInnerContainer">
         <FiMessageCircle />
-        <p>Talking to: {props.otherUserName}</p>
+        <p>{`Talking to ${otherUserFirstName}`}</p>
       </div>
       <div className="rightInnerContainer">
         
