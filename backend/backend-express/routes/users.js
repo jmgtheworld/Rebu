@@ -53,7 +53,6 @@ module.exports = ({
                 const { id } = user;
                 const { driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country } = req.body;
                 const password = bcrypt.hashSync(req.body.password, saltRounds);
-                console.log(id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password );
                 updateUserInfo(id, driver, full_name, email, phone_number, credit_card, month_year, cvc, license, street_address, apartment_number, city, postal_code, province, country, password )
                     .then(user => res.status(200).json(user))
                     .catch((err) => res.json({

@@ -1,31 +1,32 @@
 
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, Fragment } from "react";
 import Axios from 'axios';
 import { BrowserRouter as Router, Redirect } from "react-router-dom";
 import { Form, Col } from 'react-bootstrap';
 import RiderRegisterForm from "./Register/RiderRegisterForm";
 import DriverRegisterForm from './Register/DriverRegisterForm';
 
-import './Register/Register.scss';
+import "./Register/Register.scss";
 
 export default function Settings(props) {
   const token = localStorage.getItem("token");
-  // console.log("settings", token);
 
   const [currentUser, setCurrentUser] = useState({});
+  const [ userType, setUserType ] = useState("rider");
 
   useEffect(() => {
     const requestsAPI = "http://localhost:3001/users/data"
-    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} })
       .then(res => setCurrentUser(res.data));
   }, {});
 
   const updateUser = (e) => {
     e.preventDefault();
 
-    // axios here
-
-  }
+    return Axios.put("http://localhost:3001/users/data", currentUser, { headers: { "x-access-token": token} })
+      .then(() => console.log("updated"))
+      .catch(err => console.log(err))
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -35,57 +36,62 @@ export default function Settings(props) {
   };
 
   const userCheck = (e) => {
-    setCurrentUser({...currentUser, driver: e.target.value});
+    setUserType(e.target.value);
 
-    if (currentUser.driver === true) {
+    if (userType === "driver") {
       setCurrentUser({...currentUser, driver: true });
     }
-  }
-
-  console.log(currentUser);
+  };
 
   return (
-    <div>
+    <Fragment>
       {!token && <Redirect to="/login" />}
-      <h1>Settings</h1>
-      <Form.Row>
-        <Form.Label as="legend" column sm={2}>
-          User Type
-        </Form.Label>
-        <Form.Row as={Col}>
-          <Form.Check
-            type="radio"
-            label="Rider"
-            name="formHorizontalRadios"
-            value="rider"
-            id="formHorizontalRadios1"
-            defaultChecked
-            onClick={userCheck}
+      <div id="register" classname="container">
+        <div className="outer-container">
+          <h1>Settings</h1>
+          <Form.Row className="usertype-container">
+            <Form.Label as="legend" column sm={2}>
+              <span>User Type</span>
+            </Form.Label>
+            <Form.Row as={Col}>
+              <Form.Check
+                type="radio"
+                label="Rider"
+                name="formHorizontalRadios"
+                value="rider"
+                id="formHorizontalRadios1"
+                defaultChecked
+                onClick={userCheck}
+                className="choose-usertype"
+              />
+              <Form.Check
+                type="radio"
+                label="Driver"
+                name="formHorizontalRadios"
+                value="driver"
+                id="formHorizontalRadios2"
+                onClick={userCheck}
+                className="choose-usertype"
+              />
+            </Form.Row>
+          </Form.Row>
+          <hr />
+          {userType === "rider" &&
+          <RiderRegisterForm 
+            register={updateUser}
+            change={handleChange}
+            userInfo={currentUser}
           />
-          <Form.Check
-            type="radio"
-            label="Driver"
-            name="formHorizontalRadios"
-            value="driver"
-            id="formHorizontalRadios2"
-            onClick={userCheck}
-          />
-        </Form.Row>
-      </Form.Row>
-      {currentUser.driver === false && 
-        <RiderRegisterForm 
-          // register={register}
-          change={handleChange}
-          userInfo={currentUser}
-        />
-      }
-      {currentUser.driver === true && 
-        <DriverRegisterForm 
-        change={handleChange}
-        // register={register}
-        userInfo={currentUser}
-        />
-      }
-    </div>
+          }
+          {userType === "driver" &&
+            <DriverRegisterForm 
+            change={handleChange}
+            register={updateUser}
+            userInfo={currentUser}
+            />
+          }
+        </div>
+      </div>
+    </Fragment>
   )
 }
