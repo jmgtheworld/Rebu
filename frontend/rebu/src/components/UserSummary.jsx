@@ -15,7 +15,6 @@ export default function UserSummary(props) {
   const [priceMenu, setpriceMenu] = useState(false);
   const [price, setPrice] = useState(0);
   const [waiting, setWaiting]  = useState(false);
-
   const [ newTrip, setNewTrip ] = useState({
     customer_id: null,
     driver_id: null,
@@ -31,10 +30,8 @@ export default function UserSummary(props) {
     created_at: Date.now(),
     ended_at: null
   })
-
   const [loadedOnce, setloadedOnce] = useState(false);
   const [loadCancel, setloadCancel] = useState(false);
-
   const [toggle, setToggle] = useState(false);
  
 
@@ -43,8 +40,6 @@ export default function UserSummary(props) {
 
   const priceRangeGenerator = distanceInNumber => {
     const medianPrice = Math.round((5 * 3 ));
-    const startingPrice = medianPrice - (medianPrice * 0.25);
-    const highestPrice = medianPrice + (medianPrice * 0.25);
 
     priceRange.push({price: medianPrice})
     priceRange.push({price: medianPrice + medianPrice*0.05})
@@ -52,12 +47,6 @@ export default function UserSummary(props) {
     priceRange.push({price: medianPrice + medianPrice*0.25})
     priceRange.push({price: medianPrice + medianPrice*0.35})
     priceRange.push({price: medianPrice + medianPrice*0.45})
-
-    // for (let i = startingPrice; i <= highestPrice; i++) {
-    //   priceRange.push({
-    //     price: i
-    //   })
-    // }
 
     return priceRange
   }
@@ -105,8 +94,6 @@ export default function UserSummary(props) {
   }, [loadedOnce, toggle])
 
   const token = localStorage.getItem("token");
-  
-  
   const [currentDriver, setCurrentDriver]  = useState(null)
   const [currentTripID, setCurrentTripID]  = useState(null)
   const [driverName, setDriverName] = useState(null)
@@ -130,7 +117,6 @@ export default function UserSummary(props) {
       });
   })
 
-
   useEffect(() => {
     const requestsAPI = `http://localhost:3001/trips/`
     Axios.get(requestsAPI) 
@@ -148,19 +134,6 @@ export default function UserSummary(props) {
         console.log('driver name:', driverName)
       });
   })
-
-  // useEffect(() => {
-  //   const requestsAPI = `http://localhost:3001/trips/${currentTripID}`
-  //   Axios.get(requestsAPI) 
-  //     .then(res => {
-  //       console.log(res.data)
-  //       if (res.data.accepted) {
-  //         setDriverName(res.data.driver_name)
-  //         setAccepted(true)
-  //         console.log('accepted?', accepted)
-  //       }
-  //     });
-  // })
 
   const requestTrip = useCallback(() => {
     setloadedOnce(true)
@@ -197,32 +170,19 @@ export default function UserSummary(props) {
     }
   }, [loadCancel, toggle])
 
+
   const cancelTrip = useCallback(() => {
     setloadCancel(true)
     setToggle(false)
   }, [])
   
-  const completeTrip = useCallback(() => {
-    setloadedOnce(true)
-    setToggle(true)
-    setNewTrip({
-      customer_id: currentDriver,
-      driver_id: null,
-      start_address: startAddress,
-      end_address: finishAddress,
-      start_location_lat: origin.lat,
-      start_location_lon: origin.lng,
-      end_location_lat: destination.lat,
-      end_location_lon: destination.lng,
-      accepted: false,
-      payment_amount: price,
-      payment_status: false,
-      created_at: Date.now(),
-      ended_at: Date.now(),
+  const completeTrip = () => {
+    return Axios.put(`http://localhost:3001/trips/${currentTripID}/complete`)
+    .then(() => {
+      console.log('Trip completed')
     })
-    
-  })
-
+    .catch(err => console.log(err));
+  }
 
   return (
     <Fragment>
