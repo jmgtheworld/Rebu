@@ -132,8 +132,6 @@ module.exports = ({
             }));
       });
 
-
-
     router.delete("/:id/delete", (req, res) => {
         const tripId = req.params.id;
         deleteTrip(tripId)
