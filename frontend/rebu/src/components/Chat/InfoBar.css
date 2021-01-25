@@ -31,3 +31,15 @@
 .onlineIcon {
   margin-right: 5%;
 }
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .infoBar p {
+    font-size: 0.9em;
+  }
+
+  .infoBar {
+    height: 60px;
+    width: 100%;
+  }
+
+}

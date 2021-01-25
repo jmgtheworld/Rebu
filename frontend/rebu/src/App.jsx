@@ -7,7 +7,7 @@ import {
 
 import './App.css';
 
-import Homee from "./components/Homee"
+import Home from "./components/Home"
 import Login from "./components/Login"
 import Register from "./components/Register/Register"
 import Settings from "./components/Settings"
@@ -41,7 +41,7 @@ function App() {
             <Logout />
           </Route>
           <Route path = "/">
-            <Homee />
+            <Home />
           </Route>
         </Switch>
       </div>

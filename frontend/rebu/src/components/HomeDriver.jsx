@@ -9,10 +9,10 @@ import Chat from "./Chat/Chat";
 import './Chat/Chat.css'
 
 export default function HomeDriver (props) {
-  const [requests, setRequests] = useState([]); 
 
   const[travelMode, setTravelMode] = React.useState("WALKING");
 
+  const [requests, setRequests] = useState([]); 
   const [driverlocation, setDriverlocation] = useState([]); 
 
   const [travelTD, settravelTD] = useState({
@@ -39,30 +39,35 @@ export default function HomeDriver (props) {
   const[destination, setDestination] = useState({
     lat: null, 
     lng: null
-  }); 
+  });
   
-  const requestsAPI = "http://localhost:3001/trips/not-accepted";
-
   useEffect(() => {
-    Axios.get(requestsAPI) 
-      .then(res => setRequests(res.data));
-  },[requestsAPI])
-
-  useEffect(() => {
-    const requestsAPI = "http://localhost:3001/users"
+    const requestsAPI = "http://localhost:3001/trips/not-accepted"
     Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
+      .then(res => setRequests(res.data));
+  },[])
+
+  // useEffect(() => {
+  //   const requestsAPI = "http://localhost:3001/users"
+  //   Axios.get(requestsAPI) //would be /api/trips/requested to get trips that have the accepted===false
+  //     .then(res => setDriverlocation(res.data));
+  // },[])
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const requestsAPI = "http://localhost:3001/users/data"
+    Axios.get(requestsAPI, { headers: { "x-access-token": token} }) //would be /api/trips/requested to get trips that have the accepted===false
       .then(res => setDriverlocation(res.data));
   },[])
 
-  
 
-    
   return (
     <div id="home-driver">
       <div>
         <div className = "map">
           <MapDriver 
-            driverlocation = {driverlocation[1]}
+            driverlocation = {driverlocation}
             travelMode = {travelMode}
             setTravelMode = {setTravelMode}
             travelTD = {travelTD} settravelTD = {settravelTD}
@@ -80,13 +85,12 @@ export default function HomeDriver (props) {
               name={props.user.full_name}
               driver={props.user.driver}
               user={props.user}
-              setIsTripAccepted={props.setIsTripAccepted}
             />
           }
         </div>
         <h2>Requests</h2>
         <RequestList 
-          driverlocation = {driverlocation[1]}
+          driverlocation = {driverlocation}
           requests = {requests} 
           origin = {origin}
           pickup = {pickup}

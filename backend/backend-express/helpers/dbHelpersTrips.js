@@ -47,7 +47,7 @@ module.exports = (db) => {
     // Get not accepted trips
     const getTripsByNotAccepted = () => {
         const query = {
-            text: 'SELECT * FROM trips WHERE accepted = FALSE',
+            text: 'SELECT * FROM trips WHERE accepted = FALSE AND ended_at IS NULL',
         };
     
         return db
@@ -86,7 +86,7 @@ module.exports = (db) => {
     // Updates a trip to 'cancelled'
     const cancelTrip = (tripId) => {
         const query = {
-            text: `UPDATE trips SET accepted = FALSE, driver_id = null WHERE id = $1`,
+            text: `UPDATE trips SET accepted = FALSE, driver_id = null, ended_at = current_timestamp WHERE id = $1`,
             values: [tripId]
         };
 
@@ -98,6 +98,17 @@ module.exports = (db) => {
     const deleteTrip = (tripId) => {
         const query = {
             text: `DELETE FROM trips WHERE id = $1`,
+            values: [tripId]
+        };
+
+        return db.query(query)
+            .then(result => result.rows[0])
+            .catch(err => err);
+    };
+
+    const completeTrip = (tripId) => {
+        const query = {
+            text: `UPDATE trips SET ended_at = current_timestamp WHERE id = $1`,
             values: [tripId]
         };
 
@@ -187,6 +198,7 @@ module.exports = (db) => {
         deleteTrip,
         getUserAndDriverActiveTrip,
         getCustomersActiveTrip,
-        getDriversActiveTrip
+        getDriversActiveTrip,
+        completeTrip
     };
   };

@@ -65,17 +65,6 @@ export default function Map(props) {
     libraries,
   });
 
-  const directionsCallback = response => {
-
-    if (response !== null) {
-      if (response.status === 'OK') {
-        setResponse(response)
-      } else {
-        console.log('response: ', response)
-      }
-    }
-  }
-
   const onMapClick = React.useCallback((e) => {
     setMarkers(() => [
       {

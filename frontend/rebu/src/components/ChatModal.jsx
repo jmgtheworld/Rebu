@@ -1,14 +1,13 @@
 import { RiChat1Fill } from 'react-icons/ri';
 
-export default function ChatModal ({ setChatSelected, chatSelected }) {
+export default function ChatModal (props) {
 
-  // function clickHandler (e) {
-
-  //   setChatSelected(!chatSelected);
-  // };
+  function clickHandler (e) {
+    props.setChatSelected(!props.chatSelected);
+  };
 
   return (
-    <div className="modal-container">
+    <div className="modal-container" onClick={clickHandler}>
       <RiChat1Fill color="white" className="modal-icon"/>
     </div>
   )

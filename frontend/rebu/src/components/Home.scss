@@ -35,12 +35,28 @@
   .map-container {
     width: 100vw;
 
-
-  
     #map {
       width: 100vw !important;
     }
   }
+
+  .modal-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 2em;
+    z-index: 10;
+    background-color: #1A1A1D;
+    height: 77px;
+    width: 77px;
+
+    &:hover {
+      background-color: #313135;
+    }
+  }
+
+
 
 }
 

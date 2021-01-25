@@ -11,7 +11,8 @@ module.exports = ({
     deleteTrip,
     getUserAndDriverActiveTrip,
     getCustomersActiveTrip,
-    getDriversActiveTrip
+    getDriversActiveTrip,
+    completeTrip
 }) => {
     // GET all trips
     router.get('/', (req, res) => {
@@ -132,19 +133,27 @@ module.exports = ({
             }));
       });
 
-
-
     router.delete("/:id/delete", (req, res) => {
         const tripId = req.params.id;
         deleteTrip(tripId)
-        .then(trip => res.json(trip))
-        .catch(err => res.json({
-            error: err.message
-        }));
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
+    });
+
+    router.put("/:id/complete", (req, res) => {
+        const tripId = req.params.id;
+        completeTrip(tripId)
+            .then(trip => res.json(trip))
+            .catch(err => res.json({
+                error: err.message
+            }));
     });
 
 
     return router;
 };
 
-
+// removed for now
+// (6, NULL, '398 Church St, Toronto, ON M5B 2A2', '27 Kings College Cir, Toronto, ON M5S', 43.660410, -79.379010, 43.661369, -79.396263, false, 25, false, current_timestamp, NULL),

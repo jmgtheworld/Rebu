@@ -12,6 +12,7 @@
 #app-name {
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 0px;
+  font-weight: 600;
 }
 
 .slogan {
@@ -22,7 +23,7 @@
 .trails-main {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 200%;
   overflow: hidden;
   cursor: pointer;
   display: flex;
@@ -34,12 +35,12 @@
 .trails-text {
   position: relative;
   width: 100%;
-  height: 110px;
-  line-height: 100px;
+  height: 120%;
+  line-height: 95%;
   color: black;
   font-size: 8em;
   font-weight: 800;
-  letter-spacing: -7px;
+  letter-spacing: -5px;
   will-change: transform, opacity;
   overflow: hidden;
 }
@@ -48,4 +49,7 @@
   overflow: hidden;
 }
 
-
+#logo {
+  width: 50%;
+  height: 50%;
+}
