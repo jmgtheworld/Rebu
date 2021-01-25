@@ -18,7 +18,7 @@ export default function History () {
 
   return (
     <div>
-      <h1>Trips</h1>
+      <h1>Trips History</h1>
       <div>
         <TripList trips={trips}/>
       </div>
