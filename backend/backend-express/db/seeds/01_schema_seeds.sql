@@ -25,4 +25,6 @@ VALUES
   (3, NULL, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '144 Front St W, Toronto, ON M5J 2L7', 43.649110, -79.389560, 43.645433, -79.383896, false, 10, false, current_timestamp, NULL),
   (4, 5, '144 Front St W, Toronto, ON M5J 2L7', '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', 43.645630, 43.645630, 43.641788, -79.386429, true, 10, true, current_timestamp - interval '3 day', current_timestamp - interval '3 day' + interval '1 hour'),
   (2, 4, '225 Richmond St W Suite 100, Toronto, ON M5V 1W2', '132 Dundas St W, Toronto, ON M5G 1C3', 43.649110, -79.389560, 43.6556486, -79.3847106, true, 10, false, current_timestamp - interval '1 day', current_timestamp - interval '1 day' + interval '1 hour'),
-  (7, NULL, '14 Madison Ave, Toronto, ON M5R 2S1', '104 Harbord St, Toronto, ON M5S 1G6', 43.667881, -79.403381, 43.664830, -79.401900, false, 30, false, current_timestamp, NULL);
+  (7, NULL, '14 Madison Ave, Toronto, ON M5R 2S1', '104 Harbord St, Toronto, ON M5S 1G6', 43.667881, -79.403381, 43.664830, -79.401900, false, 30, false, current_timestamp, NULL),
+  (1, NULL, '328 Spadina Ave, Toronto, ON M5T 2E7', '18 Duncan St, Toronto, ON M5H 3G8', 43.653790, -79.398697, 43.647869, -79.388687, false, 20, true, current_timestamp, NULL),
+  (4, NULL, '225 Richmond St W Suite 100, Toronto', '132 Dundas St W, Toronto, ON M5G 1C3', 43.649110, -79.389560, 43.6556486, -79.3847106, false, 27, true, current_timestamp, NULL);
