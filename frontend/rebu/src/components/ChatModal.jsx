@@ -1,9 +1,9 @@
 import { RiChat1Fill } from 'react-icons/ri';
 
-export default function ChatModal ({ setChatSelected, chatSelected }) {
+export default function ChatModal (props) {
 
   function clickHandler (e) {
-    setChatSelected(!chatSelected);
+    props.setChatSelected(!props.chatSelected);
   };
 
   return (

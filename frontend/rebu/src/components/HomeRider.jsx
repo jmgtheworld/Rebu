@@ -4,6 +4,8 @@ import UserSummary from './UserSummary';
 
 import Chat from "./Chat/Chat";
 
+import './Chat/Chat.css';
+
 export default function Home(props) {
   // changes to true, when the driver accepts the request
   const [travelTD, settravelTD] = useState({
@@ -11,8 +13,8 @@ export default function Home(props) {
     distance: "0",
   })
   // Coords
-  const[origin, setOrigin] = useState({lat:null, lng:null});
-  const[destination, setDestination] = useState({lat:null, lng:null});
+  const[origin, setOrigin] = useState({lat:23, lng:23});
+  const[destination, setDestination] = useState({lat:23, lng:23});
 
   // Formated Addresses
   const [startAddress, setstartAddress] = useState("");

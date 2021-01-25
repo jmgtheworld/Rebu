@@ -14,6 +14,7 @@ const Homee = () => {
   const token = localStorage.getItem("token");
 
   const [ chatSelected, setChatSelected ] = useState(false);
+  const [ isTripAccepted, setIsTripAccepted ] = useState(false)
 
   useEffect(() => {
     Axios.get("http://localhost:3001/users/data", { headers: { "x-access-token": token} })
@@ -23,6 +24,14 @@ const Homee = () => {
       .catch(err => console.log(err));
   }, []);
 
+
+
+  // function clickHandler () {
+  //   // if (isTripAccepted) {
+  //     setChatSelected(!chatSelected);
+  //   // }
+  // };
+
   return (
     <div id="homepage">
       {!token && <HomeNotLoggedIn />}
@@ -30,16 +39,17 @@ const Homee = () => {
         <HomeRider 
           user={user} 
           chatSelected={chatSelected}
+          setIsTripAccepted={setIsTripAccepted}
         />
       }
       {user.driver && token &&
         <HomeDriver 
           user={user} 
-          setChatSelected={setChatSelected} 
+          setIsTripAccepted={setIsTripAccepted}
           chatSelected={chatSelected} 
         />
       }
-      <ChatModal setChatSelected={setChatSelected} chatSelected={chatSelected} />
+      <ChatModal  setChatSelected={setChatSelected} chatSelected={chatSelected} />
     </div>
   )
 };

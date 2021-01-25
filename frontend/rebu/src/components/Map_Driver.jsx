@@ -135,7 +135,7 @@ export default function MapDriver(props) {
   if (!isLoaded) return <Spinner animation="border" variant="secondary" />;
 
   return (
-    <div>
+    <div className="map-container">
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -143,7 +143,7 @@ export default function MapDriver(props) {
         center={center}
         options={options}
         onLoad={onMapLoad}
-        panel={ document.getElementById('panel') } 
+        panel={ document.getElementById('panel') }
       >
         {markers.map((marker) => (
           <Marker
