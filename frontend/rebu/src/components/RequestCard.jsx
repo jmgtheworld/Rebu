@@ -26,13 +26,9 @@ export default function RequestCard (props) {
             lat: driverlocation.current_location_lat,
             lng: driverlocation.current_location_lon
           })
-          setPickup({
+          setDestination({
             lat: start_location_lat,
             lng: start_location_lon
-          })
-          setDestination({
-            lat: end_location_lat, 
-            lng: end_location_lon
           })
         }
         

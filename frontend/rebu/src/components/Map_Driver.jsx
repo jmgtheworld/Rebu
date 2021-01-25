@@ -60,7 +60,7 @@ export default function MapDriver(props) {
   console.log('origin from map_driver', origin)
   const places = [
     {latitude: origin.lat, longitude: origin.lng},
-    {latitude: pickup.lat, longitude: pickup.lng}
+    {latitude: destination.lat, longitude: destination.lng}
   ]
   
   console.log('places', places)
@@ -151,7 +151,7 @@ export default function MapDriver(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        {/* <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        <MapDirectionsRenderer places = {places} travelMode = {travelMode} loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
         {destination && origin && <Distance 
           travelMode = {travelMode} 
           setstartAddress = {setstartAddress} 
@@ -167,7 +167,7 @@ export default function MapDriver(props) {
               time,
               distance
             })
-        }}/> } */}
+        }}/> }
       </GoogleMap>
       <div id="panel"></div>
       <div className = "driverInfo">

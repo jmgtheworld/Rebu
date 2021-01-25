@@ -41,7 +41,7 @@ const center = {
 //temporary data for directions
 
 
-Geocode.setApiKey("");
+Geocode.setApiKey("AIzaSyAUzhwg7j5AdgQyX_Ef8Py7iBI2kQhGqLQ");
 
 export default function Map(props) {
 
@@ -61,7 +61,7 @@ export default function Map(props) {
   ]
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyAUzhwg7j5AdgQyX_Ef8Py7iBI2kQhGqLQ",
     libraries,
   });
 
@@ -163,7 +163,7 @@ export default function Map(props) {
             position={{ lat: marker.lat, lng: marker.lng }}
           />
         ))}
-        {/* <MapDirectionsRenderer places = {places} travelMode = "DRIVING" loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
+        <MapDirectionsRenderer places = {places} travelMode = "DRIVING" loadedOnce = {loadedOnce} setloadedOnce = {setloadedOnce}/>
         {destination && origin && 
           <Distance 
             setfinishAddress = {setfinishAddress}
@@ -181,7 +181,7 @@ export default function Map(props) {
               })
             }}
           /> 
-        } */}
+        }
       </GoogleMap>
     </div>
   );
