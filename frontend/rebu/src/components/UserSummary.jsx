@@ -40,8 +40,8 @@ export default function UserSummary(props) {
   const priceRange = [];
 
   const priceRangeGenerator = distanceInNumber => {
-    // const medianPrice = Math.round((distanceInNumber * 3 ));
-    const medianPrice = Math.round(15);
+    const medianPrice = Math.round((distanceInNumber * 3 ));
+    // const medianPrice = Math.round(15);
 
     priceRange.push({price: medianPrice})
     priceRange.push({price: medianPrice + medianPrice*0.05})
