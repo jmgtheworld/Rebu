@@ -47,7 +47,7 @@ module.exports = (db) => {
   // Get not accepted trips
   const getTripsByNotAccepted = () => {
     const query = {
-      text: 'SELECT * FROM trips WHERE accepted = FALSE AND ended_at IS NULL',
+      text: 'SELECT * FROM trips WHERE accepted = FALSE AND ended_at IS NULL ORDER BY created_at DESC',
     };
     
     return db
