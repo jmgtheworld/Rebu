@@ -3,7 +3,8 @@ import './InfoBar.css';
 
 export default function InfoBar ({ otherUserName }) {
 
-  const otherUserFirstName = otherUserName.split(' ')[0];
+  const otherUserFirstName = otherUserName ? otherUserName.split(' ')[0] : "";
+
   return (
     <div className="infoBar"> 
       <div className="leftInnerContainer">
