@@ -22,6 +22,7 @@ export default function Distance(props) {
     console.log('works')
   }, [props.destination, props.origin])
 
+
   const callback = (response) => {
     console.log('response from distance', response)
     time = response.rows[0].elements[0].duration.text
@@ -36,7 +37,6 @@ export default function Distance(props) {
         return true
       })
     }
-
   }
 
   return (
