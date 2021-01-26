@@ -163,7 +163,6 @@ export default function UserSummary(props) {
     if (loadCancel && (!toggle)) {
       setWaiting(false)
       console.log('trip id to be deleted', currentTripID)
-      // let deleteid = currentTripID - 1
       return Axios.put(`http://localhost:3001/trips/${currentTripID}/cancel`)
       .then(() => {
         console.log("previous trip cancelled/delete")
@@ -184,6 +183,9 @@ export default function UserSummary(props) {
     return Axios.put(`http://localhost:3001/trips/${currentTripID}/complete`)
     .then(() => {
       console.log('Trip completed')
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500)
     })
     .catch(err => console.log(err));
   }

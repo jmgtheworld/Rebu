@@ -20,7 +20,6 @@ export default function Home(props) {
   const [startAddress, setstartAddress] = useState("");
   const [finishAddress, setfinishAddress] = useState("");
 
-  
 
   console.log("USER INFO:", props.user)
   console.log("USER NAME:", props.user.full_name)
